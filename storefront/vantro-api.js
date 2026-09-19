@@ -1,7 +1,26 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const apiBase = window.__CHROMVAULT_API_BASE__ || "/v1";
 
-    // Clean up broken external srcset immediately
+    // --- TOAST NOTIFICATIONS (defined early so all code can use it) ---
+    window.showToast = function(msg, type = 'error') {
+        let container = document.getElementById('vantro-toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'vantro-toast-container';
+            container.style.cssText = 'position:fixed;top:20px;right:20px;z-index:999999;display:flex;flex-direction:column;gap:10px;';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.style.cssText = `background:${type === 'error' ? '#e74c3c' : '#2ecc71'};color:#fff;padding:12px 20px;border-radius:4px;font-size:14px;font-weight:600;box-shadow:0 4px 6px rgba(0,0,0,0.1);opacity:0;transform:translateY(-20px);transition:all 0.3s ease;`;
+        toast.innerText = msg;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; }, 10);
+        setTimeout(() => {
+            toast.style.opacity = '0'; toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    };
+
     document.querySelectorAll('img[srcset*="vantro.com"], source[srcset*="vantro.com"]').forEach(el => {
         el.removeAttribute('srcset');
     });
@@ -313,10 +332,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- CART PAGE ---
     if (window.location.pathname === "/cart" || window.location.pathname.startsWith("/cart")) {
         const cart = readCart();
-        let mainArea = document.getElementById("vantro-cart-root") || document.querySelector(".cart-items, tbody, .cart__items");
+        let mainArea = document.getElementById("vantro-cart-root") || document.querySelector(".cart-items, .cart__items");
         if (!mainArea) {
             const mainEl = document.querySelector("main, #MainContent, .main-content");
             if (mainEl) {
+                mainEl.innerHTML = "";
                 const div = document.createElement("div");
                 div.id = "vantro-cart";
                 div.style.cssText = "max-width:800px;margin:40px auto;padding:0 24px;";
@@ -328,12 +348,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (cart.length === 0) {
                 mainArea.innerHTML = `<div style="text-align:center;padding:80px 0;color:#71717a;"><p style="font-size:18px;margin-bottom:24px;">Your bag is empty.</p><a href="/" style="background:#000;color:#fff;padding:14px 28px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.1em;border-radius:4px;">Continue Shopping</a></div>`;
             } else {
-                let total = 0, html = `<table style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:1px solid #e4e4e7;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#71717a;"><th style="padding:16px 0;text-align:left;">Product</th><th style="padding:16px 8px;text-align:center;">Qty</th><th style="padding:16px 0;text-align:right;">Total</th><th></th></tr></thead><tbody>`;
+                let total = 0, html = `<div style="max-width:800px;margin:40px auto;padding:0 24px;"><table style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:1px solid #e4e4e7;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#71717a;"><th style="padding:16px 0;text-align:left;">Product</th><th style="padding:16px 8px;text-align:center;">Qty</th><th style="padding:16px 0;text-align:right;">Total</th><th></th></tr></thead><tbody>`;
                 cart.forEach((item, idx) => {
                     total += item.price * item.quantity;
                     html += `<tr data-cart-idx="${idx}" style="border-bottom:1px solid #f4f4f5;"><td style="padding:16px 0;"><div style="display:flex;gap:16px;align-items:center;"><img src="${item.image||""}" width="70" height="70" style="object-fit:cover;border-radius:4px;flex-shrink:0;" onerror="this.style.display='none'"><div><div style="font-weight:600;font-size:14px;">${item.title}</div><div style="color:#71717a;font-size:12px;margin-top:4px;">Rs. ${item.price} each</div></div></div></td><td style="padding:16px 8px;text-align:center;">${item.quantity}</td><td style="padding:16px 0;text-align:right;font-weight:600;">Rs. ${item.price*item.quantity}</td><td style="padding:16px 0;text-align:right;"><button onclick="vantroRemoveItem(${idx})" style="background:none;border:none;cursor:pointer;color:#71717a;font-size:20px;padding:4px;" title="Remove">×</button></td></tr>`;
                 });
-                html += `</tbody></table><div style="margin-top:32px;border-top:2px solid #000;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div><div style="font-size:11px;color:#71717a;text-transform:uppercase;letter-spacing:.1em;">Order Total</div><div style="font-size:24px;font-weight:700;margin-top:4px;">Rs. ${total}</div></div><a href="/checkout.html" style="background:#000;color:#fff;padding:16px 40px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.1em;border-radius:4px;">Proceed to Checkout</a></div>`;
+                html += `</tbody></table><div style="margin-top:32px;border-top:2px solid #000;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div><div style="font-size:11px;color:#71717a;text-transform:uppercase;letter-spacing:.1em;">Order Total</div><div style="font-size:24px;font-weight:700;margin-top:4px;">Rs. ${total}</div></div><a href="/checkout" style="background:#000;color:#fff;padding:16px 40px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.1em;border-radius:4px;">Proceed to Checkout</a></div></div>`;
                 mainArea.innerHTML = html;
             }
         }
@@ -344,8 +364,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (window.location.pathname === "/checkout" || window.location.pathname.startsWith("/checkout")) {
         const checkCart = readCart();
         if (checkCart.length === 0) {
-            alert("Your cart is empty.");
-            setTimeout(() => { window.location.href = "/cart"; }, 500);
+            // Cart is empty — redirect to cart page without a blocking alert
+            window.location.href = "/cart";
             return;
         }
 
@@ -503,26 +523,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         }
     }
-
-    // --- TOAST NOTIFICATIONS ---
-    window.showToast = function(msg, type = 'error') {
-        let container = document.getElementById('vantro-toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'vantro-toast-container';
-            container.style.cssText = 'position:fixed;top:20px;right:20px;z-index:999999;display:flex;flex-direction:column;gap:10px;';
-            document.body.appendChild(container);
-        }
-        const toast = document.createElement('div');
-        toast.style.cssText = `background:${type === 'error' ? '#e74c3c' : '#2ecc71'};color:#fff;padding:12px 20px;border-radius:4px;font-size:14px;font-weight:600;box-shadow:0 4px 6px rgba(0,0,0,0.1);opacity:0;transform:translateY(-20px);transition:all 0.3s ease;`;
-        toast.innerText = msg;
-        container.appendChild(toast);
-        setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; }, 10);
-        setTimeout(() => {
-            toast.style.opacity = '0'; toast.style.transform = 'translateY(-20px)';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    };
 
     // --- ORDER SUCCESS BANNER ---
     const urlParams = new URLSearchParams(window.location.search);

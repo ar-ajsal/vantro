@@ -1492,44 +1492,10 @@ first.parentNode.insertBefore(script, first);
 
 
 </div>
-    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1"><div id="shopify-section-template--22086712328350__main" class="shopify-section">
-
-
-  <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-family: var(--font-primary); text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; color: #888;">
-    Redirecting to your bag...
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+  <div id="vantro-cart-root" style="min-height:60vh;display:flex;align-items:center;justify-content:center;">
+    <div style="text-align:center;color:#888;font-family:var(--font-primary,sans-serif);font-size:13px;text-transform:uppercase;letter-spacing:.1em;">Loading your bag...</div>
   </div>
-
-  <script>
-    (function() {
-      // Theme Editor compatibility checks
-      if (window.Shopify && window.Shopify.designMode) {
-        console.log("Cart redirect disabled in Theme Editor (Shopify.designMode).");
-        return;
-      }
-      if (window.top !== window.self) {
-        console.log("Cart redirect disabled in Theme Editor (iframe).");
-        return;
-      }
-
-      // If we have a referrer on the same domain, go back, otherwise go home
-      const referrer = document.referrer;
-      const currentDomain = window.location.hostname;
-      
-      let redirectUrl = 'https://vantro.com/';
-      
-      if (referrer && referrer.includes(currentDomain) && !referrer.includes('/cart') && !referrer.includes('/checkout') && !referrer.includes('/checkouts')) {
-        redirectUrl = referrer;
-      }
-      
-      // Add the trigger parameter
-      const separator = redirectUrl.includes('?') ? '&' : '?';
-      window.location.href = redirectUrl + separator + 'open_cart=true';
-    })();
-  </script>
-
-
-
-</div>
 </main>
     <div id="shopify-section-footer" class="shopify-section"><link href="http://vantro.com/cdn/shop/t/10/assets/footer.css?v=4652512725487660601786943362" rel="stylesheet" type="text/css" media="all" />
 <style data-shopify>.footer {

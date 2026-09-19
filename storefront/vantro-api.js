@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             return `
                                 <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:12px;background:transparent;">
                                     <a href="${href}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
-                                        <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#f4f4f5;border-radius:2px;">
+                                        <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:transparent;border-radius:2px;">
                                             <img src="${img}" alt="${title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
                                         </div>
                                     </a>
@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         return `
                             <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:12px;background:transparent;">
                                 <a href="${href}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
-                                    <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#f4f4f5;border-radius:2px;">
+                                    <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:transparent;border-radius:2px;">
                                         <img src="${img}" alt="${title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
                                     </div>
                                 </a>

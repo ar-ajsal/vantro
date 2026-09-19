@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:s="http://jadedpixel.com/-/spec/shopify">
+  <id>https://vantro.com/collections/all.atom</id>
+  <link rel="alternate" type="text/html" href="https://vantro.com/collections/all"/>
+  <link rel="self" type="application/atom+xml" href="https://vantro.com/collections/watches.atom"/>
+  <title>Vantro</title>
+  <updated>2026-06-24T14:43:46+05:30</updated>
+  <author>
+    <name>Vantro</name>
+  </author>
+  <entry>
+    <id>https://vantro.com/products/8759892639902</id>
+    <published>2026-06-24T14:43:46+05:30</published>
+    <updated>2026-06-24T14:43:46+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/vantro-calculator"/>
+    <title>Vantro calculator</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/7384C3DB-0EFF-49C7-BDDD-97B56D82B6FD.png?v=1784469120"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            1999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>The Vantro calculator watch combines timekeeping with basic arithmetic functions in a compact 71-gram design. Its black casing offers durability and a professional appearance, suitable for everyday use and quick calculations without additional devices.</span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Watches</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8759892639902</id>
+      <title>Default Title</title>
+      <s:price currency="INR">1999.00</s:price>
+      <s:sku/>
+      <s:grams>71</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8759864754334</id>
+    <published>2026-06-24T14:23:22+05:30</published>
+    <updated>2026-06-24T14:23:22+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/vantro-001"/>
+    <title>Vantro 001</title>
+    <s:type>Unisex</s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/A8B32EB4-45D6-4A98-9F2E-3CDDFBD4C88F.jpg?v=1784469069"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong>Unisex<br>
+        <strong>Price: </strong>
+            1999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>Vantro 001 features a durable stainless steel frame paired with leather straps, providing structural integrity and comfort. Weighing 44 grams, its lightweight design supports extended use without discomfort.</span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Watches</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8759864754334</id>
+      <title>Default Title</title>
+      <s:price currency="INR">1999.00</s:price>
+      <s:sku/>
+      <s:grams>44</s:grams>
+    </s:variant>
+  </entry>
+</feed>

@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:s="http://jadedpixel.com/-/spec/shopify">
+  <id>https://vantro.com/collections/all.atom</id>
+  <link rel="alternate" type="text/html" href="https://vantro.com/collections/all"/>
+  <link rel="self" type="application/atom+xml" href="https://vantro.com/collections/shades.atom"/>
+  <title>Vantro</title>
+  <updated>2026-08-25T09:28:04+05:30</updated>
+  <author>
+    <name>Vantro</name>
+  </author>
+  <entry>
+    <id>https://vantro.com/products/8856076157086</id>
+    <published>2026-08-25T09:28:04+05:30</published>
+    <updated>2026-08-25T09:28:04+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/echo-3"/>
+    <title>Echo</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/54E3D4F2-4BFE-4B99-9AFF-A3DD56FC0F4E_63b40c77-e636-40f8-bfde-a4bdf24eb981.jpg?v=1787630248"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>Blue Polarized Lens. Carry case included.</span><span><br> </span><span>Black rectangular frames with distinctive blue-tinted interior detailing.</span></p>
+<p><span>INFORMATION</span></p>
+<ul>
+<li>
+<span>Lens Size:</span><span> 53 mm</span>
+</li>
+<li>
+<span>Nose Bridge Length:</span><span> 19 mm</span>
+</li>
+<li>
+<span>Temple Length:</span><span> 145 mm</span>
+</li>
+<li>
+<span>Gender:</span><span> Unisex</span>
+</li>
+<li>
+<span>Material:</span><span> Fiber</span>
+</li>
+<li>
+<span>Shape:</span><span> Rectangle</span>
+</li>
+<li>
+<span>Country of Origin:</span><span> Italy</span>
+</li>
+<li>
+<span>Front Colour:</span><span> Brown </span>
+</li>
+<li>
+<span>Temple Colour:</span><span> Black with Blue-Tinted Interior Detailing</span>
+</li>
+<li>
+<span>Lens Colour:</span><span> Blue</span>
+</li>
+<li>
+<span>Lens Type:</span><span> Polarized</span>
+</li>
+</ul></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8856076157086</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8856072978590</id>
+    <published>2026-08-25T09:26:02+05:30</published>
+    <updated>2026-08-25T09:26:02+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/echo-2"/>
+    <title>Echo</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/35968AEB-BA87-4C4F-AA62-00A896A560A4_b8e5b445-fb6c-4c28-8a4b-8079e439d85e.jpg?v=1787630133"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>Blue Polarized Lens. Carry case included.</span><span><br> </span><span>Black rectangular frames with distinctive blue-tinted interior detailing.</span></p>
+<p><span>INFORMATION</span></p>
+<ul>
+<li>
+<span>Lens Size:</span><span> 53 mm</span>
+</li>
+<li>
+<span>Nose Bridge Length:</span><span> 19 mm</span>
+</li>
+<li>
+<span>Temple Length:</span><span> 145 mm</span>
+</li>
+<li>
+<span>Gender:</span><span> Unisex</span>
+</li>
+<li>
+<span>Material:</span><span> Fiber</span>
+</li>
+<li>
+<span>Shape:</span><span> Rectangle</span>
+</li>
+<li>
+<span>Country of Origin:</span><span> Italy</span>
+</li>
+<li>
+<span>Front Colour:</span><span> Transparent </span>
+</li>
+<li>
+<span>Temple Colour:</span><span> Black with Blue-Tinted Interior Detailing</span>
+</li>
+<li>
+<span>Lens Colour:</span><span> Blue</span>
+</li>
+<li>
+<span>Lens Type:</span><span> Polarized</span>
+</li>
+</ul></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8856072978590</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8856068587678</id>
+    <published>2026-08-25T09:24:04+05:30</published>
+    <updated>2026-08-25T09:24:04+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/echo-1"/>
+    <title>Echo</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/ED7CE13E-1A74-40AD-AD44-DBD8B390F1CC_b2dd9288-dc82-4296-a658-c59dcb1fe616.jpg?v=1787630022"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>Blue Polarized Lens. Carry case included.</span><span><br> </span><span>Black rectangular frames with distinctive blue-tinted interior detailing.</span></p>
+<p><span>INFORMATION</span></p>
+<ul>
+<li>
+<span>Lens Size:</span><span> 53 mm</span>
+</li>
+<li>
+<span>Nose Bridge Length:</span><span> 19 mm</span>
+</li>
+<li>
+<span>Temple Length:</span><span> 145 mm</span>
+</li>
+<li>
+<span>Gender:</span><span> Unisex</span>
+</li>
+<li>
+<span>Material:</span><span> Fiber</span>
+</li>
+<li>
+<span>Shape:</span><span> Rectangle</span>
+</li>
+<li>
+<span>Country of Origin:</span><span> Italy</span>
+</li>
+<li>
+<span>Front Colour:</span><span> Black</span>
+</li>
+<li>
+<span>Temple Colour:</span><span> Black with Blue-Tinted Interior Detailing</span>
+</li>
+<li>
+<span>Lens Colour:</span><span> Blue</span>
+</li>
+<li>
+<span>Lens Type:</span><span> Polarized</span>
+</li>
+</ul></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8856068587678</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8856062066846</id>
+    <published>2026-08-25T09:21:23+05:30</published>
+    <updated>2026-08-25T09:21:23+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/bru"/>
+    <title>Bru</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/81C62458-093C-49EC-A76D-0D408535A655.jpg?v=1787723112"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>INFORMATION</span></p>
+<ul>
+<li>
+<span>Lens Width:</span><span> 48 mm</span>
+</li>
+<li>
+<span>Bridge Width:</span><span> 24 mm</span>
+</li>
+<li>
+<span>Temple Length:</span><span> 145 mm</span>
+</li>
+<li>
+<span>Shape:</span><span> Geometric Crown</span>
+</li>
+<li>
+<span>Temple Detail:</span><span> Sterling Silver Diamond Iconography</span>
+</li>
+<li>
+<span>Design:</span><span> Distinctive Geometric Crown Shape</span>
+</li>
+<li>
+<span>Lens:</span><span> Blue Polarized Lens</span>
+</li>
+<li>
+<span>Frame:</span><span> Black Rectangular Frame</span>
+</li>
+<li>
+<span>Interior Detail:</span><span> Blue-Tinted Interior Detailing</span>
+</li>
+<li>
+<span>Carry Case:</span><span> Included</span>
+</li>
+</ul></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8856062066846</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8856058003614</id>
+    <published>2026-08-25T09:17:02+05:30</published>
+    <updated>2026-08-25T09:17:02+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/bembredge"/>
+    <title>Bembredge</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/BA953BD3-7842-417C-AF40-FBCF4AA04DF5_a61b592b-bdf7-4d84-97f9-2f1ae3959b51.jpg?v=1787629475"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>INFORMATION</span></p>
+<ul>
+<li>
+<span>Frame:</span><span> Rimless Rectangular</span>
+</li>
+<li>
+<span>Frame Colour:</span><span> Polished Arista Gold</span>
+</li>
+<li>
+<span>Lens Width:</span><span> 52 mm / 54 mm</span>
+</li>
+<li>
+<span>Bridge Size:</span><span> 20 mm</span>
+</li>
+<li>
+<span>Lens Height:</span><span> 34.3 mm (52 mm) / 35.7 mm (54 mm)</span>
+</li>
+<li>
+<span>Temple Length:</span><span> 145 mm</span>
+</li>
+<li><span>carry case included </span></li>
+</ul></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8856058003614</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8848176316574</id>
+    <published>2026-08-19T11:13:29+05:30</published>
+    <updated>2026-08-19T11:13:29+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/chaska"/>
+    <title>Vayn</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/6F9495EE-5BD6-426A-A234-31D8D2F7C9EB_d1e75731-3df3-4b69-a746-8051760603ec.jpg?v=1787117768"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            699.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8848176316574</id>
+      <title>Default Title</title>
+      <s:price currency="INR">699.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843857789086</id>
+    <published>2026-08-18T12:24:45+05:30</published>
+    <updated>2026-08-18T12:24:45+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/kushka-1"/>
+    <title>Tommy</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/21B1C37C-53FB-4AD3-8E82-C35FCF940956_df8eacd0-dd1e-419f-b3dc-9454e99f7335.jpg?v=1787036054"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843857789086</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843828920478</id>
+    <published>2026-08-18T12:20:40+05:30</published>
+    <updated>2026-08-18T12:20:40+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/kushka-silvyn"/>
+    <title>Tommy</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/E73B58C5-E738-456B-8590-DDB272BF6C11_daf36bd2-f743-4be2-85ff-0e5526e4c2bf.jpg?v=1787036394"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843828920478</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843822071966</id>
+    <published>2026-08-18T12:11:08+05:30</published>
+    <updated>2026-08-18T12:11:08+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/untitled-aug18_12-08-32"/>
+    <title>Grape</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/C830FFA5-282F-4854-AB00-7A3D8D73BD3E_e9d52d85-a7c0-4143-a82b-a015a6a52512.jpg?v=1787035229"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843822071966</id>
+      <title>Default Title</title>
+      <s:price currency="INR">599.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843815026846</id>
+    <published>2026-08-18T12:08:27+05:30</published>
+    <updated>2026-08-18T12:08:27+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/kiwi"/>
+    <title>Kiwi</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/3AA245F1-D219-43E9-84E6-10AFBFAB8E39_33798607-0acf-490c-87e9-b1a04a846442.jpg?v=1787035069"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843815026846</id>
+      <title>Default Title</title>
+      <s:price currency="INR">599.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843800182942</id>
+    <published>2026-08-18T12:06:04+05:30</published>
+    <updated>2026-08-18T12:06:04+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/blackberry"/>
+    <title>Blackberry</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/706491C7-28FF-4022-9A78-B82C09C05C92.jpg?v=1787034898"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843800182942</id>
+      <title>Default Title</title>
+      <s:price currency="INR">599.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843791073438</id>
+    <published>2026-08-18T12:03:17+05:30</published>
+    <updated>2026-08-18T12:03:17+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/slay-red"/>
+    <title>Slay red</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/614488A7-505F-46C1-893B-7DAAC6BF24B6_87c1369c-7500-4bc6-aec3-3f396f39d37a.jpg?v=1787034731"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843791073438</id>
+      <title>Default Title</title>
+      <s:price currency="INR">599.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843778097310</id>
+    <published>2026-08-18T11:59:20+05:30</published>
+    <updated>2026-08-18T11:59:20+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/orange-1"/>
+    <title>Orange</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/306894CF-2FCF-4468-921F-F5C090561946_4c919950-73d5-45b8-837b-77765b2dce08.jpg?v=1787034632"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843778097310</id>
+      <title>Default Title</title>
+      <s:price currency="INR">599.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843767513246</id>
+    <published>2026-08-18T11:58:19+05:30</published>
+    <updated>2026-08-18T11:58:19+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/untitled-aug18_11-55-38"/>
+    <title>Yellow</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/4736A9C0-9B30-4FDC-B402-E77FD166E8F0_24c2d8e8-dee2-45f4-915c-740f8f778d22.jpg?v=1787034455"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843767513246</id>
+      <title>Default Title</title>
+      <s:price currency="INR">599.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843761451166</id>
+    <published>2026-08-18T11:55:32+05:30</published>
+    <updated>2026-08-18T11:55:32+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/red"/>
+    <title>Red</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/74463A88-ABA0-42CC-B7DB-A31B39C472B4.jpg?v=1787034306"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843761451166</id>
+      <title>Default Title</title>
+      <s:price currency="INR">599.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843754209438</id>
+    <published>2026-08-18T11:53:34+05:30</published>
+    <updated>2026-08-18T11:53:34+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/purple"/>
+    <title>Purple</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/3E364E8B-D6C0-41F0-8627-CD9A95BB5715.jpg?v=1787034192"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843754209438</id>
+      <title>Default Title</title>
+      <s:price currency="INR">599.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843739431070</id>
+    <published>2026-08-18T11:51:07+05:30</published>
+    <updated>2026-08-18T11:51:07+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/sterling"/>
+    <title>Sterling</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/AFD85FDC-8AEA-4756-A2B2-E993508CD8BC.jpg?v=1787033998"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843739431070</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843728683166</id>
+    <published>2026-08-18T11:47:33+05:30</published>
+    <updated>2026-08-18T11:47:33+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/pink-s"/>
+    <title>Pink s</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/BE559FDB-85B3-4D5E-8998-A9DBC2D5B19C.jpg?v=1787033823"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            499.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Wallet</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843728683166</id>
+      <title>Default Title</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843699552414</id>
+    <published>2026-08-18T11:40:58+05:30</published>
+    <updated>2026-08-18T11:40:58+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/pink"/>
+    <title>Pink</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/6C7A2F86-D229-45F9-8232-73C579241C0A.jpg?v=1787033434"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            499.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843699552414</id>
+      <title>Default Title</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8843687329950</id>
+    <published>2026-08-18T11:38:50+05:30</published>
+    <updated>2026-08-18T11:38:50+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/panter"/>
+    <title>Panter</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/F6FD4388-99CF-40E1-8200-DA04C7CA377A.jpg?v=1787033281"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8843687329950</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8835222175902</id>
+    <published>2026-08-18T11:36:13+05:30</published>
+    <updated>2026-08-18T11:36:13+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/ff"/>
+    <title>Gold</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/8593E2C5-37C8-4406-96C9-103137E855DF.jpg?v=1786787922"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8835222175902</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8835222044830</id>
+    <published>2026-08-15T15:25:31+05:30</published>
+    <updated>2026-08-15T15:25:31+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/mellon"/>
+    <title>Mellon</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/BE03177F-B4DA-4191-A9E0-C6E3FE26D8D9.jpg?v=1786787672"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8835222044830</id>
+      <title>Default Title</title>
+      <s:price currency="INR">999.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8835221323934</id>
+    <published>2026-08-15T15:15:57+05:30</published>
+    <updated>2026-08-15T15:15:57+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/cannon"/>
+    <title>Cannon</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/018DE7D9-B30D-4B83-9D7B-4E1A5F19233C.jpg?v=1786787081"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            1199.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8835221323934</id>
+      <title>Default Title</title>
+      <s:price currency="INR">1199.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8835221061790</id>
+    <published>2026-08-15T15:11:54+05:30</published>
+    <updated>2026-08-15T15:11:54+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/black-flame"/>
+    <title>Black flame</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/BF99364E-5C48-4DC9-A8FA-6A1A83D85F6D.jpg?v=1786786852"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            1199.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8835221061790</id>
+      <title>Default Title</title>
+      <s:price currency="INR">1199.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8835220734110</id>
+    <published>2026-08-15T15:07:00+05:30</published>
+    <updated>2026-08-15T15:07:00+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/blue-flame"/>
+    <title>Blue flame</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/D344A78F-DFA1-4537-81F3-8CF8B4C2ACF5.jpg?v=1786786720"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            1199.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Shades</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8835220734110</id>
+      <title>Default Title</title>
+      <s:price currency="INR">1199.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+</feed>

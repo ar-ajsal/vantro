@@ -1,0 +1,9 @@
+{
+  "name": "chromvault-root",
+  "version": "1.0.0",
+  "description": "Root package for AWS deployment",
+  "private": true,
+  "scripts": {
+    "start": "cd backend && npm install && node server.js"
+  }
+}

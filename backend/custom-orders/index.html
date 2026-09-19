@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management | Admin Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        /* Status Badges */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-confirmed { background: #e0e7ff; color: #4338ca; }
+        .status-processing { background: #dbeafe; color: #2563eb; }
+        .status-shipped { background: #f3e8ff; color: #9333ea; }
+        .status-out_for_delivery { background: #fae8ff; color: #c026d3; }
+        .status-delivered { background: #dcfce7; color: #16a34a; }
+        .status-cancelled { background: #fee2e2; color: #dc2626; }
+        .status-returned { background: #f3f4f6; color: #4b5563; }
+
+        .payment-pending { background: #fef3c7; color: #d97706; }
+        .payment-paid { background: #dcfce7; color: #16a34a; }
+        .payment-failed { background: #fee2e2; color: #dc2626; }
+
+        #orderModal {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased h-screen flex flex-col overflow-hidden">
+
+    <!-- Navbar -->
+    <header class="glass-panel sticky top-0 z-30 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="p-2 bg-blue-600 rounded-lg text-white">
+                <i data-lucide="package" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-gray-900 leading-tight">Order Management</h1>
+                <p class="text-sm text-gray-500">Manage customer orders, shipments, and payments</p>
+            </div>
+        </div>
+        <div>
+            <a href="/" class="flex items-center space-x-2 text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span>Back to Admin</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-auto p-6 flex flex-col space-y-6">
+        
+        <!-- Filters & Search -->
+        <div class="glass-panel rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="relative flex-1 max-w-md">
+                <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                <input type="text" id="searchInput" placeholder="Search by Order ID, Customer Name, or Phone..." 
+                       class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all text-sm">
+            </div>
+            <div class="flex space-x-3">
+                <select id="statusFilter" class="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2">
+                    <option value="">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Out For Delivery">Out For Delivery</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Returned">Returned</option>
+                </select>
+                <select id="paymentFilter" class="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2">
+                    <option value="">All Payments</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Failed">Failed</option>
+                </select>
+                <button id="refreshBtn" class="p-2 bg-white border border-gray-200 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors" title="Refresh">
+                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="glass-panel rounded-xl shadow-sm overflow-hidden flex-1 flex flex-col">
+            <div class="overflow-x-auto flex-1">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50/50 border-b border-gray-200 sticky top-0">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 font-semibold">Order ID</th>
+                            <th scope="col" class="px-6 py-4 font-semibold">Date</th>
+                            <th scope="col" class="px-6 py-4 font-semibold">Customer</th>
+                            <th scope="col" class="px-6 py-4 font-semibold">Total</th>
+                            <th scope="col" class="px-6 py-4 font-semibold">Payment</th>
+                            <th scope="col" class="px-6 py-4 font-semibold">Order Status</th>
+                            <th scope="col" class="px-6 py-4 font-semibold text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody" class="divide-y divide-gray-100">
+                        <!-- Populated via JS -->
+                        <tr>
+                            <td colspan="7" class="px-6 py-10 text-center text-gray-500">
+                                <div class="flex flex-col items-center justify-center">
+                                    <i data-lucide="loader-2" class="w-8 h-8 animate-spin text-blue-500 mb-2"></i>
+                                    <p>Loading orders...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50/50 flex items-center justify-between">
+                <span class="text-sm text-gray-700">
+                    Showing <span id="pageInfo" class="font-semibold text-gray-900">1 - 10</span> of <span id="totalOrdersInfo" class="font-semibold text-gray-900">...</span>
+                </span>
+                <div class="inline-flex space-x-2">
+                    <button id="prevBtn" class="px-3 py-1 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Prev</button>
+                    <button id="nextBtn" class="px-3 py-1 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Order Details Modal -->
+    <div id="orderModal" class="fixed inset-0 z-50 hidden bg-gray-900/40 backdrop-blur-sm flex justify-end">
+        <div class="bg-white w-full max-w-3xl h-full shadow-2xl flex flex-col transform transition-transform duration-300 translate-x-full" id="modalContent">
+            
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/80">
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900" id="modalOrderId">Order #ORD-0000</h2>
+                    <p class="text-sm text-gray-500" id="modalOrderDate">Placed on ...</p>
+                </div>
+                <button id="closeModalBtn" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-8">
+                
+                <!-- Quick Status Update -->
+                <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                    <h3 class="text-sm font-semibold text-blue-900 mb-3 flex items-center">
+                        <i data-lucide="zap" class="w-4 h-4 mr-2"></i> Update Order Status
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <select id="updateStatusSelect" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 flex-1 min-w-[200px]">
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Out For Delivery">Out For Delivery</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Returned">Returned</option>
+                        </select>
+                        <select id="updatePaymentStatusSelect" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 flex-1 min-w-[150px]">
+                            <option value="Pending">Payment: Pending</option>
+                            <option value="Paid">Payment: Paid</option>
+                            <option value="Failed">Payment: Failed</option>
+                        </select>
+                        <button id="saveStatusBtn" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-colors">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Customer Details -->
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center border-b pb-2">
+                            <i data-lucide="user" class="w-4 h-4 mr-2 text-gray-500"></i> Customer Info
+                        </h3>
+                        <div class="text-sm text-gray-600 space-y-2" id="modalCustomerInfo">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Payment Details -->
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center border-b pb-2">
+                            <i data-lucide="credit-card" class="w-4 h-4 mr-2 text-gray-500"></i> Payment Info
+                        </h3>
+                        <div class="text-sm text-gray-600 space-y-2" id="modalPaymentInfo">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Details -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center border-b pb-2">
+                        <i data-lucide="truck" class="w-4 h-4 mr-2 text-gray-500"></i> Shipping & Tracking
+                    </h3>
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-500 mb-1">Courier Name</label>
+                                <input type="text" id="trackCourier" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="e.g. BlueDart">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-500 mb-1">AWB / Tracking Number</label>
+                                <input type="text" id="trackAWB" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="e.g. 123456789">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-medium text-gray-500 mb-1">Tracking URL</label>
+                                <input type="url" id="trackUrl" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="https://...">
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button id="saveTrackingBtn" class="text-sm text-white bg-gray-800 hover:bg-gray-900 px-4 py-2 rounded-lg transition-colors">
+                                Update Tracking Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Items -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center border-b pb-2">
+                        <i data-lucide="shopping-bag" class="w-4 h-4 mr-2 text-gray-500"></i> Order Items
+                    </h3>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+                                <tr>
+                                    <th class="px-4 py-3">Product</th>
+                                    <th class="px-4 py-3">Price</th>
+                                    <th class="px-4 py-3 text-center">Qty</th>
+                                    <th class="px-4 py-3 text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modalOrderItems" class="divide-y divide-gray-100">
+                                <!-- Populated via JS -->
+                            </tbody>
+                            <tfoot class="bg-gray-50" id="modalOrderSummary">
+                                <!-- Populated via JS -->
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-50 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg flex items-center">
+        <i data-lucide="check-circle" class="w-5 h-5 mr-3 text-green-400" id="toastIcon"></i>
+        <span id="toastMsg" class="text-sm font-medium">Updated successfully</span>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

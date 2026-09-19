@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "web": "node frontendServer.js",
+    "web:legacy": "node -e \"process.env.STOREFRONT_LEGACY='1';require('./frontendServer.js')\"",
+    "seed": "node seed.js",
+    "seed:admin": "node seedAdmin.js",
+    "test": "node tests/auth.test.js && node tests/pricing.test.js && node tests/controllers.test.js && node tests/razorpay.test.js && node tests/storefront.test.js && node tests/notifications.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^1.41.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "firebase-admin": "^14.3.0",
+    "http-proxy-middleware": "^4.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.4",
+    "multer": "^2.3.0",
+    "multer-storage-cloudinary": "^4.0.0",
+    "razorpay": "^2.9.8"
+  }
+}

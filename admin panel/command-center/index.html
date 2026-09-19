@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#050506" />
+  <title>Chromvault — Command Center</title>
+
+  <meta name="description" content="Chromvault admin command center" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icon-192x192.png" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Login screen (shown until authenticated) -->
+  <div class="login-screen" id="loginScreen" hidden>
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="brand-mark">C</div>
+        <div>
+          <b>Chromvault</b>
+          <span>Command Center</span>
+        </div>
+      </div>
+      <h1>Sign in</h1>
+      <p class="lead">Enter your admin credentials to access the console.</p>
+      <form class="login-form" id="loginForm" autocomplete="on">
+        <div class="login-err" id="loginErr"></div>
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <input class="input" type="email" id="loginEmail" name="email" placeholder="admin@chromvault.in" required autocomplete="username" />
+        </div>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input class="input" type="password" id="loginPassword" name="password" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <button class="btn primary" type="submit" id="loginBtn">Sign in</button>
+      </form>
+      <div class="login-foot">CHROMVAULT · SECURE ADMIN</div>
+    </div>
+  </div>
+
+  <!-- Public screen (e.g. Leave a Review) -->
+  <div class="public-screen" id="publicScreen" hidden>
+    <div class="public-card" id="publicCard"></div>
+  </div>
+
+  <!-- App shell (shown when authenticated) -->
+  <div id="app" hidden>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div class="brand-text">
+          <b>Chromvault</b>
+          <span>Command Center</span>
+        </div>
+      </div>
+      <nav class="nav" id="navList"></nav>
+      <div class="sidebar-foot">
+        <div class="userchip" id="userChip" data-route="settings">
+          <div class="avatar" id="userAvatar">A</div>
+          <div class="meta">
+            <b id="userName">Admin</b>
+            <span id="userRole">—</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile sidebar scrim -->
+    <div class="scrim-mobile" id="sidebarScrim"></div>
+
+    <!-- Main column -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn desktop-only" id="toggleSidebar" title="Toggle sidebar" aria-label="Toggle sidebar"></button>
+        <button class="icon-btn mobile-only" id="openSidebar" title="Menu" aria-label="Open menu"></button>
+        <div class="crumbs" id="crumbs"><b>Dashboard</b></div>
+        <div class="topbar-spacer"></div>
+        <button class="cmd-trigger" id="cmdTrigger">
+          <span class="ic-slot" id="cmdSearchIc"></span>
+          <span class="cmd-trigger-label">Search or jump to…</span>
+          <span class="kbd">⌘K</span>
+        </button>
+        <span class="live-dot desktop-only"><i></i>Live</span>
+      </header>
+
+      <div class="viewport" id="viewport">
+        <div id="view"></div>
+      </div>
+    </div>
+
+    <!-- Bottom nav (mobile) -->
+    <nav class="bottom-nav" id="bottomNav"></nav>
+  </div>
+
+  <!-- Command palette -->
+  <div class="cmdk-scrim" id="cmdkScrim">
+    <div class="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div class="cmdk-input-wrap">
+        <span id="cmdkIc"></span>
+        <input class="cmdk-input" id="cmdkInput" placeholder="Search products, orders, or run a command…" autocomplete="off" spellcheck="false" />
+        <span class="kbd">ESC</span>
+      </div>
+      <div class="cmdk-list" id="cmdkList"></div>
+      <div class="cmdk-foot">
+        <span><span class="kbd">↑</span><span class="kbd">↓</span> navigate</span>
+        <span><span class="kbd">↵</span> select</span>
+        <span><span class="kbd">esc</span> close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drawer host (order/product detail) -->
+  <div class="drawer-scrim" id="drawerScrim"></div>
+
+  <!-- Scripts (buildless, ordered) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-messaging-compat.js"></script>
+  <script src="firebase-config.js?v=2.7"></script>
+  <script src="icons.js?v=2.7"></script>
+  <script src="core.js?v=2.7"></script>
+  <script src="components.js?v=2.7"></script>
+  <script src="notifications.js?v=2.7"></script>
+  <script src="invoice.js?v=2.7"></script>
+  <script src="views/dashboard.js?v=2.7"></script>
+  <script src="views/orders.js?v=2.7"></script>
+  <script src="views/products.js?v=2.7"></script>
+  <script src="views/customers.js?v=2.7"></script>
+  <script src="views/categories.js?v=2.7"></script>
+  <script src="views/reviews.js?v=2.7"></script>
+  <script src="views/settings.js?v=2.7"></script>
+  <script src="views/public-review.js?v=2.7"></script>
+  <script src="app.js?v=2.7"></script>
+
+  <!-- Register the admin PWA service worker so the dashboard is installable and
+       loads offline. API traffic is never cached (see service-worker.js). -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/service-worker.js').catch(function (err) {
+          console.warn('Admin SW registration failed:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

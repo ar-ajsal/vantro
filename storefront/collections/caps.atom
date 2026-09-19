@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:s="http://jadedpixel.com/-/spec/shopify">
+  <id>https://vantro.com/collections/all.atom</id>
+  <link rel="alternate" type="text/html" href="https://vantro.com/collections/all"/>
+  <link rel="self" type="application/atom+xml" href="https://vantro.com/collections/caps.atom"/>
+  <title>Vantro</title>
+  <updated>2026-08-20T07:02:41+05:30</updated>
+  <author>
+    <name>Vantro</name>
+  </author>
+  <entry>
+    <id>https://vantro.com/products/8848808312990</id>
+    <published>2026-08-20T07:02:41+05:30</published>
+    <updated>2026-08-20T07:02:41+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/untitled-aug19_21-17-56"/>
+    <title>Flame</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/1F1FF932-D385-49EC-BFD5-7B96A4132880_d5a83246-06cf-4b23-afc8-c1f6d3dad068.jpg?v=1787189521"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            499.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Cap</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8848808312990</id>
+      <title>Default Title</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8848220848286</id>
+    <published>2026-08-19T21:17:30+05:30</published>
+    <updated>2026-08-19T21:17:30+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/vv"/>
+    <title>White Flame</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/DC1D7A66-3350-4F2A-BD10-68F6F95316AC.jpg?v=1787154373"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            559.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Free size </p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Cap</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8848220848286</id>
+      <title>Default Title</title>
+      <s:price currency="INR">559.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8816151232670</id>
+    <published>2026-08-02T19:33:03+05:30</published>
+    <updated>2026-08-02T19:33:03+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/dango-b"/>
+    <title>Dango B</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/37052542-ACA6-4359-A93B-760B42C98687_292e4501-6a43-4916-b018-821e0c88c3d0.jpg?v=1785680252"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            799.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Cap</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8816151232670</id>
+      <title>Default Title</title>
+      <s:price currency="INR">799.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8816142483614</id>
+    <published>2026-08-02T19:29:07+05:30</published>
+    <updated>2026-08-02T19:29:07+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/dango-w"/>
+    <title>Dango w</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/8E645608-B63B-404B-82D9-3DAA2C1A7FA5_363bb0d3-355c-4cb4-8930-1e74637ebbc2.jpg?v=1785679093"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            799.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Cap</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8816142483614</id>
+      <title>Default Title</title>
+      <s:price currency="INR">799.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8816127213726</id>
+    <published>2026-08-02T19:25:19+05:30</published>
+    <updated>2026-08-02T19:25:19+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/dango"/>
+    <title>Dango</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/6BB0A4F1-2C0A-493C-9A5E-E729839D470F_73e57d46-53bd-469c-9d88-46f79083f230.jpg?v=1785742472"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            799.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Cap</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8816127213726</id>
+      <title>Default Title</title>
+      <s:price currency="INR">799.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8816095068318</id>
+    <published>2026-08-02T18:47:28+05:30</published>
+    <updated>2026-08-02T18:47:28+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/f-1"/>
+    <title>Nori</title>
+    <s:type></s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/C7148A99-608D-4E73-A452-9A1E047D1131_90b638b5-21fc-46e0-95e4-e5e34124293b.jpg?v=1785676613"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong><br>
+        <strong>Price: </strong>
+            699.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Cap</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8816095068318</id>
+      <title>Default Title</title>
+      <s:price currency="INR">699.00</s:price>
+      <s:sku/>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://vantro.com/products/8760414830750</id>
+    <published>2026-06-24T16:08:26+05:30</published>
+    <updated>2026-06-24T16:08:26+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://vantro.com/products/d-cap"/>
+    <title>Kebabs</title>
+    <s:type>Unisex</s:type>
+    <s:vendor>Vantro</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0758/7361/6030/files/55936CF4-AEDA-48B1-AB4A-764C6E293C29_346346e9-a395-4e56-a9f4-56b56a2365a4.jpg?v=1785677490"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Vantro<br>
+        <strong>Type: </strong>Unisex<br>
+        <strong>Price: </strong>
+            499.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>Color:Black </span><span>Weight: 126 g D - addition</span><span><br> </span><span>Style: Minimalist, solid black unisex design.</span><span><br> </span><span>Size: Free Size (Adjustable).</span><span><br> </span><span>Best For: Everyday casual wear.</span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Cap</s:tag>
+    <s:variant>
+      <id>https://vantro.com/products/8760414830750</id>
+      <title>Default Title</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku/>
+      <s:grams>150</s:grams>
+    </s:variant>
+  </entry>
+</feed>

@@ -39,10 +39,10 @@
         var en = box.querySelector('#emptyNewCat'); if (en) en.addEventListener('click', function () { openEditor(root, null); });
         return;
       }
-      box.innerHTML = '<div class="grid grid-4">' + cats.map(function (c) {
+      box.innerHTML = '<div class="grid grid-4" id="catGrid">' + cats.map(function (c) {
         var hidden = (c.status || 'show') !== 'show';
         var imgUrl = c.image || c.icon || '';
-        return '<div class="panel" style="padding:0;overflow:hidden;display:flex;flex-direction:column">' +
+        return '<div class="panel cat-panel" data-id="' + esc(c._id) + '" draggable="true" style="padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:grab;">' +
           '<div class="panel-pad" style="display:flex;align-items:center;gap:14px;flex:1">' +
           (imgUrl
             ? '<div style="width:48px;height:48px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--near-black);flex:0 0 48px;display:grid;place-items:center">' +
@@ -88,6 +88,41 @@
             });
         });
       });
+    
+      var grid = box.querySelector('#catGrid');
+      if (grid) {
+        var draggedItem = null;
+        grid.addEventListener('dragstart', function(e) {
+          draggedItem = e.target.closest('.cat-panel');
+          if (draggedItem) {
+            e.dataTransfer.effectAllowed = 'move';
+            draggedItem.style.opacity = '0.5';
+          }
+        });
+        grid.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          var target = e.target.closest('.cat-panel');
+          if (target && target !== draggedItem) {
+            // Very simple vertical/horizontal threshold calculation for grid
+            var rect = target.getBoundingClientRect();
+            var isAfter = (e.clientX - rect.left) / (rect.right - rect.left) > 0.5;
+            grid.insertBefore(draggedItem, isAfter ? target.nextSibling : target);
+          }
+        });
+        grid.addEventListener('dragend', function(e) {
+          if (draggedItem) {
+            draggedItem.style.opacity = '1';
+            var panels = Array.from(grid.querySelectorAll('.cat-panel'));
+            var updates = panels.map(function(p, i) { return { id: p.getAttribute('data-id'), order: i }; });
+            CC.API.put('/category/reorder', { updates: updates }).then(function() {
+              CC.toast('Order updated');
+            }).catch(function(err) {
+              CC.toast(err.message, 'bad');
+            });
+            draggedItem = null;
+          }
+        });
+      }
     }).catch(function (e) {
       box.innerHTML = UI.errorState(e.message, 'catRetry');
       var rt = box.querySelector('#catRetry'); if (rt) rt.addEventListener('click', function () { load(root); });

@@ -6,7 +6,8 @@ const {
   getCategoryById,
   updateCategory,
   updateStatus,
-  deleteCategory
+  deleteCategory,
+  reorderCategories
 } = require('../controllers/categoryController');
 const { protectAdmin } = require('../middleware/authMiddleware');
 
@@ -17,6 +18,7 @@ router.get('/:id', getCategoryById);
 
 // ─── Admin-only writes ─────────────────────────────────────
 router.post('/add', protectAdmin, addCategory);
+router.put('/reorder', protectAdmin, reorderCategories);
 router.put('/status/:id', protectAdmin, updateStatus);
 router.put('/:id', protectAdmin, updateCategory);
 router.delete('/:id', protectAdmin, deleteCategory);

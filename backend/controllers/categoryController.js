@@ -34,10 +34,34 @@ const getAllCategories = async (req, res) => {
     // a Bearer token) so it can still display hidden categories.
     const showAll = req.query.all === '1';
     const filter = showAll ? {} : { status: 'show' };
-    const categories = await Category.find(filter).sort({ createdAt: -1 });
+    const categories = await Category.find(filter).sort({ order: 1, createdAt: -1 });
     res.status(200).send({ categories });
   } catch (err) {
     sendError(res, err, 'Failed to fetch categories.');
+  }
+};
+
+const reorderCategories = async (req, res) => {
+  try {
+    const { updates } = req.body; // e.g. [{ id: "...", order: 1 }]
+    if (!Array.isArray(updates)) {
+      return res.status(400).send({ message: "Updates must be an array." });
+    }
+
+    const bulkOps = updates.map((update) => ({
+      updateOne: {
+        filter: { _id: update.id },
+        update: { $set: { order: update.order } }
+      }
+    }));
+
+    if (bulkOps.length > 0) {
+      await Category.bulkWrite(bulkOps);
+    }
+    
+    res.status(200).send({ message: "Categories reordered successfully!" });
+  } catch (err) {
+    sendError(res, err, 'Failed to reorder categories.');
   }
 };
 
@@ -110,5 +134,6 @@ module.exports = {
   getCategoryById,
   updateCategory,
   updateStatus,
-  deleteCategory
+  deleteCategory,
+  reorderCategories
 };

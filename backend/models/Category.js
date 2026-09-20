@@ -9,6 +9,7 @@ const categorySchema = new mongoose.Schema({
   icon: { type: String },
   image: { type: String },
   status: { type: String, default: 'show' },
+  order: { type: Number, default: 0 }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Category', categorySchema);

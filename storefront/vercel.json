@@ -16,6 +16,10 @@
     {
       "source": "/collections/:slug",
       "destination": "/collections/template"
+    },
+    {
+      "source": "/track",
+      "destination": "/index.html"
     }
   ],
   "headers": [

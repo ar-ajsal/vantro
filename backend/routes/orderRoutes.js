@@ -22,7 +22,7 @@ const { protectAdmin } = require('../middleware/authMiddleware');
 router.post('/create-order', createRazorpayOrder);
 router.post('/create-razorpay-order', createRazorpayOrder);
 router.post('/verify-payment', verifyPaymentAndCreateOrder);
-router.get('/track/:orderId', trackOrder);
+router.get('/track', trackOrder);
 
 // ─── Admin-only: Dashboard Analytics ───────────────────────
 router.get('/dashboard-amount', protectAdmin, getDashboardAmount);

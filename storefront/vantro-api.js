@@ -542,7 +542,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <div style="max-width:600px;margin:80px auto;padding:0 24px;font-family:inherit;">
                 <h1 style="font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:24px;text-align:center;">Track Your Order</h1>
                 <form id="track-form" style="display:flex;flex-direction:column;gap:16px;">
-                    <input id="track-order-id" type="text" placeholder="Order ID (e.g. ORD-12345) *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
+                    
                     <input id="track-phone" type="tel" placeholder="Mobile Number used for order *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
                     <button type="submit" id="btn-track" style="background:#000;color:#fff;padding:16px;border:none;border-radius:4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;width:100%;">Track Order</button>
                 </form>
@@ -551,22 +551,22 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             document.getElementById("track-form").addEventListener("submit", async e => {
                 e.preventDefault();
-                const orderId = document.getElementById("track-order-id").value.trim();
                 const phone = document.getElementById("track-phone").value.trim();
                 const btn = document.getElementById("btn-track");
                 const resEl = document.getElementById("track-result");
-                if (!orderId || !phone) return;
+                if (!phone) return;
                 
                 btn.innerText = "Tracking..."; btn.disabled = true;
                 try {
-                    const res = await fetch(`${apiBase}/orders/track/${encodeURIComponent(orderId)}?phone=${encodeURIComponent(phone)}`);
+                    const res = await fetch(`${apiBase}/orders/track?phone=${encodeURIComponent(phone)}`);
                     const data = await res.json();
                     if (!res.ok) throw new Error(data.message || "Failed to track order.");
                     
-                    const order = data.order;
+                    
+                    const orders = data.orders;
                     resEl.style.display = "block";
-                    resEl.innerHTML = `
-                        <div style="padding:24px;border:1px solid #e4e4e7;border-radius:4px;">
+                    resEl.innerHTML = orders.map(order => `
+                        <div style="padding:24px;border:1px solid #e4e4e7;border-radius:4px;margin-bottom:16px;">
                             <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
                                 <div><strong style="font-size:18px;">${order.orderId}</strong><div style="font-size:12px;color:#71717a;margin-top:4px;">${new Date(order.date).toLocaleDateString()}</div></div>
                                 <div style="text-align:right;"><span style="display:inline-block;padding:4px 8px;background:#f4f4f5;border-radius:4px;font-size:12px;font-weight:600;text-transform:uppercase;">${order.status}</span></div>
@@ -577,8 +577,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 ${order.items.map(item => `<div style="display:flex;gap:12px;margin-bottom:12px;align-items:center;"><img src="${item.image||''}" width="40" height="40" style="object-fit:cover;border-radius:4px;background:#f4f4f5;" onerror="this.style.display='none'"><div style="font-size:13px;">${item.name} <span style="color:#71717a">x${item.quantity}</span></div></div>`).join('')}
                             </div>
                         </div>
-                    `;
-                } catch(err) {
+                    `).join('');} catch(err) {
                     resEl.style.display = "block";
                     resEl.innerHTML = `<div style="padding:16px;background:#fee2e2;color:#991b1b;border-radius:4px;font-size:14px;">${err.message}</div>`;
                 }

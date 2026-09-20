@@ -563,37 +563,37 @@ const getBestSellerChart = async (req, res) => {
 // 9. Public Order Tracking
 const trackOrder = async (req, res) => {
   try {
-    const { orderId } = req.params;
     const { phone } = req.query;
 
-    if (!orderId || !phone) {
-      return res.status(400).send({ message: 'Order ID and Phone number are required for tracking.' });
+    if (!phone) {
+      return res.status(400).send({ message: 'Phone number is required for tracking.' });
     }
 
-    const order = await Order.findOne({ 
-      orderId: new RegExp(`^${orderId}$`, 'i'),
+    const orders = await Order.find({ 
       phone: new RegExp(`${phone}$`) // Match end of phone number
-    });
+    }).sort({ createdAt: -1 });
 
-    if (!order) {
-      return res.status(404).send({ message: 'Order not found. Please check your Order ID and Phone number.' });
+    if (!orders || orders.length === 0) {
+      return res.status(404).send({ message: 'No orders found for this phone number.' });
     }
+
+    const mappedOrders = orders.map(order => ({
+      orderId: order.orderId,
+      date: order.createdAt,
+      status: order.status,
+      total: order.total,
+      paymentStatus: order.paymentStatus,
+      shippingDetails: order.shippingDetails || {},
+      items: (order.cart || []).map(item => ({
+        name: item.name || item.title || 'Product',
+        quantity: item.quantity,
+        image: item.image || ''
+      }))
+    }));
 
     res.send({
       success: true,
-      order: {
-        orderId: order.orderId,
-        status: order.status,
-        date: order.createdAt,
-        total: order.total,
-        paymentStatus: order.paymentStatus,
-        shippingDetails: order.shippingDetails || {},
-        items: (order.cart || []).map(item => ({
-          name: item.name || item.title || 'Product',
-          quantity: item.quantity,
-          image: item.image || ''
-        }))
-      }
+      orders: mappedOrders
     });
   } catch (err) {
     res.status(500).send({ message: err.message });

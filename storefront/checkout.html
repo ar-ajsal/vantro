@@ -1494,27 +1494,27 @@ first.parentNode.insertBefore(script, first);
   <div class="checkout-container" style="max-width: 1000px; margin: 40px auto; display: flex; gap: 40px; padding: 20px; font-family: var(--font-primary, sans-serif); flex-wrap: wrap;">
     
     <!-- Left Column: Shipping Form -->
-    <div style="flex: 1; min-width: 300px;">
+    <div style="flex: 1; min-width: 280px; box-sizing: border-box; width: 100%;">
       <h2 style="font-size: 24px; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 0.05em;">Shipping Information</h2>
       <form id="checkout-form" style="display: flex; flex-direction: column; gap: 15px;">
-        <input type="text" id="chk-name" placeholder="Full Name" required style="padding: 12px; border: 1px solid #e4e4e7; background: #fff; width: 100%; border-radius: 4px;">
-        <input type="email" id="chk-email" placeholder="Email Address" required style="padding: 12px; border: 1px solid #e4e4e7; background: #fff; width: 100%; border-radius: 4px;">
-        <input type="tel" id="chk-phone" placeholder="Phone Number (10 digits)" pattern="[6-9][0-9]{9}" required style="padding: 12px; border: 1px solid #e4e4e7; background: #fff; width: 100%; border-radius: 4px;">
-        <input type="text" id="chk-street" placeholder="Street Address" required style="padding: 12px; border: 1px solid #e4e4e7; background: #fff; width: 100%; border-radius: 4px;">
-        <div style="display: flex; gap: 15px;">
-          <input type="text" id="chk-city" placeholder="City" required style="padding: 12px; border: 1px solid #e4e4e7; background: #fff; flex: 1; border-radius: 4px;">
-          <input type="text" id="chk-district" placeholder="District" required style="padding: 12px; border: 1px solid #e4e4e7; background: #fff; flex: 1; border-radius: 4px;">
+        <input type="text" id="chk-name" placeholder="Full Name" required style="box-sizing: border-box; padding: 12px; border: 1px solid #e4e4e7; background: #fff; width: 100%; border-radius: 4px;">
+        <input type="email" id="chk-email" placeholder="Email Address" required style="box-sizing: border-box; padding: 12px; border: 1px solid #e4e4e7; background: #fff; width: 100%; border-radius: 4px;">
+        <input type="tel" id="chk-phone" placeholder="Phone Number (10 digits)" pattern="[6-9][0-9]{9}" required style="box-sizing: border-box; padding: 12px; border: 1px solid #e4e4e7; background: #fff; width: 100%; border-radius: 4px;">
+        <input type="text" id="chk-street" placeholder="Street Address" required style="box-sizing: border-box; padding: 12px; border: 1px solid #e4e4e7; background: #fff; width: 100%; border-radius: 4px;">
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <input type="text" id="chk-city" placeholder="City" required style="box-sizing: border-box; padding: 12px; border: 1px solid #e4e4e7; background: #fff; flex: 1 1 120px; min-width: 120px; border-radius: 4px;">
+          <input type="text" id="chk-district" placeholder="District" required style="box-sizing: border-box; padding: 12px; border: 1px solid #e4e4e7; background: #fff; flex: 1 1 120px; min-width: 120px; border-radius: 4px;">
         </div>
-        <div style="display: flex; gap: 15px;">
-          <input type="text" id="chk-state" placeholder="State" required style="padding: 12px; border: 1px solid #e4e4e7; background: #fff; flex: 1; border-radius: 4px;">
-          <input type="text" id="chk-zip" placeholder="Pincode (6 digits)" pattern="[0-9]{6}" required style="padding: 12px; border: 1px solid #e4e4e7; background: #fff; flex: 1; border-radius: 4px;">
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <input type="text" id="chk-state" placeholder="State" required style="box-sizing: border-box; padding: 12px; border: 1px solid #e4e4e7; background: #fff; flex: 1 1 120px; min-width: 120px; border-radius: 4px;">
+          <input type="text" id="chk-zip" placeholder="Pincode (6 digits)" pattern="[0-9]{6}" required style="box-sizing: border-box; padding: 12px; border: 1px solid #e4e4e7; background: #fff; flex: 1 1 120px; min-width: 120px; border-radius: 4px;">
         </div>
         <button type="submit" id="btn-pay-now" style="background: #000; color: #fff; border: none; padding: 15px; text-transform: uppercase; font-weight: bold; cursor: pointer; letter-spacing: 0.1em; margin-top: 10px; border-radius: 4px; transition: background 0.2s;">Pay Now</button>
       </form>
     </div>
 
     <!-- Right Column: Order Summary -->
-    <div style="flex: 1; min-width: 300px; padding: 20px; border: 1px solid #e4e4e7; background: #fff; border-radius: 4px; height: fit-content;">
+    <div style="flex: 1; min-width: 280px; box-sizing: border-box; width: 100%; padding: 20px; border: 1px solid #e4e4e7; background: #fff; border-radius: 4px; height: fit-content;">
       <h2 style="font-size: 18px; text-transform: uppercase; margin-bottom: 20px; border-bottom: 1px solid #e4e4e7; padding-bottom: 10px; letter-spacing: 0.05em;">Order Summary</h2>
       <div id="checkout-summary-items" style="display: flex; flex-direction: column; gap: 15px;">
         <!-- Hydrated by JS -->

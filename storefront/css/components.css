@@ -1824,3 +1824,16 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
   justify-content: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
+
+/* Fix Explore link styling in mobile menu */
+a.mobile-menu-drawer__item {
+  color: #1a1a1a !important;
+  text-decoration: none !important;
+}
+
+a.mobile-menu-drawer__item:hover,
+a.mobile-menu-drawer__item:active,
+a.mobile-menu-drawer__item:visited {
+  color: #1a1a1a !important;
+  text-decoration: none !important;
+}

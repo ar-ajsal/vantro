@@ -10,7 +10,7 @@
  *      makes every URL look valid to a crawler.
  *   2. That runtime config is injected into the shell before config.js runs, and
  *      that the Google Maps key is only present when it is configured.
- *   3. That the retired WordPress surface and the old /chromvault.in/ prefix are
+ *   3. That the retired WordPress surface and the old /vantro.in/ prefix are
  *      handled rather than falling through to the SPA.
  *
  * It also asserts that the route table in frontendServer.js and the one in
@@ -109,7 +109,7 @@ function normalise(re) {
     check('GET / -> 200', home.status, 200);
     check('GET / is html', /^text\/html/.test(home.headers['content-type'] || ''), true);
     check('GET / is never cached', /no-store/.test(home.headers['cache-control'] || ''), true);
-    check('shell injects API base', home.body.includes('window.__CHROMVAULT_API_BASE__="/v1"'), true);
+    check('shell injects API base', home.body.includes('window.__VANTRO_API_BASE__="/v1"'), true);
 
     const cart = await get('/cart');
     check('GET /cart -> 200', cart.status, 200);
@@ -138,11 +138,11 @@ function normalise(re) {
   }
   check('GET / is html', /^text\/html/.test(home.headers['content-type'] || ''), true);
   check('GET / is never cached', /no-store/.test(home.headers['cache-control'] || ''), true);
-  check('shell injects API base', home.body.includes('window.__CHROMVAULT_API_BASE__="/v1"'), true);
+  check('shell injects API base', home.body.includes('window.__VANTRO_API_BASE__="/v1"'), true);
   check('shell injects Maps key when configured',
-    home.body.includes('window.__CHROMVAULT_MAPS_KEY__="test-maps-key-not-a-real-key"'), true);
+    home.body.includes('window.__VANTRO_MAPS_KEY__="test-maps-key-not-a-real-key"'), true);
   check('injection precedes config.js',
-    home.body.indexOf('__CHROMVAULT_API_BASE__') < home.body.indexOf('assets/js/config.js'), true);
+    home.body.indexOf('__VANTRO_API_BASE__') < home.body.indexOf('assets/js/config.js'), true);
   check('shell is the SPA, not the scrape', home.body.includes('id="view"'), true);
   check('shell does not contain WooCommerce markup', /woocommerce/i.test(home.body), false);
 
@@ -208,7 +208,7 @@ function normalise(re) {
     sw.headers['service-worker-allowed'], '/');
   check('service worker never caches /v1', sw.body.includes("indexOf('/v1') === 0"), true);
   check('service worker cache names are storefront-scoped',
-    sw.body.includes("'chromvault-store-'"), true);
+    sw.body.includes("'vantro-store-'"), true);
   /* The guard that keeps the admin PWA's caches alive. The storefront worker
      must refuse to delete any cache key that is not its own — asserted on the
      early-return itself, since a comment mentioning the admin is fine but a
@@ -220,12 +220,12 @@ function normalise(re) {
     sw.body.indexOf('key.indexOf(PREFIX) !== 0') < sw.body.indexOf('caches.delete(key)'), true);
 
   /* ── Canonical URLs ────────────────────────────────────────────────────── */
-  const legacyPrefix = await get('/chromvault.in/shop');
-  check('/chromvault.in/shop -> 301', legacyPrefix.status, 301);
-  check('/chromvault.in/shop -> /shop', legacyPrefix.headers.location, '/shop');
+  const legacyPrefix = await get('/vantro.in/shop');
+  check('/vantro.in/shop -> 301', legacyPrefix.status, 301);
+  check('/vantro.in/shop -> /shop', legacyPrefix.headers.location, '/shop');
 
-  const legacyQuery = await get('/chromvault.in/shop?category=rings');
-  check('/chromvault.in/… keeps the query', legacyQuery.headers.location, '/shop?category=rings');
+  const legacyQuery = await get('/vantro.in/shop?category=rings');
+  check('/vantro.in/… keeps the query', legacyQuery.headers.location, '/shop?category=rings');
 
   const indexHtml = await get('/index.html');
   check('/index.html -> 301 /', indexHtml.status, 301);

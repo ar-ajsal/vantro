@@ -53,7 +53,7 @@ router.post('/removebg', uploadMem.single('file'), async (req, res) => {
     // 2. Upload the processed transparent PNG to Cloudinary using upload_stream
     const uploadStream = cloudinary.uploader.upload_stream(
       {
-        folder: 'chromvault',
+        folder: 'vantro',
         resource_type: 'image',
         format: 'png', // Force PNG for transparency
       },

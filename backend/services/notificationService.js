@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT — PUSH NOTIFICATION SERVICE (FIREBASE ADMIN SDK)
+   VANTRO — PUSH NOTIFICATION SERVICE (FIREBASE ADMIN SDK)
    ----------------------------------------------------------------------------
    Dispatches push notifications to active Admin Command Center PWA devices.
    Credentials stay strictly server-side in environment variables.
@@ -193,7 +193,7 @@ async function sendTestNotification(adminId) {
   }
 
   const title = '🔔 Test Notification';
-  const body = 'Chromvault Command Center push notifications are active and ready!';
+  const body = 'Vantro Command Center push notifications are active and ready!';
 
   const message = {
     tokens: tokens.map((t) => t.token),

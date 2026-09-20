@@ -1,5 +1,5 @@
 /* ============================================================================
-   Chromvault Command Center — core runtime
+   Vantro Command Center — core runtime
    - API client against the same-origin "/api" proxy (→ backend /v1)
    - Admin session: JWT stored in the "adminInfo" cookie (shared convention),
      sent as a Bearer token. 401/403 bounces to the in-app login screen.
@@ -273,7 +273,7 @@
 
   // ---- Storefront URL Resolution --------------------------------------------
   function getStorefrontUrl() {
-    var saved = localStorage.getItem('chromvault_storefront_url');
+    var saved = localStorage.getItem('vantro_storefront_url');
     if (saved && saved.trim()) return saved.trim().replace(/\/+$/, '');
 
     var host = window.location.hostname;

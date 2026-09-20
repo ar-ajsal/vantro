@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT — PUBLIC REVIEW SUBMISSION (COMMAND CENTER FALLBACK)
+   VANTRO — PUBLIC REVIEW SUBMISSION (COMMAND CENTER FALLBACK)
    ----------------------------------------------------------------------------
    Allows customers to submit product reviews even if the link points to the
    admin Vercel domain. If an external storefront URL is configured in Settings,
@@ -36,7 +36,7 @@
     // 1. Check if an external storefront URL is saved in Settings or auto-detect it
     try {
       var targetOrigin = '';
-      var saved = localStorage.getItem('chromvault_storefront_url');
+      var saved = localStorage.getItem('vantro_storefront_url');
       if (saved && saved.trim()) {
         targetOrigin = saved.trim().replace(/\/+$/, '');
       } else {
@@ -75,7 +75,7 @@
       card.innerHTML =
         '<div class="login-brand">' +
           '<div class="brand-mark">C</div>' +
-          '<div><b>Chromvault</b><span>Verified Reviews</span></div>' +
+          '<div><b>Vantro</b><span>Verified Reviews</span></div>' +
         '</div>' +
         '<div style="text-align:center;padding:24px 0">' +
           '<h2 style="color:var(--bad);font-size:20px;margin-bottom:8px">Invalid Link</h2>' +
@@ -88,7 +88,7 @@
     card.innerHTML =
       '<div class="login-brand">' +
         '<div class="brand-mark">C</div>' +
-        '<div><b>Chromvault</b><span>Verified Reviews</span></div>' +
+        '<div><b>Vantro</b><span>Verified Reviews</span></div>' +
       '</div>' +
       '<div style="text-align:center;padding:40px 0">' +
         '<div class="spinner" style="margin:0 auto 16px"></div>' +
@@ -111,14 +111,14 @@
         card.innerHTML =
           '<div class="login-brand" style="margin-bottom:20px">' +
             '<div class="brand-mark">C</div>' +
-            '<div><b>Chromvault</b><span>Verified Buyer Review</span></div>' +
+            '<div><b>Vantro</b><span>Verified Buyer Review</span></div>' +
           '</div>' +
 
           '<div style="background:var(--near-black);border:1px solid var(--line-soft);border-radius:var(--r-md);padding:14px;display:flex;align-items:center;gap:14px;margin-bottom:24px">' +
             imgHtml +
             '<div style="min-width:0">' +
               '<div style="font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.08em">Purchased Item</div>' +
-              '<div style="font-weight:600;font-size:16px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px">' + esc(res.productTitle || 'Chromvault Piece') + '</div>' +
+              '<div style="font-weight:600;font-size:16px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px">' + esc(res.productTitle || 'Vantro Piece') + '</div>' +
             '</div>' +
           '</div>' +
 
@@ -196,7 +196,7 @@
               card.innerHTML =
                 '<div class="login-brand">' +
                   '<div class="brand-mark">C</div>' +
-                  '<div><b>Chromvault</b><span>Verified Reviews</span></div>' +
+                  '<div><b>Vantro</b><span>Verified Reviews</span></div>' +
                 '</div>' +
                 '<div style="text-align:center;padding:30px 10px">' +
                   '<div style="width:58px;height:58px;border-radius:50%;background:rgba(70,230,160,0.12);color:var(--ok);border:1px solid rgba(70,230,160,0.3);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px">✓</div>' +
@@ -215,7 +215,7 @@
         card.innerHTML =
           '<div class="login-brand">' +
             '<div class="brand-mark">C</div>' +
-            '<div><b>Chromvault</b><span>Verified Reviews</span></div>' +
+            '<div><b>Vantro</b><span>Verified Reviews</span></div>' +
           '</div>' +
           '<div style="text-align:center;padding:24px 0">' +
             '<div style="width:52px;height:52px;border-radius:50%;background:rgba(255,95,109,0.1);color:var(--bad);border:1px solid rgba(255,95,109,0.25);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 18px">✕</div>' +

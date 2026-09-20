@@ -1,7 +1,7 @@
 {
-  "name": "Chromvault Admin",
-  "short_name": "Chromvault Admin",
-  "description": "Chromvault store administration dashboard",
+  "name": "Vantro Admin",
+  "short_name": "Vantro Admin",
+  "description": "Vantro store administration dashboard",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",

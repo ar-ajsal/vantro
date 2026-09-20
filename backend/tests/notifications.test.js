@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT — PUSH NOTIFICATIONS SUITE
+   VANTRO — PUSH NOTIFICATIONS SUITE
    ----------------------------------------------------------------------------
    Verifies:
    - AdminPushToken model behaves correctly (indexing, validation)

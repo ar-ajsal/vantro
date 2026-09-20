@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const apiBase = window.__CHROMVAULT_API_BASE__ || "/v1";
+    const apiBase = window.__VANTRO_API_BASE__ || "/v1";
 
     // --- TOAST NOTIFICATIONS (defined early so all code can use it) ---
     window.showToast = function(msg, type = 'error') {

@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT — COMPONENTS
+   VANTRO — COMPONENTS
    Controls, product cards, badges, forms, skeletons, empty/error states, toast.
    ========================================================================== */
 
@@ -1571,7 +1571,7 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
   padding: 10px 14px !important;
   border-radius: 14px !important;
   border: 1.5px solid #e4e4e7 !important;
-  /* Clean white surface matching Chromvault's paper theme */
+  /* Clean white surface matching Vantro's paper theme */
   background: #ffffff !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
   display: flex !important;
@@ -1649,7 +1649,7 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
   width: 100%;
 }
 
-/* Primary BUY NOW CTA (Matching Chromvault's Website Theme — Solid Obsidian Black, NOT silver!) */
+/* Primary BUY NOW CTA (Matching Vantro's Website Theme — Solid Obsidian Black, NOT silver!) */
 .pdp-btn-buy-now {
   width: 100%;
   max-width: 440px;

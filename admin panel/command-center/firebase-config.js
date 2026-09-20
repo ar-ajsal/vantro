@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT — FIREBASE CLIENT CONFIGURATION
+   VANTRO — FIREBASE CLIENT CONFIGURATION
    ----------------------------------------------------------------------------
    Web push configuration for Firebase Cloud Messaging (FCM) in the Command
    Center PWA. Used by both the window context and the service worker.
@@ -28,7 +28,7 @@
   var customVapid = '';
   try {
     if (typeof localStorage !== 'undefined') {
-      customVapid = localStorage.getItem('chromvault_vapid_key') || '';
+      customVapid = localStorage.getItem('vantro_vapid_key') || '';
     }
   } catch (e) {}
 

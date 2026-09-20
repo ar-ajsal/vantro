@@ -47,7 +47,7 @@ app.use(cors({
       }
 
       // Allow custom store domains
-      if (host === 'chromvault.in' || host.endsWith('.chromvault.in')) {
+      if (host === 'vantro.in' || host.endsWith('.vantro.in')) {
         return callback(null, true);
       }
 
@@ -115,7 +115,7 @@ app.use('/v1/reviews', require('./routes/reviewRoutes'));
 app.use('/v1/settings', require('./routes/settingRoutes'));
 
 app.get('/', (req, res) => {
-  res.send('Chromvault Backend API is running...');
+  res.send('Vantro Backend API is running...');
 });
 
 // 404 for unknown routes

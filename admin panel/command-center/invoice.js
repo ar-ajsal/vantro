@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT INVOICE & DISPATCH ENGINE
+   VANTRO INVOICE & DISPATCH ENGINE
    Supports:
    1. Clean Customer Invoice: Product details, costs, From & To addresses.
    2. Order Slip / Courier Package Label: Sticker-ready dispatch label to stick on
@@ -23,7 +23,7 @@
 
   // Default Store / Dispatch From Address settings (Simple & direct)
   var DEFAULT_FROM_SETTINGS = {
-    storeName: 'CHROMVAULT',
+    storeName: 'VANTRO',
     phone: '+91 9400 123 456',
     address: 'Hill View Arcade, NH 66, Kakkanchery, Malappuram, Kerala - 671321, India'
   };
@@ -50,7 +50,7 @@
   function getFromSettings() {
     if (_cachedFromSettings) return _cachedFromSettings;
     try {
-      var raw = localStorage.getItem('chromvault_from_settings');
+      var raw = localStorage.getItem('vantro_from_settings');
       if (raw) {
         var parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object') {
@@ -75,7 +75,7 @@
     };
     _cachedFromSettings = merged;
     try {
-      localStorage.setItem('chromvault_from_settings', JSON.stringify(merged));
+      localStorage.setItem('vantro_from_settings', JSON.stringify(merged));
     } catch (e) {}
 
     // Persist to backend API if available
@@ -88,7 +88,7 @@
   function resetFromSettings() {
     _cachedFromSettings = Object.assign({}, DEFAULT_FROM_SETTINGS);
     try {
-      localStorage.removeItem('chromvault_from_settings');
+      localStorage.removeItem('vantro_from_settings');
     } catch (e) {}
     if (CC && CC.API && CC.API.put) {
       CC.API.put('/admin/settings/from_address', { value: _cachedFromSettings }).catch(function () {});
@@ -107,7 +107,7 @@
               address: formatCombinedAddress(res.value)
             };
             try {
-              localStorage.setItem('chromvault_from_settings', JSON.stringify(_cachedFromSettings));
+              localStorage.setItem('vantro_from_settings', JSON.stringify(_cachedFromSettings));
             } catch (e) {}
           }
           return getFromSettings();
@@ -479,10 +479,10 @@
   // PRINT & PREVIEW HANDLERS
   // ============================================================================
   function printHtml(html) {
-    var iframe = document.getElementById('chromvaultPrintFrame');
+    var iframe = document.getElementById('vantroPrintFrame');
     if (!iframe) {
       iframe = document.createElement('iframe');
-      iframe.id = 'chromvaultPrintFrame';
+      iframe.id = 'vantroPrintFrame';
       iframe.style.position = 'fixed';
       iframe.style.right = '0';
       iframe.style.bottom = '0';

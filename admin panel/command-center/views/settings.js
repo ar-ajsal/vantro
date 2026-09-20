@@ -22,7 +22,7 @@
     var fromSettings = (global.Invoice && global.Invoice.getFromSettings)
       ? global.Invoice.getFromSettings()
       : {
-          storeName: 'CHROMVAULT',
+          storeName: 'VANTRO',
           phone: '+91 9400 123 456',
           address: 'Hill View Arcade, NH 66, Kakkanchery, Malappuram, Kerala - 671321, India'
         };
@@ -59,7 +59,7 @@
       '</div></div>' +
       '<div class="panel"><div class="panel-head"><h3>' + icon('command') + 'System</h3></div>' +
       '<div class="panel-pad"><dl class="kv">' +
-      '<dt>Console</dt><dd>Chromvault Command Center</dd>' +
+      '<dt>Console</dt><dd>Vantro Command Center</dd>' +
       '<dt>API base</dt><dd class="mono">' + esc(CC.API.base) + '</dd>' +
       '<dt>Build</dt><dd>Buildless · Luxury Engine v1</dd>' +
       '</dl></div></div>' +
@@ -80,7 +80,7 @@
       '<div style="display:flex;flex-direction:column;gap:14px;max-width:680px">' +
       '<div class="grid grid-2" style="gap:14px">' +
       '<div class="field"><label>Store / Sender Name</label>' +
-      '<input class="input" id="faStoreName" value="' + esc(fromSettings.storeName || '') + '" placeholder="e.g. CHROMVAULT"></div>' +
+      '<input class="input" id="faStoreName" value="' + esc(fromSettings.storeName || '') + '" placeholder="e.g. VANTRO"></div>' +
       '<div class="field"><label>Contact / Dispatch Phone</label>' +
       '<input class="input" id="faPhone" value="' + esc(fromSettings.phone || '') + '" placeholder="e.g. +91 9400 123 456"></div>' +
       '</div>' +
@@ -231,7 +231,7 @@
       '<div class="field">' +
       '<label style="font-size:12px;color:var(--ink-2)">Firebase Web Push Certificate (VAPID Key Pair)</label>' +
       '<div style="display:flex;gap:10px">' +
-      '<input class="input mono" id="txtVapidKey" style="font-size:12px" value="' + esc(localStorage.getItem('chromvault_vapid_key') || (global.FIREBASE_WEB_CONFIG && global.FIREBASE_WEB_CONFIG.vapidKey) || '') + '" placeholder="Paste key pair from Firebase Console → Cloud Messaging → Web Push certificates">' +
+      '<input class="input mono" id="txtVapidKey" style="font-size:12px" value="' + esc(localStorage.getItem('vantro_vapid_key') || (global.FIREBASE_WEB_CONFIG && global.FIREBASE_WEB_CONFIG.vapidKey) || '') + '" placeholder="Paste key pair from Firebase Console → Cloud Messaging → Web Push certificates">' +
       '<button class="btn ghost" id="btnSaveVapid" style="flex:none">' + icon('check') + 'Save Key</button>' +
       '</div>' +
       '<span class="hint">Copy from: Firebase Console → Project Settings → Cloud Messaging → Web configuration → Web Push certificates</span>' +
@@ -250,7 +250,7 @@
       '</p>' +
       '<div class="field" style="max-width:520px">' +
       '<label>Storefront Base URL</label>' +
-      '<input class="input mono" id="sfPublicUrl" value="' + esc(CC.getStorefrontUrl()) + '" placeholder="e.g. http://localhost:3001 or https://chromvault.vercel.app">' +
+      '<input class="input mono" id="sfPublicUrl" value="' + esc(CC.getStorefrontUrl()) + '" placeholder="e.g. http://localhost:3001 or https://vantro.vercel.app">' +
       '<span class="hint">Currently active: <code>' + esc(CC.getStorefrontUrl()) + '</code></span>' +
       '</div>' +
       '<div style="display:flex;gap:12px;margin-top:14px">' +
@@ -266,7 +266,7 @@
         '<div class="panel-pad">' +
         '<div class="grid grid-2" style="gap:14px">' +
         '<div class="field"><label>Name</label><input class="input" id="tmName" placeholder="Full name"></div>' +
-        '<div class="field"><label>Email</label><input class="input" id="tmEmail" type="email" placeholder="name@chromvault.in"></div>' +
+        '<div class="field"><label>Email</label><input class="input" id="tmEmail" type="email" placeholder="name@vantro.in"></div>' +
         '<div class="field"><label>Password</label><input class="input" id="tmPass" type="password" placeholder="Min 6 characters"></div>' +
         '<div class="field"><label>Role</label><select class="select" id="tmRole">' +
         '<option value="admin">Admin</option><option value="super admin">Super admin</option></select></div>' +
@@ -587,17 +587,17 @@
       btnSaveSf.addEventListener('click', function () {
         var val = (sfInput.value || '').trim();
         if (!val) {
-          localStorage.removeItem('chromvault_storefront_url');
+          localStorage.removeItem('vantro_storefront_url');
           sfInput.value = CC.getStorefrontUrl();
           CC.toast('Storefront URL set to auto-detect: ' + CC.getStorefrontUrl(), 'ok');
         } else {
-          localStorage.setItem('chromvault_storefront_url', val.replace(/\/+$/, ''));
+          localStorage.setItem('vantro_storefront_url', val.replace(/\/+$/, ''));
           CC.toast('Storefront URL saved!', 'ok');
         }
       });
       if (btnResetSf) {
         btnResetSf.addEventListener('click', function () {
-          localStorage.removeItem('chromvault_storefront_url');
+          localStorage.removeItem('vantro_storefront_url');
           sfInput.value = CC.getStorefrontUrl();
           CC.toast('Reverted to auto-detected URL: ' + sfInput.value, 'ok');
         });
@@ -723,11 +723,11 @@
       btnSaveVapid.addEventListener('click', function () {
         var val = (txtVapid.value || '').trim();
         if (val) {
-          localStorage.setItem('chromvault_vapid_key', val);
+          localStorage.setItem('vantro_vapid_key', val);
           if (global.FIREBASE_WEB_CONFIG) global.FIREBASE_WEB_CONFIG.vapidKey = val;
           CC.toast('Web Push Certificate (VAPID Key) saved! Now click "Register Device".', 'ok');
         } else {
-          localStorage.removeItem('chromvault_vapid_key');
+          localStorage.removeItem('vantro_vapid_key');
           CC.toast('VAPID key reset to default.', 'ok');
         }
       });

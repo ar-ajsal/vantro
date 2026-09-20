@@ -1,5 +1,5 @@
 /* ============================================================================
-   Chromvault Command Center — reusable UI components
+   Vantro Command Center — reusable UI components
    Buildless SVG charts (sparkline, area, donut), a right-side drawer, KPI/
    stat/table/skeleton builders. Everything returns HTML strings or mounts into
    a container; no framework, no CDN.

@@ -1,5 +1,5 @@
 /* ============================================================================
-   Chromvault Command Center — app shell runtime
+   Vantro Command Center — app shell runtime
    - Hash router (#/dashboard, #/orders, …) with a view registry
    - Auth gate: no session → login screen; API 401/403 → bounce back to login
    - Sidebar + bottom-nav rendering, breadcrumbs, sidebar collapse (persisted)
@@ -157,9 +157,9 @@
     setActiveNav();
     var crumbText = (view && (view.crumb || view.title)) || parsed.route;
     if (parsed.params && parsed.params.id) {
-      setCrumbs(['Chromvault', crumbText, 'Order Details']);
+      setCrumbs(['Vantro', crumbText, 'Order Details']);
     } else {
-      setCrumbs(['Chromvault', crumbText]);
+      setCrumbs(['Vantro', crumbText]);
     }
     closeSidebarMobile();
 

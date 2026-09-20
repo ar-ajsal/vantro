@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT — FRONT-END SERVER
+   VANTRO — FRONT-END SERVER
    ----------------------------------------------------------------------------
    Two applications live here, on two ports:
 
@@ -10,7 +10,7 @@
    boot from STOREFRONT_LEGACY:
 
      mountStorefront()        the new SPA. The default.
-     mountLegacyStorefront()  the original HTTrack scrape of chromvault.in, kept
+     mountLegacyStorefront()  the original HTTrack scrape of vantro.in, kept
                               verbatim as a rollback path.
 
    They are mutually exclusive by construction rather than by route ordering, so
@@ -39,7 +39,7 @@ const ADMIN_PORT = parseInt(process.env.ADMIN_PORT, 10) || 3002;
 const API_TARGET = (process.env.API_PROXY_TARGET || 'http://localhost:5000/v1').replace(/\/+$/, '');
 
 /* What the browser is told to use as its API base, injected into the shell as
-   window.__CHROMVAULT_API_BASE__ (see storefront/assets/js/config.js).
+   window.__VANTRO_API_BASE__ (see storefront/assets/js/config.js).
 
    The default is the relative '/v1', which this server proxies to API_TARGET.
    Same-origin means no preflight, no CORS_ORIGINS to keep in sync, and no
@@ -61,8 +61,8 @@ const MAPS_KEY = process.env.GOOGLE_MAPS_API_KEY || process.env.VITE_GOOGLE_MAPS
 const IS_PROD = process.env.NODE_ENV === 'production';
 
 const storefrontRoot = path.join(__dirname, '..', 'storefront');
-const legacyRoot = path.join(__dirname, '..', 'https___chromvault.in_');
-const legacySiteRoot = path.join(legacyRoot, 'chromvault.in');
+const legacyRoot = path.join(__dirname, '..', 'https___vantro.in_');
+const legacySiteRoot = path.join(legacyRoot, 'vantro.in');
 const adminRoot = path.join(__dirname, '..', 'admin panel', 'command-center');
 
 const app = express();
@@ -159,14 +159,14 @@ function contactOverrides() {
 function injectConfig(html) {
   const lines = [];
   if (STOREFRONT_API_BASE) {
-    lines.push(`window.__CHROMVAULT_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};`);
+    lines.push(`window.__VANTRO_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};`);
   }
   if (MAPS_KEY) {
-    lines.push(`window.__CHROMVAULT_MAPS_KEY__=${jsonForScript(MAPS_KEY)};`);
+    lines.push(`window.__VANTRO_MAPS_KEY__=${jsonForScript(MAPS_KEY)};`);
   }
   const contact = contactOverrides();
   if (Object.keys(contact).length) {
-    lines.push(`window.__CHROMVAULT_CONTACT__=${jsonForScript(contact)};`);
+    lines.push(`window.__VANTRO_CONTACT__=${jsonForScript(contact)};`);
   }
   if (!lines.length) return html;
 
@@ -181,7 +181,7 @@ function sendVantroHtml(res, status, relativePath) {
   let html;
   try {
     const rawHtml = readHtml(relativePath);
-    const apiBase = STOREFRONT_API_BASE ? `window.__CHROMVAULT_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};` : '';
+    const apiBase = STOREFRONT_API_BASE ? `window.__VANTRO_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};` : '';
 
     // earlyCapture: runs synchronously during HTML parsing (before any Shopify inline script)
     // so document.addEventListener(…, capture=true) here wins over all later Shopify listeners.
@@ -290,7 +290,7 @@ function mountStorefront() {
 
   // Cart and Checkout: serve a clean minimal shell so Shopify's HTTrack scripts don't fire
   app.get(['/cart', '/cart/:item'], (req, res) => {
-    const apiBase = STOREFRONT_API_BASE ? `window.__CHROMVAULT_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};` : '';
+    const apiBase = STOREFRONT_API_BASE ? `window.__VANTRO_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};` : '';
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -320,7 +320,7 @@ function mountStorefront() {
   });
 
   app.get(['/checkout', '/checkout.html'], (req, res) => {
-    const apiBase = STOREFRONT_API_BASE ? `window.__CHROMVAULT_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};` : '';
+    const apiBase = STOREFRONT_API_BASE ? `window.__VANTRO_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};` : '';
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -447,7 +447,7 @@ function serveFixedHtml(res, filePath) {
   let html = fs.readFileSync(filePath, 'utf8');
 
   if (STOREFRONT_API_BASE) {
-    const inject = `<script>window.__CHROMVAULT_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};</script>`;
+    const inject = `<script>window.__VANTRO_API_BASE__=${jsonForScript(STOREFRONT_API_BASE)};</script>`;
     html = /<head[^>]*>/i.test(html)
       ? html.replace(/<head[^>]*>/i, (m) => m + inject)
       : inject + html;
@@ -462,8 +462,8 @@ function serveFixedHtml(res, filePath) {
     <ul class="products columns-4" id="dynamic-products-container"></ul>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        if (window.chromvaultAPI) {
-          window.chromvaultAPI.renderProducts('#dynamic-products-container');
+        if (window.vantroAPI) {
+          window.vantroAPI.renderProducts('#dynamic-products-container');
         }
       });
     </script>
@@ -475,8 +475,8 @@ function serveFixedHtml(res, filePath) {
       document.addEventListener('DOMContentLoaded', async () => {
         if (window.location.pathname.includes('/product/')) {
           const slug = window.location.pathname.split('/').filter(Boolean).pop();
-          if (window.chromvaultAPI) {
-            const product = await window.chromvaultAPI.fetchProductBySlug(slug);
+          if (window.vantroAPI) {
+            const product = await window.vantroAPI.fetchProductBySlug(slug);
             if (product) {
               const titleEl = document.querySelector('h1.product_title');
               if (titleEl) {
@@ -544,26 +544,26 @@ function mountLegacyStorefront() {
   app.use('/wp-content', express.static(path.join(legacySiteRoot, 'wp-content')));
   app.use('/wp-includes', express.static(path.join(legacySiteRoot, 'wp-includes')));
 
-  app.get(['/', '/chromvault.in', '/chromvault.in/'], (req, res) => {
+  app.get(['/', '/vantro.in', '/vantro.in/'], (req, res) => {
     serveFixedHtml(res, path.join(legacySiteRoot, 'index.html'));
   });
 
-  app.get(['/shop', '/shop/', '/chromvault.in/shop', '/chromvault.in/shop/'], (req, res) => {
+  app.get(['/shop', '/shop/', '/vantro.in/shop', '/vantro.in/shop/'], (req, res) => {
     serveFixedHtml(res, path.join(legacySiteRoot, 'shop', 'index.html'));
   });
 
-  app.get(['/cart', '/cart/', '/chromvault.in/cart', '/chromvault.in/cart/'], (req, res) => {
+  app.get(['/cart', '/cart/', '/vantro.in/cart', '/vantro.in/cart/'], (req, res) => {
     serveFixedHtml(res, path.join(legacySiteRoot, 'cart', 'index.html'));
   });
 
-  app.get(['/contact-us', '/contact-us/', '/chromvault.in/contact-us', '/chromvault.in/contact-us/'], (req, res) => {
+  app.get(['/contact-us', '/contact-us/', '/vantro.in/contact-us', '/vantro.in/contact-us/'], (req, res) => {
     const f = path.join(legacySiteRoot, 'contact-us', 'index.html');
     if (fs.existsSync(f)) return serveFixedHtml(res, f);
     serveFixedHtml(res, path.join(legacySiteRoot, 'index.html'));
   });
 
   ['shipping-policy', 'return-replacement-policy', 'privacy-policy-2', 'track'].forEach((page) => {
-    app.get([`/${page}`, `/${page}/`, `/chromvault.in/${page}`, `/chromvault.in/${page}/`], (req, res) => {
+    app.get([`/${page}`, `/${page}/`, `/vantro.in/${page}`, `/vantro.in/${page}/`], (req, res) => {
       const f = path.join(legacySiteRoot, page, 'index.html');
       if (fs.existsSync(f)) return serveFixedHtml(res, f);
       serveFixedHtml(res, path.join(legacySiteRoot, 'index.html'));
@@ -572,7 +572,7 @@ function mountLegacyStorefront() {
 
   app.get([
     '/product-category/:cat', '/product-category/:cat/',
-    '/chromvault.in/product-category/:cat', '/chromvault.in/product-category/:cat/'
+    '/vantro.in/product-category/:cat', '/vantro.in/product-category/:cat/'
   ], (req, res) => {
     const f = path.join(legacySiteRoot, 'product-category', req.params.cat, 'index.html');
     if (fs.existsSync(f)) return serveFixedHtml(res, f);
@@ -581,12 +581,12 @@ function mountLegacyStorefront() {
 
   app.get([
     '/product/:slug', '/product/:slug/',
-    '/chromvault.in/product/:slug', '/chromvault.in/product/:slug/'
+    '/vantro.in/product/:slug', '/vantro.in/product/:slug/'
   ], (req, res) => {
     serveFixedHtml(res, path.join(legacySiteRoot, 'product', 'template', 'index.html'));
   });
 
-  app.use('/chromvault.in', express.static(legacySiteRoot));
+  app.use('/vantro.in', express.static(legacySiteRoot));
   app.use(express.static(legacySiteRoot));
   app.use(express.static(legacyRoot));
 
@@ -657,7 +657,7 @@ else mountStorefront();
 
 const server = app.listen(PORT, () => {
   const origin = `http://localhost:${PORT}`;
-  console.log(`✅ Chromvault Storefront running at ${origin}`);
+  console.log(`✅ Vantro Storefront running at ${origin}`);
   console.log(`   Serving:      ${LEGACY ? 'legacy scrape (rollback mode)' : 'storefront/ (SPA)'}`);
   console.log(`   API base:     ${STOREFRONT_API_BASE}  →  ${API_TARGET}`);
   console.log(`   Google Maps:  ${MAPS_KEY ? 'key configured (address autocomplete on)' : 'not configured (manual address entry)'}`);

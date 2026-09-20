@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT — FIREBASE MESSAGING SERVICE WORKER ALIAS
+   VANTRO — FIREBASE MESSAGING SERVICE WORKER ALIAS
    ----------------------------------------------------------------------------
    Firebase Cloud Messaging default fallback entry point.
    Imports the main Admin Command Center PWA Service Worker so caching and

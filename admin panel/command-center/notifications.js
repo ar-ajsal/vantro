@@ -1,5 +1,5 @@
 /* ============================================================================
-   CHROMVAULT COMMAND CENTER — PUSH NOTIFICATIONS & REAL-TIME ALERTS
+   VANTRO COMMAND CENTER — PUSH NOTIFICATIONS & REAL-TIME ALERTS
    ----------------------------------------------------------------------------
    Manages Firebase Cloud Messaging (FCM) on the client:
    - Permission handling (never spams on initial load)
@@ -277,7 +277,7 @@
       return navigator.serviceWorker.ready.then(function (registration) {
         var vapid = (FIREBASE_WEB_CONFIG && FIREBASE_WEB_CONFIG.vapidKey) || '';
         try {
-          var customVapid = localStorage.getItem('chromvault_vapid_key');
+          var customVapid = localStorage.getItem('vantro_vapid_key');
           if (customVapid && customVapid.trim()) vapid = customVapid.trim();
         } catch (e) {}
 

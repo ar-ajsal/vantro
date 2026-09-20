@@ -1,4 +1,4 @@
-/* Chromvault Admin PWA service worker with Firebase Cloud Messaging (FCM).
+/* Vantro Admin PWA service worker with Firebase Cloud Messaging (FCM).
  *
  * Strategy:
  *   - Precache the app shell + hashed build assets so the dashboard is
@@ -21,7 +21,7 @@ try {
   console.warn('[SW] Could not load Firebase scripts inside service worker:', err);
 }
 
-const CACHE_VERSION = 'chromvault-admin-v9';
+const CACHE_VERSION = 'vantro-admin-v9';
 const SHELL_URLS = [
   '/',
   '/index.html',

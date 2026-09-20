@@ -390,7 +390,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                   </div>
                   <div>
                     <label for="chk-street" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">Address *</label>
-                    <input id="chk-street" type="text" placeholder="House No / Street / Area *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
+                    <div style="position:relative;">
+                      <input id="chk-street" type="text" autocomplete="off" placeholder="House No / Street / Area *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
+                      <div id="geoapify-suggestions" style="position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 4px 4px;z-index:10;max-height:200px;overflow-y:auto;display:none;box-shadow:0 4px 6px rgba(0,0,0,0.1);"></div>
+                    </div>
                   </div>
                   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                     <div>
@@ -477,6 +480,61 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             })
             .catch(err => console.error('Failed to load districts JSON:', err));
+
+        const streetInput = document.getElementById("chk-street");
+        const suggestionsBox = document.getElementById("geoapify-suggestions");
+        if (streetInput && suggestionsBox) {
+            let debounceTimer;
+            streetInput.addEventListener("input", function() {
+                const val = this.value;
+                if (!val || val.length < 3) {
+                    suggestionsBox.style.display = "none";
+                    return;
+                }
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(val)}&apiKey=416db992171440c1b0591924c677962b`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data && data.features && data.features.length > 0) {
+                                suggestionsBox.innerHTML = "";
+                                data.features.forEach(feature => {
+                                    const opt = document.createElement("div");
+                                    opt.style.padding = "10px 14px";
+                                    opt.style.cursor = "pointer";
+                                    opt.style.fontSize = "13px";
+                                    opt.style.borderBottom = "1px solid #f4f4f5";
+                                    opt.innerText = feature.properties.formatted;
+                                    opt.onmouseover = () => opt.style.background = "#f4f4f5";
+                                    opt.onmouseout = () => opt.style.background = "#fff";
+                                    opt.onclick = () => {
+                                        streetInput.value = feature.properties.formatted;
+                                        suggestionsBox.style.display = "none";
+                                        
+                                        if (feature.properties.city) {
+                                            const cityInput = document.getElementById("chk-city");
+                                            if (cityInput) cityInput.value = feature.properties.city;
+                                        }
+                                        if (feature.properties.postcode) {
+                                            const zipInput = document.getElementById("chk-zip");
+                                            if (zipInput) zipInput.value = feature.properties.postcode;
+                                        }
+                                    };
+                                    suggestionsBox.appendChild(opt);
+                                });
+                                suggestionsBox.style.display = "block";
+                            } else {
+                                suggestionsBox.style.display = "none";
+                            }
+                        }).catch(err => console.log('geoapify error', err));
+                }, 400);
+            });
+            document.addEventListener("click", function(e) {
+                if (e.target !== streetInput && e.target !== suggestionsBox) {
+                    suggestionsBox.style.display = "none";
+                }
+            });
+        }
 
         const form = document.getElementById("checkout-form");
         if (form) {

@@ -19,7 +19,11 @@
     },
     {
       "source": "/track",
-      "destination": "/index.html"
+      "destination": "/"
+    },
+    {
+      "source": "/order-tracking",
+      "destination": "/"
     }
   ],
   "headers": [

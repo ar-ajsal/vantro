@@ -1,26 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const apiBase = window.__VANTRO_API_BASE__ || "/v1";
+    const apiBase = window.__CHROMVAULT_API_BASE__ || "/v1";
 
-    // --- TOAST NOTIFICATIONS (defined early so all code can use it) ---
-    window.showToast = function(msg, type = 'error') {
-        let container = document.getElementById('vantro-toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'vantro-toast-container';
-            container.style.cssText = 'position:fixed;top:20px;right:20px;z-index:999999;display:flex;flex-direction:column;gap:10px;';
-            document.body.appendChild(container);
-        }
-        const toast = document.createElement('div');
-        toast.style.cssText = `background:${type === 'error' ? '#e74c3c' : '#2ecc71'};color:#fff;padding:12px 20px;border-radius:4px;font-size:14px;font-weight:600;box-shadow:0 4px 6px rgba(0,0,0,0.1);opacity:0;transform:translateY(-20px);transition:all 0.3s ease;`;
-        toast.innerText = msg;
-        container.appendChild(toast);
-        setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; }, 10);
-        setTimeout(() => {
-            toast.style.opacity = '0'; toast.style.transform = 'translateY(-20px)';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    };
-
+    // Clean up broken external srcset immediately
     document.querySelectorAll('img[srcset*="vantro.com"], source[srcset*="vantro.com"]').forEach(el => {
         el.removeAttribute('srcset');
     });
@@ -251,9 +232,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                             const slug = p.slug || p._id || p.id;
                             const href = `/products/${slug}`;
                             return `
-                                <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:12px;background:transparent;">
+                                <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:12px;background:#fff;">
                                     <a href="${href}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
-                                        <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:transparent;border-radius:2px;">
+                                        <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#f4f4f5;border-radius:2px;">
                                             <img src="${img}" alt="${title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
                                         </div>
                                     </a>
@@ -307,9 +288,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                         const slug = p.slug || p._id || p.id;
                         const href = `/products/${slug}`;
                         return `
-                            <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:12px;background:transparent;">
+                            <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:12px;background:#fff;">
                                 <a href="${href}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
-                                    <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:transparent;border-radius:2px;">
+                                    <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#f4f4f5;border-radius:2px;">
                                         <img src="${img}" alt="${title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
                                     </div>
                                 </a>
@@ -332,11 +313,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- CART PAGE ---
     if (window.location.pathname === "/cart" || window.location.pathname.startsWith("/cart")) {
         const cart = readCart();
-        let mainArea = document.getElementById("vantro-cart-root") || document.querySelector(".cart-items, .cart__items");
+        let mainArea = document.getElementById("vantro-cart-root") || document.querySelector(".cart-items, tbody, .cart__items");
         if (!mainArea) {
             const mainEl = document.querySelector("main, #MainContent, .main-content");
             if (mainEl) {
-                mainEl.innerHTML = "";
                 const div = document.createElement("div");
                 div.id = "vantro-cart";
                 div.style.cssText = "max-width:800px;margin:40px auto;padding:0 24px;";
@@ -348,12 +328,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (cart.length === 0) {
                 mainArea.innerHTML = `<div style="text-align:center;padding:80px 0;color:#71717a;"><p style="font-size:18px;margin-bottom:24px;">Your bag is empty.</p><a href="/" style="background:#000;color:#fff;padding:14px 28px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.1em;border-radius:4px;">Continue Shopping</a></div>`;
             } else {
-                let total = 0, html = `<div style="max-width:800px;margin:40px auto;padding:0 24px;"><table style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:1px solid #e4e4e7;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#71717a;"><th style="padding:16px 0;text-align:left;">Product</th><th style="padding:16px 8px;text-align:center;">Qty</th><th style="padding:16px 0;text-align:right;">Total</th><th></th></tr></thead><tbody>`;
+                let total = 0, html = `<table style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:1px solid #e4e4e7;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#71717a;"><th style="padding:16px 0;text-align:left;">Product</th><th style="padding:16px 8px;text-align:center;">Qty</th><th style="padding:16px 0;text-align:right;">Total</th><th></th></tr></thead><tbody>`;
                 cart.forEach((item, idx) => {
                     total += item.price * item.quantity;
                     html += `<tr data-cart-idx="${idx}" style="border-bottom:1px solid #f4f4f5;"><td style="padding:16px 0;"><div style="display:flex;gap:16px;align-items:center;"><img src="${item.image||""}" width="70" height="70" style="object-fit:cover;border-radius:4px;flex-shrink:0;" onerror="this.style.display='none'"><div><div style="font-weight:600;font-size:14px;">${item.title}</div><div style="color:#71717a;font-size:12px;margin-top:4px;">Rs. ${item.price} each</div></div></div></td><td style="padding:16px 8px;text-align:center;">${item.quantity}</td><td style="padding:16px 0;text-align:right;font-weight:600;">Rs. ${item.price*item.quantity}</td><td style="padding:16px 0;text-align:right;"><button onclick="vantroRemoveItem(${idx})" style="background:none;border:none;cursor:pointer;color:#71717a;font-size:20px;padding:4px;" title="Remove">×</button></td></tr>`;
                 });
-                html += `</tbody></table><div style="margin-top:32px;border-top:2px solid #000;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div><div style="font-size:11px;color:#71717a;text-transform:uppercase;letter-spacing:.1em;">Order Total</div><div style="font-size:24px;font-weight:700;margin-top:4px;">Rs. ${total}</div></div><a href="/checkout" style="background:#000;color:#fff;padding:16px 40px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.1em;border-radius:4px;">Proceed to Checkout</a></div></div>`;
+                html += `</tbody></table><div style="margin-top:32px;border-top:2px solid #000;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div><div style="font-size:11px;color:#71717a;text-transform:uppercase;letter-spacing:.1em;">Order Total</div><div style="font-size:24px;font-weight:700;margin-top:4px;">Rs. ${total}</div></div><a href="/checkout.html" style="background:#000;color:#fff;padding:16px 40px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.1em;border-radius:4px;">Proceed to Checkout</a></div>`;
                 mainArea.innerHTML = html;
             }
         }
@@ -364,12 +344,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (window.location.pathname === "/checkout" || window.location.pathname.startsWith("/checkout")) {
         const checkCart = readCart();
         if (checkCart.length === 0) {
-            // Cart is empty — redirect to cart page without a blocking alert
-            window.location.href = "/cart";
+            alert("Your cart is empty.");
+            setTimeout(() => { window.location.href = "/cart"; }, 500);
             return;
         }
 
-        if (!document.getElementById("checkout-form")) {
+        if (!document.getElementById("vantro-checkout-ui")) {
             const mainEl = document.querySelector("main, #MainContent, .main-content, .page-content, body");
             const checkoutHtml = `
             <div id="vantro-checkout-ui" style="max-width:960px;margin:100px auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:40px;font-family:inherit;">
@@ -389,35 +369,31 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <input id="chk-email" type="email" placeholder="Email Address (optional)" style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
                   </div>
                   <div>
-                    <label for="chk-street" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">Address *</label>
-                    <div style="position:relative;">
-                      <input id="chk-street" type="text" autocomplete="off" placeholder="House No / Street / Area *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                      <div id="geoapify-suggestions" style="position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 4px 4px;z-index:10;max-height:200px;overflow-y:auto;display:none;box-shadow:0 4px 6px rgba(0,0,0,0.1);"></div>
-                    </div>
-                  </div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                    <div>
-                      <label for="chk-city" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">City *</label>
-                      <input id="chk-city" type="text" placeholder="City *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                    </div>
-                    <div>
-                      <label for="chk-zip" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">PIN Code *</label>
-                      <input id="chk-zip" type="tel" placeholder="PIN Code *" required pattern="[0-9]{6}" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)" style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                    </div>
+                    <label for="chk-zip" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">PIN Code *</label>
+                    <input id="chk-zip" type="tel" placeholder="Enter 6-digit PIN Code *" required pattern="[0-9]{6}" maxlength="6" style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
                   </div>
                   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                     <div>
                       <label for="chk-state" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">State *</label>
-                      <select id="chk-state" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
+                      <select id="chk-state" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;background:#f9fafb;">
                         <option value="" disabled selected>Select State *</option>
                       </select>
                     </div>
                     <div>
                       <label for="chk-district" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">District *</label>
-                      <select id="chk-district" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
+                      <select id="chk-district" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;background:#f9fafb;">
                         <option value="" disabled selected>Select District *</option>
                       </select>
                     </div>
+                  </div>
+                  <div style="position:relative;">
+                    <label for="chk-street" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">Address *</label>
+                    <input id="chk-street" type="text" placeholder="Start typing your address..." autocomplete="off" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
+                    <div id="address-suggestions" style="position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 4px 4px;z-index:10;max-height:200px;overflow-y:auto;display:none;box-shadow:0 4px 6px rgba(0,0,0,0.1);"></div>
+                  </div>
+                  <div>
+                    <label for="chk-city" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">City / Town / Village *</label>
+                    <input id="chk-city" type="text" placeholder="City / Town / Village *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
                   </div>
                   <button id="btn-pay-now" type="submit" style="background:#000;color:#fff;padding:16px;border:none;border-radius:4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;width:100%;margin-top:8px;">Pay Now</button>
                 </form>
@@ -452,9 +428,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         }
 
+        let indiaData = null;
         fetch('/india-districts.json')
             .then(res => res.json())
             .then(data => {
+                indiaData = data;
                 const stateSelect = document.getElementById("chk-state");
                 const districtSelect = document.getElementById("chk-district");
                 if (stateSelect && districtSelect && stateSelect.options.length <= 1) {
@@ -481,57 +459,119 @@ document.addEventListener("DOMContentLoaded", async () => {
             })
             .catch(err => console.error('Failed to load districts JSON:', err));
 
+        // PIN Code Auto-fetch
+        const zipInput = document.getElementById("chk-zip");
+        if (zipInput) {
+            zipInput.addEventListener("input", async (e) => {
+                let val = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
+                e.target.value = val;
+                
+                if (val.length === 6 && indiaData) {
+                    try {
+                        const res = await fetch('https://api.postalpincode.in/pincode/' + val);
+                        const data = await res.json();
+                        if (data && data[0].Status === 'Success') {
+                            const postOffice = data[0].PostOffice[0];
+                            const stateName = postOffice.State;
+                            const districtName = postOffice.District;
+                            
+                            const stateSelect = document.getElementById("chk-state");
+                            const districtSelect = document.getElementById("chk-district");
+                            const cityInput = document.getElementById("chk-city");
+                            
+                            // Auto-select state
+                            let stateMatch = Array.from(stateSelect.options).find(o => o.text.toLowerCase() === stateName.toLowerCase());
+                            if (stateMatch) {
+                                stateSelect.value = stateMatch.value;
+                                // Trigger change to populate districts
+                                stateSelect.dispatchEvent(new Event('change'));
+                            }
+                            
+                            // Auto-select district
+                            setTimeout(() => {
+                                let distMatch = Array.from(districtSelect.options).find(o => o.text.toLowerCase() === districtName.toLowerCase());
+                                if (distMatch) {
+                                    districtSelect.value = distMatch.value;
+                                } else {
+                                    const opt = document.createElement('option');
+                                    opt.value = districtName;
+                                    opt.text = districtName;
+                                    districtSelect.add(opt);
+                                    districtSelect.value = districtName;
+                                }
+                            }, 50);
+                            
+                            // Auto-fill city with Region or Block
+                            if (!cityInput.value) {
+                                cityInput.value = postOffice.Block || postOffice.Region || postOffice.Name;
+                            }
+                        }
+                    } catch (err) {
+                        console.error('Pincode fetch error:', err);
+                    }
+                }
+            });
+        }
+
+        // Geoapify Address Autocomplete
         const streetInput = document.getElementById("chk-street");
-        const suggestionsBox = document.getElementById("geoapify-suggestions");
+        const suggestionsBox = document.getElementById("address-suggestions");
+        let geoapifyTimeout;
         if (streetInput && suggestionsBox) {
-            let debounceTimer;
-            streetInput.addEventListener("input", function() {
-                const val = this.value;
-                if (!val || val.length < 3) {
-                    suggestionsBox.style.display = "none";
+            streetInput.addEventListener("input", (e) => {
+                const val = e.target.value;
+                if (val.length < 3) {
+                    suggestionsBox.style.display = 'none';
                     return;
                 }
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => {
-                    fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(val)}&apiKey=416db992171440c1b0591924c677962b`)
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data && data.features && data.features.length > 0) {
-                                suggestionsBox.innerHTML = "";
-                                data.features.forEach(feature => {
-                                    const opt = document.createElement("div");
-                                    opt.style.padding = "10px 14px";
-                                    opt.style.cursor = "pointer";
-                                    opt.style.fontSize = "13px";
-                                    opt.style.borderBottom = "1px solid #f4f4f5";
-                                    opt.innerText = feature.properties.formatted;
-                                    opt.onmouseover = () => opt.style.background = "#f4f4f5";
-                                    opt.onmouseout = () => opt.style.background = "#fff";
-                                    opt.onclick = () => {
-                                        streetInput.value = feature.properties.formatted;
-                                        suggestionsBox.style.display = "none";
-                                        
-                                        if (feature.properties.city) {
-                                            const cityInput = document.getElementById("chk-city");
-                                            if (cityInput) cityInput.value = feature.properties.city;
-                                        }
-                                        if (feature.properties.postcode) {
-                                            const zipInput = document.getElementById("chk-zip");
-                                            if (zipInput) zipInput.value = feature.properties.postcode;
-                                        }
-                                    };
-                                    suggestionsBox.appendChild(opt);
+                clearTimeout(geoapifyTimeout);
+                geoapifyTimeout = setTimeout(async () => {
+                    try {
+                        const apiKey = '36fa05b75aa84c5994c9e050ef718581';
+                        const res = await fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(val)}&filter=countrycode:in&apiKey=${apiKey}`);
+                        const data = await res.json();
+                        
+                        if (data.features && data.features.length > 0) {
+                            suggestionsBox.innerHTML = '';
+                            data.features.forEach(f => {
+                                const props = f.properties;
+                                const item = document.createElement('div');
+                                item.style.padding = '10px 14px';
+                                item.style.cursor = 'pointer';
+                                item.style.borderBottom = '1px solid #f4f4f5';
+                                item.style.fontSize = '13px';
+                                item.innerText = props.formatted;
+                                
+                                item.addEventListener('mouseover', () => item.style.background = '#f9fafb');
+                                item.addEventListener('mouseout', () => item.style.background = '#fff');
+                                
+                                item.addEventListener('click', () => {
+                                    streetInput.value = props.address_line1 || props.name || props.street || props.formatted.split(',')[0];
+                                    suggestionsBox.style.display = 'none';
+                                    
+                                    const cityInput = document.getElementById("chk-city");
+                                    const zipInp = document.getElementById("chk-zip");
+                                    if (props.city && !cityInput.value) cityInput.value = props.city;
+                                    if (props.postcode && !zipInp.value) {
+                                        zipInp.value = props.postcode;
+                                        zipInp.dispatchEvent(new Event('input')); // trigger pincode fetch
+                                    }
                                 });
-                                suggestionsBox.style.display = "block";
-                            } else {
-                                suggestionsBox.style.display = "none";
-                            }
-                        }).catch(err => console.log('geoapify error', err));
-                }, 400);
+                                suggestionsBox.appendChild(item);
+                            });
+                            suggestionsBox.style.display = 'block';
+                        } else {
+                            suggestionsBox.style.display = 'none';
+                        }
+                    } catch (err) {
+                        console.error('Geoapify error:', err);
+                    }
+                }, 300);
             });
-            document.addEventListener("click", function(e) {
+            
+            document.addEventListener("click", (e) => {
                 if (e.target !== streetInput && e.target !== suggestionsBox) {
-                    suggestionsBox.style.display = "none";
+                    suggestionsBox.style.display = 'none';
                 }
             });
         }
@@ -582,6 +622,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    // --- TOAST NOTIFICATIONS ---
+    window.showToast = function(msg, type = 'error') {
+        let container = document.getElementById('vantro-toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'vantro-toast-container';
+            container.style.cssText = 'position:fixed;top:20px;right:20px;z-index:999999;display:flex;flex-direction:column;gap:10px;';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.style.cssText = `background:${type === 'error' ? '#e74c3c' : '#2ecc71'};color:#fff;padding:12px 20px;border-radius:4px;font-size:14px;font-weight:600;box-shadow:0 4px 6px rgba(0,0,0,0.1);opacity:0;transform:translateY(-20px);transition:all 0.3s ease;`;
+        toast.innerText = msg;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; }, 10);
+        setTimeout(() => {
+            toast.style.opacity = '0'; toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    };
+
     // --- ORDER SUCCESS BANNER ---
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get("order") === "success") {
@@ -600,7 +660,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <div style="max-width:600px;margin:80px auto;padding:0 24px;font-family:inherit;">
                 <h1 style="font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:24px;text-align:center;">Track Your Order</h1>
                 <form id="track-form" style="display:flex;flex-direction:column;gap:16px;">
-                    
+                    <input id="track-order-id" type="text" placeholder="Order ID (e.g. ORD-12345) *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
                     <input id="track-phone" type="tel" placeholder="Mobile Number used for order *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
                     <button type="submit" id="btn-track" style="background:#000;color:#fff;padding:16px;border:none;border-radius:4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;width:100%;">Track Order</button>
                 </form>
@@ -609,22 +669,22 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             document.getElementById("track-form").addEventListener("submit", async e => {
                 e.preventDefault();
+                const orderId = document.getElementById("track-order-id").value.trim();
                 const phone = document.getElementById("track-phone").value.trim();
                 const btn = document.getElementById("btn-track");
                 const resEl = document.getElementById("track-result");
-                if (!phone) return;
+                if (!orderId || !phone) return;
                 
                 btn.innerText = "Tracking..."; btn.disabled = true;
                 try {
-                    const res = await fetch(`${apiBase}/orders/track?phone=${encodeURIComponent(phone)}`);
+                    const res = await fetch(`${apiBase}/orders/track/${encodeURIComponent(orderId)}?phone=${encodeURIComponent(phone)}`);
                     const data = await res.json();
                     if (!res.ok) throw new Error(data.message || "Failed to track order.");
                     
-                    
-                    const orders = data.orders;
+                    const order = data.order;
                     resEl.style.display = "block";
-                    resEl.innerHTML = orders.map(order => `
-                        <div style="padding:24px;border:1px solid #e4e4e7;border-radius:4px;margin-bottom:16px;">
+                    resEl.innerHTML = `
+                        <div style="padding:24px;border:1px solid #e4e4e7;border-radius:4px;">
                             <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
                                 <div><strong style="font-size:18px;">${order.orderId}</strong><div style="font-size:12px;color:#71717a;margin-top:4px;">${new Date(order.date).toLocaleDateString()}</div></div>
                                 <div style="text-align:right;"><span style="display:inline-block;padding:4px 8px;background:#f4f4f5;border-radius:4px;font-size:12px;font-weight:600;text-transform:uppercase;">${order.status}</span></div>
@@ -635,7 +695,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 ${order.items.map(item => `<div style="display:flex;gap:12px;margin-bottom:12px;align-items:center;"><img src="${item.image||''}" width="40" height="40" style="object-fit:cover;border-radius:4px;background:#f4f4f5;" onerror="this.style.display='none'"><div style="font-size:13px;">${item.name} <span style="color:#71717a">x${item.quantity}</span></div></div>`).join('')}
                             </div>
                         </div>
-                    `).join('');} catch(err) {
+                    `;
+                } catch(err) {
                     resEl.style.display = "block";
                     resEl.innerHTML = `<div style="padding:16px;background:#fee2e2;color:#991b1b;border-radius:4px;font-size:14px;">${err.message}</div>`;
                 }

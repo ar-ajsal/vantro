@@ -95,10 +95,11 @@
       '<div class="head-actions">' +
       '<button class="btn" id="ordRefresh">' + icon('refresh') + 'Refresh</button>' +
       '</div></div>' +
-      '<div class="toolbar">' +
+      '<div class="toolbar orders-toolbar">' +
       '<div class="search-box grow">' + icon('search') +
       '<input class="input" id="ordSearch" placeholder="Search order number, customer, or phone…" value="' + esc(q.search) + '">' +
       '</div>' +
+      '<div class="toolbar-selects">' +
       '<select class="select" id="ordStatus"><option value="">All statuses</option>' +
       CC.ORDER_STATUS.map(function (s) { return '<option' + (s === q.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') +
       '</select>' +
@@ -106,7 +107,8 @@
       ['Pending', 'Paid', 'Failed'].map(function (s) { return '<option' + (s === q.paymentStatus ? ' selected' : '') + '>' + s + '</option>'; }).join('') +
       '</select>' +
       '</div>' +
-      '<div class="panel"><div class="tbl-wrap"><table class="tbl"><thead><tr>' +
+      '</div>' +
+      '<div class="panel"><div class="tbl-wrap"><table class="tbl orders-tbl"><thead><tr>' +
       '<th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Placed</th><th>Actions</th>' +
       '</tr></thead><tbody id="ordBody">' + UI.skelRows(8, 8) + '</tbody></table></div>' +
       '<div class="panel-pad" id="ordPager"></div></div>';
@@ -178,16 +180,27 @@
     var itemCount = o.items.reduce(function (a, i) { return a + i.quantity; }, 0);
     var payBadge = o.paymentStatus === 'Paid' ? 'ok' : o.paymentStatus === 'Failed' ? 'bad' : 'warn';
 
-    return '<tr data-id="' + esc(o._id) + '" style="cursor:pointer">' +
-      '<td data-label="Order"><div class="cell-strong mono" style="color:var(--ink)">' + esc(o.orderNumber) + '</div></td>' +
-      '<td data-label="Customer"><div class="cell-strong">' + esc(o.customerName) + '</div>' +
-      (o.phone ? '<div class="cell-sub mono" style="font-size:11.5px">' + esc(o.phone) + '</div>' : '') + '</td>' +
-      '<td data-label="Items">' + itemCount + ' item' + (itemCount === 1 ? '' : 's') + '</td>' +
-      '<td data-label="Total"><span class="cell-strong font-display" style="font-size:15px">' + money(o.total) + '</span></td>' +
-      '<td data-label="Payment"><span class="badge ' + payBadge + '"><i class="d"></i>' + esc(o.paymentStatus) + '</span></td>' +
-      '<td data-label="Status"><span class="badge ' + CC.orderBadgeClass(o.status) + '">' + esc(o.status) + '</span></td>' +
-      '<td data-label="Placed"><span class="cell-sub" style="font-size:12px">' + CC.timeAgo(o.createdAt) + '</span></td>' +
-      '<td data-label="Actions" class="no-label"><button class="btn sm ghost btn-view-order row-action-btn" data-id="' + esc(o._id) + '">View</button></td>' +
+    return '<tr data-id="' + esc(o._id) + '" class="tbl-row-order" style="cursor:pointer">' +
+      '<td data-label="Order" class="col-ord-id"><div class="cell-strong mono ord-id-badge">' + esc(o.orderNumber) + '</div></td>' +
+      '<td data-label="Customer" class="col-ord-cust">' +
+        '<div class="cell-strong ord-cust-name">' + esc(o.customerName) + '</div>' +
+        (o.phone ? '<div class="cell-sub mono ord-cust-phone">' + esc(o.phone) + '</div>' : '') +
+      '</td>' +
+      '<td data-label="Items" class="col-ord-items">' +
+        '<span class="ord-items-badge">' + itemCount + ' item' + (itemCount === 1 ? '' : 's') + '</span>' +
+        '<span class="ord-placed-mobile">&bull; ' + CC.timeAgo(o.createdAt) + '</span>' +
+      '</td>' +
+      '<td data-label="Total" class="col-ord-total"><span class="cell-strong font-display ord-total-val">' + money(o.total) + '</span></td>' +
+      '<td data-label="Payment" class="col-ord-pay"><span class="badge ' + payBadge + '"><i class="d"></i>' + esc(o.paymentStatus) + '</span></td>' +
+      '<td data-label="Status" class="col-ord-status">' +
+        '<div class="ord-badges-mobile">' +
+          '<span class="badge ' + payBadge + '" style="font-size:10px;padding:2px 7px"><i class="d"></i>' + esc(o.paymentStatus) + '</span>' +
+          '<span class="badge ' + CC.orderBadgeClass(o.status) + '" style="font-size:10px;padding:2px 7px">' + esc(o.status) + '</span>' +
+        '</div>' +
+        '<span class="badge ' + CC.orderBadgeClass(o.status) + ' ord-status-desktop">' + esc(o.status) + '</span>' +
+      '</td>' +
+      '<td data-label="Placed" class="col-ord-placed"><span class="cell-sub">' + CC.timeAgo(o.createdAt) + '</span></td>' +
+      '<td data-label="Actions" class="col-ord-act no-label"><button class="btn sm ghost btn-view-order row-action-btn" data-id="' + esc(o._id) + '">View</button></td>' +
       '</tr>';
   }
 
@@ -282,7 +295,7 @@
       '</div>' +
 
       // 2-Column Responsive Content
-      '<div class="' + (isFullPage ? 'order-page-columns' : 'grid grid-2') + '">' +
+      '<div class="' + (isFullPage ? 'order-page-columns' : 'order-drawer-columns') + '">' +
       // Column Left
       '<div style="display:flex;flex-direction:column;gap:20px">' +
       // Ordered Items Card
@@ -300,8 +313,6 @@
           '<div class="order-item-info">' +
           '<div class="order-item-title">' + esc(it.name) + '</div>' +
           (it.variant ? (function() {
-            // Parse "Key: Value, Key2: Value2" into labeled rows. Fall back
-            // to a plain badge if the string doesn't match the pattern.
             var pairs = it.variant.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
             var hasKeyVal = pairs.some(function(s) { return s.indexOf(':') > 0; });
             if (hasKeyVal) {
@@ -343,13 +354,15 @@
       '<div class="field"><label>AWB / Tracking Number</label>' +
       '<input class="input mono" id="tkAwb" value="' + esc(o.shippingDetails.awb) + '" placeholder="Air Waybill code"></div>' +
       '</div>' +
-      '<div class="field" style="margin-top:12px"><label>Live Tracking URL</label>' +
+      '<div style="padding:0 18px 18px">' +
+      '<div class="field"><label>Live Tracking URL</label>' +
       '<div style="display:flex;gap:8px">' +
       '<input class="input grow" id="tkUrl" value="' + esc(o.shippingDetails.trackingUrl) + '" placeholder="https://track.courier.com/..."> ' +
       (o.shippingDetails.trackingUrl ? '<a class="btn ghost sm" href="' + esc(o.shippingDetails.trackingUrl) + '" target="_blank" rel="noopener">' + icon('external') + 'Open</a>' : '') +
       '</div></div>' +
       '<div style="margin-top:14px;display:flex;justify-content:flex-end">' +
       '<button class="btn primary sm" id="btnSaveTracking">' + icon('save') + 'Save Tracking Info</button>' +
+      '</div>' +
       '</div>' +
       '</div>' +
       '</div>' +
@@ -397,8 +410,7 @@
       (o.discount > 0 ? '<div class="summary-row" style="color:var(--ok)"><span>Special Discount</span><span>− ' + money(o.discount) + '</span></div>' : '') +
       '<div class="summary-row"><span>Delivery Shipping Fee</span><span>' + (o.shippingFee > 0 ? money(o.shippingFee) : '<span class="badge ok" style="padding:1px 6px">Free Delivery</span>') + '</span></div>' +
       '<div class="summary-row total"><span>Total Payable</span><span class="amt">' + money(o.total) + '</span></div>' +
-      '</div>' +
-      '<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:6px">' +
+      '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:6px">' +
       '<div style="display:flex;justify-content:space-between"><span>Payment Method</span><b style="color:var(--ink)">' + esc(o.paymentMethod) + '</b></div>' +
       (o.paymentRef ? '<div style="display:flex;justify-content:space-between;align-items:center"><span>Payment Ref</span><span class="mono" style="color:var(--ink-2)">' + esc(o.paymentRef) + '</span></div>' : '') +
       '</div>' +
@@ -413,18 +425,21 @@
       '</div>' +
       '</div>' +
       '</div>' +
+      '</div>' +
 
       // Status Management Card
       '<div class="order-card">' +
       '<div class="order-card-head">' +
       '<div class="dsec-title-left">' + icon('settings') + '<span>Update Order Status</span></div>' +
       '</div>' +
+      '<div style="padding:18px">' +
       '<p class="cell-sub" style="font-size:12.5px;margin-bottom:12px">Select a new fulfillment status for this order. Marking as Cancelled or Returned will automatically restore inventory.</p>' +
       '<div style="display:flex;flex-direction:column;gap:12px">' +
       '<select class="select" id="detailStatusSelect" style="height:44px;font-weight:600">' +
       CC.ORDER_STATUS.map(function (s) { return '<option value="' + s + '"' + (s === o.status ? ' selected' : '') + '>' + s + (s === o.status ? ' (Current)' : '') + '</option>'; }).join('') +
       '</select>' +
       '<button class="btn primary" id="btnUpdateOrderStatus" style="height:44px;justify-content:center">' + icon('check') + 'Update Status</button>' +
+      '</div>' +
       '</div>' +
       '</div>' +
       '</div>' +

@@ -36,11 +36,11 @@
       '</div>' +
 
       // Search & filter bar
-      '<div class="toolbar" style="flex-wrap:wrap;gap:12px">' +
+      '<div class="toolbar cust-toolbar">' +
       '<div class="search-box grow">' + icon('search') +
       '<input class="input" id="custSearch" placeholder="Search by phone (main), customer name, email, or city…">' +
       '</div>' +
-      '<div class="btn-group" id="custFilterGroup">' +
+      '<div class="btn-group cust-filter-group" id="custFilterGroup">' +
       '<button class="btn sm active" data-filter="all">All Customers</button>' +
       '<button class="btn sm ghost" data-filter="repeat">Repeat Buyers (2+)</button>' +
       '<button class="btn sm ghost" data-filter="high">High Value (₹500+)</button>' +
@@ -50,7 +50,7 @@
       // Customers table
       '<div class="panel">' +
       '<div class="tbl-wrap">' +
-      '<table class="tbl">' +
+      '<table class="tbl cust-tbl">' +
       '<thead><tr>' +
       '<th>Customer</th>' +
       '<th>Phone Number (Main ID)</th>' +
@@ -167,55 +167,64 @@
                           (c.createdAt ? CC.timeAgo(c.createdAt) : '—');
       var lastOrderId = (c.lastOrder && c.lastOrder.orderId) ? c.lastOrder.orderId : '';
 
-      return '<tr data-id="' + esc(c._id) + '" style="cursor:pointer">' +
+      return '<tr data-id="' + esc(c._id) + '" class="tbl-row-cust" style="cursor:pointer">' +
         // Customer Name & Tag
-        '<td data-label="Customer">' +
-        '<div style="display:flex;align-items:center;gap:12px">' +
-        '<div class="avatar">' + esc(initial) + '</div>' +
-        '<div>' +
-        '<div style="display:flex;align-items:center;gap:6px">' +
-        '<span class="cell-strong">' + esc(c.name || 'Valued Customer') + '</span>' +
-        tagHtml +
-        '</div>' +
-        '</div>' +
-        '</div>' +
+        '<td data-label="Customer" class="col-cust-main">' +
+          '<div class="cust-card-mobile-head">' +
+            '<div class="avatar cust-avatar-sm">' + esc(initial) + '</div>' +
+            '<div class="cust-info-block">' +
+              '<div class="cust-name-row">' +
+                '<span class="cell-strong cust-name-text">' + esc(c.name || 'Valued Customer') + '</span>' +
+                tagHtml +
+              '</div>' +
+              '<div class="cust-sub-row">' +
+                '<span class="mono cust-phone-text">' + esc(c.phone || '—') + '</span>' +
+                (c.city ? '<span class="cust-city-text">&bull; ' + esc(c.city) + '</span>' : '') +
+              '</div>' +
+            '</div>' +
+          '</div>' +
         '</td>' +
 
         // Phone Number (User Main)
-        '<td data-label="Phone">' +
-        '<div style="display:flex;align-items:center;gap:6px">' +
-        '<span class="cell-strong mono" style="color:var(--ink);font-size:13px">' + esc(c.phone || '—') + '</span>' +
-        (cleanPhone ? '<a class="cust-action-btn whatsapp" href="https://wa.me/' + cleanPhone + '" target="_blank" rel="noopener" title="Open WhatsApp" onclick="event.stopPropagation()">' + icon('zap') + '</a>' : '') +
-        '</div>' +
+        '<td data-label="Phone" class="col-cust-phone">' +
+          '<div style="display:flex;align-items:center;gap:6px">' +
+            '<span class="cell-strong mono" style="color:var(--ink);font-size:13px">' + esc(c.phone || '—') + '</span>' +
+            (cleanPhone ? '<a class="cust-action-btn whatsapp" href="https://wa.me/' + cleanPhone + '" target="_blank" rel="noopener" title="Open WhatsApp" onclick="event.stopPropagation()">' + icon('zap') + '</a>' : '') +
+          '</div>' +
         '</td>' +
 
         // Email
-        '<td data-label="Email"><span class="cell-sub">' + esc(c.email || '—') + '</span></td>' +
+        '<td data-label="Email" class="col-cust-email"><span class="cell-sub">' + esc(c.email || '—') + '</span></td>' +
 
         // Location
-        '<td data-label="Location">' +
-        (c.city ? '<span class="badge neutral" style="font-size:11.5px">' + icon('map-pin') + esc(c.city) + '</span>' : '<span class="cell-sub">—</span>') +
+        '<td data-label="Location" class="col-cust-loc">' +
+          (c.city ? '<span class="badge neutral" style="font-size:11.5px">' + icon('map-pin') + esc(c.city) + '</span>' : '<span class="cell-sub">—</span>') +
         '</td>' +
 
         // Total Orders
-        '<td data-label="Orders">' +
-        '<span class="badge ' + (isRepeat ? 'violet' : 'neutral') + '">' + c.totalOrders + ' order' + (c.totalOrders === 1 ? '' : 's') + '</span>' +
+        '<td data-label="Orders" class="col-cust-orders">' +
+          '<span class="badge ' + (isRepeat ? 'violet' : 'neutral') + '">' + c.totalOrders + ' order' + (c.totalOrders === 1 ? '' : 's') + '</span>' +
+          '<div class="cust-mobile-meta">' +
+            '<span class="cell-sub" style="font-size:11.5px">Last: ' + esc(lastOrderDate) + '</span>' +
+            (cleanPhone ? '<a class="cust-action-btn whatsapp sm" href="https://wa.me/' + cleanPhone + '" target="_blank" rel="noopener" title="Open WhatsApp" onclick="event.stopPropagation()">' + icon('zap') + ' WhatsApp</a>' : '') +
+          '</div>' +
         '</td>' +
 
         // Total Spent (LTV)
-        '<td data-label="Lifetime Spend">' +
-        '<span class="cell-strong font-display" style="font-size:14px;color:var(--ink)">' + money(c.totalSpent) + '</span>' +
+        '<td data-label="Lifetime Spend" class="col-cust-ltv">' +
+          '<span class="cell-strong font-display cust-ltv-val">' + money(c.totalSpent) + '</span>' +
+          '<div class="cell-sub cust-ltv-sub">Lifetime</div>' +
         '</td>' +
 
         // Last Order
-        '<td data-label="Last Order">' +
-        '<div class="cell-strong" style="font-size:12px">' + esc(lastOrderDate) + '</div>' +
-        (lastOrderId ? '<div class="cell-sub mono" style="font-size:10.5px">' + esc(lastOrderId) + '</div>' : '') +
+        '<td data-label="Last Order" class="col-cust-last">' +
+          '<div class="cell-strong" style="font-size:12px">' + esc(lastOrderDate) + '</div>' +
+          (lastOrderId ? '<div class="cell-sub mono" style="font-size:10.5px">' + esc(lastOrderId) + '</div>' : '') +
         '</td>' +
 
         // Action
-        '<td data-label="Action" class="no-label" style="text-align:right">' +
-        '<button class="btn sm ghost row-action-btn" data-id="' + esc(c._id) + '">Profile</button>' +
+        '<td data-label="Action" class="col-cust-act no-label" style="text-align:right">' +
+          '<button class="btn sm ghost row-action-btn" data-id="' + esc(c._id) + '">Profile</button>' +
         '</td>' +
         '</tr>';
     }).join('');
@@ -251,7 +260,7 @@
         '<button class="icon-btn" id="drwCustCopyPhone" title="Copy Phone">' + icon('copy') + '</button>',
       bodyHtml:
         // Customer Profile Header Card
-        '<div class="order-card">' +
+        '<div class="order-card" style="padding:18px">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">' +
         '<div style="display:flex;align-items:center;gap:16px">' +
         '<div class="cust-avatar" style="width:54px;height:54px;font-size:22px">' + esc(initial) + '</div>' +
@@ -271,7 +280,7 @@
         '</div>' +
 
         // 4 KPI Analytics Strip
-        '<div class="grid" style="grid-template-columns:repeat(4,1fr);gap:12px">' +
+        '<div class="cust-drawer-kpis">' +
         '<div class="stat-tile" style="padding:14px"><div class="st-num" style="color:var(--ink)">' + money(c.totalSpent) + '</div><div class="st-lbl">Lifetime Spend</div></div>' +
         '<div class="stat-tile" style="padding:14px"><div class="st-num">' + c.totalOrders + '</div><div class="st-lbl">Total Orders</div></div>' +
         '<div class="stat-tile" style="padding:14px"><div class="st-num">' + money(aov) + '</div><div class="st-lbl">Average Order</div></div>' +
@@ -284,6 +293,7 @@
         '<div class="dsec-title-left">' + icon('map-pin') + '<span>Customer Location & Delivery Address</span></div>' +
         (c.city ? '<span class="badge neutral mono">📍 ' + esc(c.city) + (c.state ? ', ' + esc(c.state) : '') + '</span>' : '') +
         '</div>' +
+        '<div style="padding:18px">' +
         '<p class="cell-sub" style="font-size:12px;margin-bottom:10px">Address automatically gathered from customer fulfillment orders:</p>' +
         '<div class="addr-box">' +
         '<div class="addr-content">' +
@@ -304,6 +314,7 @@
           }).join('') +
           '</div>' : '') +
         '</div>' +
+        '</div>' +
 
         // Latest Order Spotlight Card (What did they order last)
         (c.lastOrder ?
@@ -312,6 +323,7 @@
           '<div class="dsec-title-left">' + icon('package') + '<span>Latest Order: ' + esc(c.lastOrder.orderId) + '</span></div>' +
           '<span class="badge ' + CC.orderBadgeClass(c.lastOrder.status) + '"><i class="d"></i>' + esc(c.lastOrder.status) + '</span>' +
           '</div>' +
+          '<div style="padding:18px">' +
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:12px;color:var(--ink-3)">' +
           '<span>Placed: <b>' + CC.dateLong(c.lastOrder.date) + ' (' + CC.timeAgo(c.lastOrder.date) + ')</b></span>' +
           '<span class="cell-strong font-display" style="font-size:15px;color:var(--ink)">' + money(c.lastOrder.total) + '</span>' +
@@ -336,6 +348,7 @@
           '<button class="btn primary sm" id="btnOpenLatestOrder" data-oid="' + esc(c.lastOrder.id) + '">' +
           icon('external') + 'Open Order ' + esc(c.lastOrder.orderId) +
           '</button>' +
+          '</div>' +
           '</div>' +
           '</div>' : '') +
 

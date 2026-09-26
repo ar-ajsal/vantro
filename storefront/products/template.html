@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   
 <!-- Mirrored from vantro.com/products/black by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Sep 2026 19:35:25 GMT -->
@@ -57,7 +57,6 @@
     "name": "Vantro",
     
     "url": "https:\/\/vantro.com",
-    "telephone": "9207965510",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "VANTRO, VANTRO, 4X74+V76",
@@ -560,6 +559,39 @@ first.parentNode.insertBefore(script, first);
   data-shs-beacon-endpoint="https://vantro.com/api/collect"
 ></script>
 <meta name="shopify-y" content="0606de17-c433-4547-831d-ef3f3e5afaee" data-expiration="1820712651000"><meta name="shopify-s" content="49895e1b-1610-46c5-9041-0c8a7b11f366" data-expiration="1789156851000"><meta name="new-cookie-storage-activated" content="f">
+
+<script id="vantro-instant-product-hydration">
+(function() {
+  try {
+    const slug = window.location.pathname.split("/").filter(Boolean).pop().replace(".html", "");
+    const cached = sessionStorage.getItem("vantro_prod_" + slug);
+    if (cached) {
+      const p = JSON.parse(cached);
+      window.__CACHED_PRODUCT__ = p;
+      function applyCached() {
+        const titleEls = document.querySelectorAll("h1.product-title-text-render, h1.product__title, .product__title h1, h1");
+        if (p.title) titleEls.forEach(el => { el.innerText = p.title; });
+        const priceEls = document.querySelectorAll(".price-current, .price-item--regular, .price-item--sale");
+        if (p.price !== undefined) priceEls.forEach(el => { el.innerText = "Rs. " + p.price; });
+        if (p.image) {
+          document.querySelectorAll(".slider-slide img, .product-media-column img, .product-main-image img").forEach(img => {
+            if (!img.classList.contains("header__logo") && !img.classList.contains("mobile-menu-drawer__logo")) {
+              img.src = p.image;
+              img.srcset = "";
+            }
+          });
+        }
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", applyCached);
+      } else {
+        applyCached();
+      }
+    }
+  } catch (e) {}
+})();
+</script>
+
 </head>
   <body class="template-product">
     <a href="#MainContent" class="skip-to-content-link" aria-label="Skip to content">Skip to content</a>
@@ -1684,9 +1716,7 @@ first.parentNode.insertBefore(script, first);
           <div class="product-title-row">
             <div class="title-meta-box">
               <span class="product-label-small">SHADES</span>
-              <h1 class="product-title-text-render" style="display: block !important; margin: 0;">
-                Black
-              </h1>
+              <h1 class="product-title-text-render" style="display: block !important; margin: 0;"></h1>
             </div>
             <button class="share-button-circle" aria-label="Share product">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1701,7 +1731,7 @@ first.parentNode.insertBefore(script, first);
 
           <div class="product-price-rating-row">
             <div class="price-box">
-              <span class="price-current">Rs. 1,399</span>
+              <span class="price-current"></span>
               
             </div>
             <div class="divider-line"></div>

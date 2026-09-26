@@ -119,6 +119,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (window.location.pathname.startsWith("/products/")) {
         let slug = window.location.pathname.split("/").filter(Boolean).pop();
         if (slug.endsWith(".html")) slug = slug.replace(".html", "");
+
+        // Immediately apply cached product data if available to prevent any price/title flash
+        try {
+            const cachedStr = sessionStorage.getItem("vantro_prod_" + slug);
+            if (cachedStr) {
+                const cachedProd = JSON.parse(cachedStr);
+                const titleEls = document.querySelectorAll("h1.product-title-text-render, h1.product__title, .product__title h1, h1");
+                if (titleEls.length && cachedProd.title) titleEls.forEach(el => { el.innerText = cachedProd.title; });
+                const priceEls = document.querySelectorAll(".price-current, .price-item--regular, .price-item--sale");
+                if (priceEls.length && cachedProd.price !== undefined) priceEls.forEach(el => { el.innerText = "Rs. " + cachedProd.price; });
+                if (cachedProd.image) {
+                    document.querySelectorAll(".slider-slide img, .product-media-column img, .product-main-image img").forEach(img => {
+                        if (!img.classList.contains("header__logo") && !img.classList.contains("mobile-menu-drawer__logo")) {
+                            img.src = cachedProd.image;
+                            img.srcset = "";
+                        }
+                    });
+                }
+            }
+        } catch(e) {}
         try {
             const res = await fetch(`${apiBase}/products/slug/${slug}`);
             if (!res.ok) throw new Error(`API ${res.status}`);
@@ -232,16 +252,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                             const slug = p.slug || p._id || p.id;
                             const href = `/products/${slug}`;
                             return `
-                                <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:12px;background:#fff;">
-                                    <a href="${href}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
-                                        <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#f4f4f5;border-radius:2px;">
+                                <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);padding:14px;background:transparent;">
+                                    <a href="${href}" onclick="try{sessionStorage.setItem('vantro_prod_' + '${slug}', JSON.stringify({id:'${slug}',title:${JSON.stringify(title)},price:${price},image:${JSON.stringify(img)}}));}catch(e){}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
+                                        <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:transparent;border-radius:2px;display:flex;align-items:center;justify-content:center;">
                                             <img src="${img}" alt="${title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
                                         </div>
                                     </a>
                                     <div class="product-info-template--22086712361118__product_listing_grid" style="padding-top:12px;">
                                         <div class="product-info-top-template--22086712361118__product_listing_grid" style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">
                                             <div class="product-title-wrap-template--22086712361118__product_listing_grid" style="flex:1;min-width:0;">
-                                                <a href="${href}" class="product-title-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:600;text-decoration:none;color:#000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</a>
+                                                <a href="${href}" onclick="try{sessionStorage.setItem('vantro_prod_' + '${slug}', JSON.stringify({id:'${slug}',title:${JSON.stringify(title)},price:${price},image:${JSON.stringify(img)}}));}catch(e){}" class="product-title-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:600;text-decoration:none;color:#000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</a>
                                             </div>
                                             <div class="product-price-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:700;color:#000;white-space:nowrap;">Rs. ${price}</div>
                                         </div>
@@ -288,16 +308,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                         const slug = p.slug || p._id || p.id;
                         const href = `/products/${slug}`;
                         return `
-                            <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:12px;background:#fff;">
-                                <a href="${href}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
-                                    <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#f4f4f5;border-radius:2px;">
+                            <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);padding:14px;background:transparent;">
+                                <a href="${href}" onclick="try{sessionStorage.setItem('vantro_prod_' + '${slug}', JSON.stringify({id:'${slug}',title:${JSON.stringify(title)},price:${price},image:${JSON.stringify(img)}}));}catch(e){}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
+                                    <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:transparent;border-radius:2px;display:flex;align-items:center;justify-content:center;">
                                         <img src="${img}" alt="${title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
                                     </div>
                                 </a>
                                 <div class="product-info-template--22086712361118__product_listing_grid" style="padding-top:12px;">
                                     <div class="product-info-top-template--22086712361118__product_listing_grid" style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">
                                         <div class="product-title-wrap-template--22086712361118__product_listing_grid" style="flex:1;min-width:0;">
-                                            <a href="${href}" class="product-title-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:600;text-decoration:none;color:#000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</a>
+                                            <a href="${href}" onclick="try{sessionStorage.setItem('vantro_prod_' + '${slug}', JSON.stringify({id:'${slug}',title:${JSON.stringify(title)},price:${price},image:${JSON.stringify(img)}}));}catch(e){}" class="product-title-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:600;text-decoration:none;color:#000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</a>
                                         </div>
                                         <div class="product-price-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:700;color:#000;white-space:nowrap;">Rs. ${price}</div>
                                     </div>
@@ -312,32 +332,113 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // --- CART PAGE ---
     if (window.location.pathname === "/cart" || window.location.pathname.startsWith("/cart")) {
-        const cart = readCart();
-        let mainArea = document.getElementById("vantro-cart-root") || document.querySelector(".cart-items, tbody, .cart__items");
-        if (!mainArea) {
-            const mainEl = document.querySelector("main, #MainContent, .main-content");
-            if (mainEl) {
-                const div = document.createElement("div");
-                div.id = "vantro-cart";
-                div.style.cssText = "max-width:800px;margin:40px auto;padding:0 24px;";
-                mainEl.appendChild(div);
-                mainArea = div;
+        const renderCartPage = () => {
+            const cart = readCart();
+            let mainArea = document.getElementById("vantro-cart-root") || document.querySelector(".cart-items, tbody, .cart__items");
+            if (!mainArea) {
+                const mainEl = document.querySelector("main, #MainContent, .main-content");
+                if (mainEl) {
+                    let div = document.getElementById("vantro-cart");
+                    if (!div) {
+                        div = document.createElement("div");
+                        div.id = "vantro-cart";
+                        mainEl.appendChild(div);
+                    }
+                    mainArea = div;
+                }
             }
-        }
-        if (mainArea) {
+            if (!mainArea) return;
+
             if (cart.length === 0) {
-                mainArea.innerHTML = `<div style="text-align:center;padding:80px 0;color:#71717a;"><p style="font-size:18px;margin-bottom:24px;">Your bag is empty.</p><a href="/" style="background:#000;color:#fff;padding:14px 28px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.1em;border-radius:4px;">Continue Shopping</a></div>`;
-            } else {
-                let total = 0, html = `<table style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:1px solid #e4e4e7;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#71717a;"><th style="padding:16px 0;text-align:left;">Product</th><th style="padding:16px 8px;text-align:center;">Qty</th><th style="padding:16px 0;text-align:right;">Total</th><th></th></tr></thead><tbody>`;
-                cart.forEach((item, idx) => {
-                    total += item.price * item.quantity;
-                    html += `<tr data-cart-idx="${idx}" style="border-bottom:1px solid #f4f4f5;"><td style="padding:16px 0;"><div style="display:flex;gap:16px;align-items:center;"><img src="${item.image||""}" width="70" height="70" style="object-fit:cover;border-radius:4px;flex-shrink:0;" onerror="this.style.display='none'"><div><div style="font-weight:600;font-size:14px;">${item.title}</div><div style="color:#71717a;font-size:12px;margin-top:4px;">Rs. ${item.price} each</div></div></div></td><td style="padding:16px 8px;text-align:center;">${item.quantity}</td><td style="padding:16px 0;text-align:right;font-weight:600;">Rs. ${item.price*item.quantity}</td><td style="padding:16px 0;text-align:right;"><button onclick="vantroRemoveItem(${idx})" style="background:none;border:none;cursor:pointer;color:#71717a;font-size:20px;padding:4px;" title="Remove">×</button></td></tr>`;
-                });
-                html += `</tbody></table><div style="margin-top:32px;border-top:2px solid #000;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div><div style="font-size:11px;color:#71717a;text-transform:uppercase;letter-spacing:.1em;">Order Total</div><div style="font-size:24px;font-weight:700;margin-top:4px;">Rs. ${total}</div></div><a href="/checkout.html" style="background:#000;color:#fff;padding:16px 40px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.1em;border-radius:4px;">Proceed to Checkout</a></div>`;
-                mainArea.innerHTML = html;
+                mainArea.innerHTML = `
+                <div style="max-width:540px;margin:60px auto;padding:40px 20px;text-align:center;font-family:inherit;">
+                    <div style="width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,0.04);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#71717a;">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                    </div>
+                    <h2 style="font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;color:#09090b;">Your bag is empty</h2>
+                    <p style="color:#71717a;font-size:13px;margin-bottom:24px;">Discover trending styles and accessories.</p>
+                    <a href="/collections/all.html" style="display:inline-block;background:#000;color:#fff;padding:14px 34px;text-decoration:none;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.12em;border-radius:4px;transition:background 0.2s;">Shop Collection</a>
+                </div>`;
+                return;
             }
-        }
-        window.vantroRemoveItem = function(idx) { const c = readCart(); c.splice(idx, 1); writeCart(c); location.reload(); };
+
+            let total = 0;
+            let itemsHtml = "";
+            cart.forEach((item, idx) => {
+                const itemTotal = (parseFloat(item.price) || 0) * (item.quantity || 1);
+                total += itemTotal;
+                itemsHtml += `
+                <div class="cart-item-row" data-cart-idx="${idx}" style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(0,0,0,0.07);align-items:center;">
+                    <a href="/products/${item.id||''}" style="flex-shrink:0;">
+                        <img src="${item.image||''}" alt="${item.title}" style="width:72px;height:72px;object-fit:cover;border-radius:6px;background:transparent;border:1px solid rgba(0,0,0,0.06);" onerror="this.style.display='none'">
+                    </a>
+                    <div style="flex:1;min-width:0;">
+                        <a href="/products/${item.id||''}" style="font-size:14px;font-weight:700;color:#09090b;text-decoration:none;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.title}</a>
+                        <div style="font-size:12px;color:#71717a;margin:3px 0 8px;">Rs. ${item.price} each</div>
+                        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                            <div style="display:inline-flex;align-items:center;border:1px solid #d4d4d8;border-radius:4px;background:rgba(255,255,255,0.8);overflow:hidden;">
+                                <button type="button" onclick="vantroUpdateQty(${idx}, -1)" style="border:none;background:none;padding:5px 10px;cursor:pointer;font-size:15px;font-weight:600;color:#09090b;touch-action:manipulation;">−</button>
+                                <span style="font-size:13px;font-weight:700;min-width:22px;text-align:center;">${item.quantity}</span>
+                                <button type="button" onclick="vantroUpdateQty(${idx}, 1)" style="border:none;background:none;padding:5px 10px;cursor:pointer;font-size:15px;font-weight:600;color:#09090b;touch-action:manipulation;">+</button>
+                            </div>
+                            <button type="button" onclick="vantroRemoveItem(${idx})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:4px 6px;" title="Remove">Remove</button>
+                        </div>
+                    </div>
+                    <div style="text-align:right;flex-shrink:0;">
+                        <div style="font-size:15px;font-weight:800;color:#09090b;">Rs. ${itemTotal}</div>
+                    </div>
+                </div>`;
+            });
+
+            mainArea.innerHTML = `
+            <div style="max-width:860px;margin:24px auto 60px;padding:0 16px;font-family:inherit;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:2px solid #000;padding-bottom:12px;">
+                    <h1 style="font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:0;">Shopping Bag (${cart.reduce((s,i)=>s+(i.quantity||1),0)})</h1>
+                    <a href="/collections/all.html" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#71717a;text-decoration:none;">Continue Shopping</a>
+                </div>
+                <div style="background:rgba(255,255,255,0.65);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,0.08);border-radius:8px;padding:16px 20px;box-shadow:0 8px 30px rgba(0,0,0,0.03);">
+                    ${itemsHtml}
+                    <div style="padding:20px 0 8px;display:flex;flex-direction:column;gap:10px;">
+                        <div style="display:flex;justify-content:space-between;font-size:13px;color:#71717a;">
+                            <span>Shipping</span>
+                            <span style="color:#16a34a;font-weight:700;text-transform:uppercase;">FREE ALL INDIA DELIVERY</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px dashed rgba(0,0,0,0.12);padding-top:14px;margin-top:4px;">
+                            <span style="font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Estimated Total</span>
+                            <span style="font-size:22px;font-weight:800;color:#09090b;">Rs. ${total}</span>
+                        </div>
+                        <div style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;">
+                            <a href="/checkout.html" style="flex:1;min-width:240px;background:#000;color:#fff;text-align:center;padding:16px 32px;text-decoration:none;text-transform:uppercase;font-size:13px;font-weight:700;letter-spacing:.12em;border-radius:4px;box-shadow:0 4px 14px rgba(0,0,0,0.12);transition:background 0.2s;">Proceed to Checkout →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        };
+
+        renderCartPage();
+
+        window.vantroUpdateQty = function(idx, delta) {
+            const c = readCart();
+            if (c[idx]) {
+                c[idx].quantity = (c[idx].quantity || 1) + delta;
+                if (c[idx].quantity <= 0) {
+                    c.splice(idx, 1);
+                }
+                writeCart(c);
+                renderCartPage();
+            }
+        };
+
+        window.vantroRemoveItem = function(idx) {
+            const c = readCart();
+            c.splice(idx, 1);
+            writeCart(c);
+            renderCartPage();
+        };
     }
 
     // --- CHECKOUT PAGE ---
@@ -345,87 +446,43 @@ document.addEventListener("DOMContentLoaded", async () => {
         const checkCart = readCart();
         if (checkCart.length === 0) {
             alert("Your cart is empty.");
-            setTimeout(() => { window.location.href = "/cart"; }, 500);
+            setTimeout(() => { window.location.href = "/cart"; }, 400);
             return;
         }
 
-        if (!document.getElementById("vantro-checkout-ui")) {
-            const mainEl = document.querySelector("main, #MainContent, .main-content, .page-content, body");
-            const checkoutHtml = `
-            <div id="vantro-checkout-ui" style="max-width:960px;margin:100px auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:40px;font-family:inherit;">
-              <div>
-                <h2 style="font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:24px;">Delivery Details</h2>
-                <form id="checkout-form" novalidate style="display:flex;flex-direction:column;gap:16px;">
-                  <div>
-                    <label for="chk-name" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">Full Name *</label>
-                    <input id="chk-name" type="text" placeholder="Full Name *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                  </div>
-                  <div>
-                    <label for="chk-phone" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">Mobile Number *</label>
-                    <input id="chk-phone" type="tel" placeholder="Mobile Number (10 digits) *" required pattern="[0-9]{10}" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                  </div>
-                  <div>
-                    <label for="chk-email" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">Email Address (Optional)</label>
-                    <input id="chk-email" type="email" placeholder="Email Address (optional)" style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                  </div>
-                  <div>
-                    <label for="chk-zip" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">PIN Code *</label>
-                    <input id="chk-zip" type="tel" placeholder="Enter 6-digit PIN Code *" required pattern="[0-9]{6}" maxlength="6" style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                  </div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                    <div>
-                      <label for="chk-state" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">State *</label>
-                      <select id="chk-state" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;background:#f9fafb;">
-                        <option value="" disabled selected>Select State *</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label for="chk-district" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">District *</label>
-                      <select id="chk-district" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;background:#f9fafb;">
-                        <option value="" disabled selected>Select District *</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div style="position:relative;">
-                    <label for="chk-street" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">Address *</label>
-                    <input id="chk-street" type="text" placeholder="Start typing your address..." autocomplete="off" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                    <div id="address-suggestions" style="position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 4px 4px;z-index:10;max-height:200px;overflow-y:auto;display:none;box-shadow:0 4px 6px rgba(0,0,0,0.1);"></div>
-                  </div>
-                  <div>
-                    <label for="chk-city" style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;margin-bottom:6px;display:block;">City / Town / Village *</label>
-                    <input id="chk-city" type="text" placeholder="City / Town / Village *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
-                  </div>
-                  <button id="btn-pay-now" type="submit" style="background:#000;color:#fff;padding:16px;border:none;border-radius:4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;width:100%;margin-top:8px;">Pay Now</button>
-                </form>
-              </div>
-              <div>
-                <h2 style="font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:24px;">Order Summary</h2>
-                <div id="checkout-summary-items" style="display:flex;flex-direction:column;gap:0;"></div>
-                <div style="margin-top:24px;padding-top:16px;border-top:2px solid #000;display:flex;justify-content:space-between;align-items:center;">
-                  <span style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Total</span>
-                  <span id="checkout-total" style="font-size:20px;font-weight:700;">Rs. 0</span>
-                </div>
-              </div>
-            </div>`;
-            if (mainEl) mainEl.innerHTML = checkoutHtml;
-        }
-
-        const cart = readCart();
+        // Hydrate checkout items & total
+        const cart = checkCart;
         let total = 0;
         const summaryEl = document.getElementById("checkout-summary-items");
         const totalEl = document.getElementById("checkout-total");
         if (summaryEl) {
-            if (cart.length === 0) { summaryEl.innerHTML = "<p>Your cart is empty. <a href='/'>Shop</a></p>"; }
-            else {
-                let html = "";
-                cart.forEach(item => {
-                    const itemPrice = parseFloat(item.price) || 0;
-                    total += itemPrice * item.quantity;
-                    html += `<div style="display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #f4f4f5;"><img src="${item.image||""}" width="56" height="56" style="object-fit:cover;border-radius:4px;flex-shrink:0;" onerror="this.style.display='none'"><div style="flex:1;"><div style="font-size:13px;font-weight:600;">${item.title}</div><div style="color:#71717a;font-size:12px;margin-top:2px;">Qty: ${item.quantity}</div></div><div style="font-weight:700;font-size:14px;">Rs. ${itemPrice*item.quantity}</div></div>`;
-                });
-                summaryEl.innerHTML = html;
-                if (totalEl) totalEl.innerText = `Rs. ${total}`;
-            }
+            let html = "";
+            cart.forEach(item => {
+                const itemPrice = parseFloat(item.price) || 0;
+                total += itemPrice * (item.quantity || 1);
+                html += `
+                <div class="chk-summary-item" style="display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.06);">
+                    <img src="${item.image||''}" class="chk-summary-img" width="56" height="56" style="object-fit:cover;border-radius:4px;background:transparent;" onerror="this.style.display='none'">
+                    <div class="chk-summary-details" style="flex:1;min-width:0;">
+                        <div class="chk-summary-name" style="font-size:13px;font-weight:600;color:#09090b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.title}</div>
+                        <div class="chk-summary-qty" style="color:#71717a;font-size:12px;margin-top:2px;">Qty: ${item.quantity||1}</div>
+                    </div>
+                    <div class="chk-summary-price" style="font-weight:700;font-size:14px;color:#09090b;">Rs. ${itemPrice * (item.quantity||1)}</div>
+                </div>`;
+            });
+            summaryEl.innerHTML = html;
+            if (totalEl) totalEl.innerText = `Rs. ${total}`;
+        }
+
+        // Hook up back button
+        const backBtn = document.getElementById("chk-back-btn");
+        if (backBtn) {
+            backBtn.addEventListener("click", (e) => {
+                if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
+                    e.preventDefault();
+                    window.history.back();
+                }
+            });
         }
 
         let indiaData = null;
@@ -483,7 +540,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                             let stateMatch = Array.from(stateSelect.options).find(o => o.text.toLowerCase() === stateName.toLowerCase());
                             if (stateMatch) {
                                 stateSelect.value = stateMatch.value;
-                                // Trigger change to populate districts
                                 stateSelect.dispatchEvent(new Event('change'));
                             }
                             
@@ -501,7 +557,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 }
                             }, 50);
                             
-                            // Auto-fill city with Region or Block
+                            // Auto-fill city
                             if (!cityInput.value) {
                                 cityInput.value = postOffice.Block || postOffice.Region || postOffice.Name;
                             }
@@ -554,7 +610,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                     if (props.city && !cityInput.value) cityInput.value = props.city;
                                     if (props.postcode && !zipInp.value) {
                                         zipInp.value = props.postcode;
-                                        zipInp.dispatchEvent(new Event('input')); // trigger pincode fetch
+                                        zipInp.dispatchEvent(new Event('input'));
                                     }
                                 });
                                 suggestionsBox.appendChild(item);
@@ -582,7 +638,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 e.preventDefault();
                 if (cart.length === 0) { showToast("Cart is empty!"); return; }
                 const btn = document.getElementById("btn-pay-now");
-                const origText = btn?.innerText || "Pay Now";
+                const origText = btn?.innerText || "Proceed to Payment";
                 if (btn) { btn.innerText = "Processing..."; btn.disabled = true; }
                 const name = document.getElementById("chk-name")?.value?.trim();
                 const email = document.getElementById("chk-email")?.value?.trim();

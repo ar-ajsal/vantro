@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
+﻿document.addEventListener("DOMContentLoaded", async () => {
     const apiBase = window.__CHROMVAULT_API_BASE__ || "/v1";
 
     // Clean up broken external srcset immediately
@@ -709,7 +709,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // --- TRACKING PAGE ---
-    if (window.location.pathname === "/track" || window.location.pathname === "/order-tracking") {
+    if (window.location.pathname.includes("/track") || window.location.pathname === "/order-tracking") {
         const mainEl = document.querySelector("main, #MainContent, .main-content, .page-content, body");
         if (mainEl) {
             mainEl.innerHTML = `

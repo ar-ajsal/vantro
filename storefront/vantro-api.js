@@ -770,10 +770,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const data = await res.json();
                     if (!res.ok) throw new Error(data.message || "Failed to track order.");
                     
-                    const order = data.order;
+                    const orders = data.orders || [];
                     resEl.style.display = "block";
-                    resEl.innerHTML = `
-                        <div style="padding:24px;border:1px solid #e4e4e7;border-radius:4px;">
+                    resEl.innerHTML = orders.map(order => `
+                        <div style="padding:24px;border:1px solid #e4e4e7;border-radius:4px;margin-bottom:16px;">
                             <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
                                 <div><strong style="font-size:18px;">${order.orderId}</strong><div style="font-size:12px;color:#71717a;margin-top:4px;">${new Date(order.date).toLocaleDateString()}</div></div>
                                 <div style="text-align:right;"><span style="display:inline-block;padding:4px 8px;background:#f4f4f5;border-radius:4px;font-size:12px;font-weight:600;text-transform:uppercase;">${order.status}</span></div>
@@ -784,7 +784,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 ${order.items.map(item => `<div style="display:flex;gap:12px;margin-bottom:12px;align-items:center;"><img src="${item.image||''}" width="40" height="40" style="object-fit:cover;border-radius:4px;background:#f4f4f5;" onerror="this.style.display='none'"><div style="font-size:13px;">${item.name} <span style="color:#71717a">x${item.quantity}</span></div></div>`).join('')}
                             </div>
                         </div>
-                    `;
+                    `).join('');
                 } catch(err) {
                     resEl.style.display = "block";
                     resEl.innerHTML = `<div style="padding:16px;background:#fee2e2;color:#991b1b;border-radius:4px;font-size:14px;">${err.message}</div>`;

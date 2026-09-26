@@ -716,7 +716,6 @@
             <div style="max-width:600px;margin:80px auto;padding:0 24px;font-family:inherit;">
                 <h1 style="font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:24px;text-align:center;">Track Your Order</h1>
                 <form id="track-form" style="display:flex;flex-direction:column;gap:16px;">
-                    <input id="track-order-id" type="text" placeholder="Order ID (e.g. ORD-12345) *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
                     <input id="track-phone" type="tel" placeholder="Mobile Number used for order *" required style="padding:14px;border:1px solid #e4e4e7;border-radius:4px;font-size:14px;width:100%;box-sizing:border-box;">
                     <button type="submit" id="btn-track" style="background:#000;color:#fff;padding:16px;border:none;border-radius:4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;width:100%;">Track Order</button>
                 </form>
@@ -725,15 +724,14 @@
             
             document.getElementById("track-form").addEventListener("submit", async e => {
                 e.preventDefault();
-                const orderId = document.getElementById("track-order-id").value.trim();
                 const phone = document.getElementById("track-phone").value.trim();
                 const btn = document.getElementById("btn-track");
                 const resEl = document.getElementById("track-result");
-                if (!orderId || !phone) return;
+                if (!phone) return;
                 
                 btn.innerText = "Tracking..."; btn.disabled = true;
                 try {
-                    const res = await fetch(`${apiBase}/orders/track/${encodeURIComponent(orderId)}?phone=${encodeURIComponent(phone)}`);
+                    const res = await fetch(`${apiBase}/orders/track?phone=${encodeURIComponent(phone)}`);
                     const data = await res.json();
                     if (!res.ok) throw new Error(data.message || "Failed to track order.");
                     

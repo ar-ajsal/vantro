@@ -3,7 +3,9 @@
 
 html,
 body,
-body.template-product {
+body.template-product,
+body.template-collection,
+body.template-index {
   background-image: url('noise_bg.png') !important;
   background-repeat: repeat !important;
   background-attachment: fixed !important;
@@ -51,9 +53,7 @@ body.template-product {
 .product-page-container,
 .product-layout-grid,
 #MainContent {
-  background-color: #fffffff2 !important;
-  background-image: url('noise_bg.png') !important;
-  background-repeat: repeat !important;
-  background-attachment: fixed !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 

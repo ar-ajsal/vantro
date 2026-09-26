@@ -14,3 +14,9 @@
   background: transparent !important;
   background-color: transparent !important;
 }
+
+.dynamic-related-products {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-20);
+}

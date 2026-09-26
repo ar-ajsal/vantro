@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   
 <!-- Mirrored from vantro.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Sep 2026 19:30:51 GMT -->
@@ -477,6 +477,31 @@ first.parentNode.insertBefore(script, first);
 <meta name="shopify-y" content="0606de17-c433-4547-831d-ef3f3e5afaee" data-expiration="1820712651000"><meta name="shopify-s" content="49895e1b-1610-46c5-9041-0c8a7b11f366" data-expiration="1789156851000"><meta name="new-cookie-storage-activated" content="f">
 
 <style id="vantro-custom-tweaks">
+  html,
+  body,
+  body.template-index {
+    background-color: #fffffff2 !important;
+    background-image: url('/cdn/shop/t/10/assets/noise_bg.png') !important;
+    background-repeat: repeat !important;
+    background-attachment: fixed !important;
+  }
+  .content-for-layout,
+  .shopify-section,
+  .shopify-section > div,
+  #MainContent {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+  #shopify-section-template--22086712361118__category_list,
+  #shopify-section-template--22086712361118__category_list > div,
+  .category-list-overflow-fix,
+  .category-list-template--22086712361118__category_list {
+    background-color: #fffffff2 !important;
+    background-image: url('/cdn/shop/t/10/assets/noise_bg.png') !important;
+    background-repeat: repeat !important;
+    background-attachment: fixed !important;
+  }
   .product-listing-section-template--22086712361118__product_listing_grid,
   .product-listing-grid-template--22086712361118__product_listing_grid,
   .product-grid-container-template--22086712361118__product_listing_grid {
@@ -1848,6 +1873,12 @@ document.addEventListener('DOMContentLoaded', function() {
     min-height: calc(100vh - var(--header-height, 56px));
     width: 100%;
     overflow: hidden;
+    background-color: #fffffff2;
+    background-image: url('/cdn/shop/t/10/assets/noise_bg.png');
+    background-repeat: repeat;
+    background-attachment: fixed;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   .category-list-template--22086712361118__category_list {

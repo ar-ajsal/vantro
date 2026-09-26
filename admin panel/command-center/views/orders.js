@@ -179,7 +179,7 @@
     var payBadge = o.paymentStatus === 'Paid' ? 'ok' : o.paymentStatus === 'Failed' ? 'bad' : 'warn';
 
     return '<tr data-id="' + esc(o._id) + '" style="cursor:pointer">' +
-      '<td data-label="Order"><div class="cell-strong mono" style="color:var(--lime)">' + esc(o.orderNumber) + '</div></td>' +
+      '<td data-label="Order"><div class="cell-strong mono" style="color:var(--ink)">' + esc(o.orderNumber) + '</div></td>' +
       '<td data-label="Customer"><div class="cell-strong">' + esc(o.customerName) + '</div>' +
       (o.phone ? '<div class="cell-sub mono" style="font-size:11.5px">' + esc(o.phone) + '</div>' : '') + '</td>' +
       '<td data-label="Items">' + itemCount + ' item' + (itemCount === 1 ? '' : 's') + '</td>' +
@@ -415,7 +415,7 @@
       '</div>' +
 
       // Status Management Card
-      '<div class="order-card" style="border-color:rgba(200,255,0,0.25)">' +
+      '<div class="order-card">' +
       '<div class="order-card-head">' +
       '<div class="dsec-title-left">' + icon('settings') + '<span>Update Order Status</span></div>' +
       '</div>' +

@@ -48,7 +48,7 @@
             ? '<div style="width:48px;height:48px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--near-black);flex:0 0 48px;display:grid;place-items:center">' +
                 '<img src="' + esc(imgUrl) + '" alt="' + esc(locName(c.name, 'Category')) + '" style="width:100%;height:100%;object-fit:cover">' +
               '</div>'
-            : '<div class="st-ic" style="width:48px;height:48px;border-radius:12px;flex:0 0 48px;display:grid;place-items:center;background:var(--lime-glow);color:var(--lime)">' + icon('layers') + '</div>'
+            : '<div class="st-ic" style="width:48px;height:48px;border-radius:12px;flex:0 0 48px;display:grid;place-items:center;background:var(--graphite-2);color:var(--ink-3)">' + icon('layers') + '</div>'
           ) +
           '<div style="flex:1;min-width:0">' +
           '<div class="cell-strong" style="font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(locName(c.name, 'Category')) + '</div>' +

@@ -28,7 +28,7 @@
       '<div class="panel"><div class="panel-head"><h3>' + icon('trending-up') + 'Revenue trend</h3>' +
       '<div class="seg" id="trendSeg"><button data-days="7" class="active">7D</button><button data-days="14">14D</button><button data-days="30">30D</button></div></div>' +
       '<div class="panel-pad"><div class="chart-wrap" id="revChart">' + UI.spinner() + '</div>' +
-      '<div class="legend"><span><i style="background:var(--lime)"></i>Paid revenue</span></div></div></div>' +
+      '<div class="legend"><span><i style="background:var(--ink)"></i>Paid revenue</span></div></div></div>' +
       '<div class="panel"><div class="panel-head"><h3>' + icon('gauge') + 'Order status</h3></div>' +
       '<div class="panel-pad" id="statusDonut">' + UI.spinner() + '</div></div>' +
       '</div>' +

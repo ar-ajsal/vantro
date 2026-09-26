@@ -171,7 +171,7 @@
         // Customer Name & Tag
         '<td data-label="Customer">' +
         '<div style="display:flex;align-items:center;gap:12px">' +
-        '<div class="avatar" style="color:var(--lime);border:1px solid rgba(200,255,0,0.2)">' + esc(initial) + '</div>' +
+        '<div class="avatar">' + esc(initial) + '</div>' +
         '<div>' +
         '<div style="display:flex;align-items:center;gap:6px">' +
         '<span class="cell-strong">' + esc(c.name || 'Valued Customer') + '</span>' +
@@ -184,7 +184,7 @@
         // Phone Number (User Main)
         '<td data-label="Phone">' +
         '<div style="display:flex;align-items:center;gap:6px">' +
-        '<span class="cell-strong mono" style="color:var(--lime);font-size:13px">' + esc(c.phone || '—') + '</span>' +
+        '<span class="cell-strong mono" style="color:var(--ink);font-size:13px">' + esc(c.phone || '—') + '</span>' +
         (cleanPhone ? '<a class="cust-action-btn whatsapp" href="https://wa.me/' + cleanPhone + '" target="_blank" rel="noopener" title="Open WhatsApp" onclick="event.stopPropagation()">' + icon('zap') + '</a>' : '') +
         '</div>' +
         '</td>' +
@@ -251,14 +251,14 @@
         '<button class="icon-btn" id="drwCustCopyPhone" title="Copy Phone">' + icon('copy') + '</button>',
       bodyHtml:
         // Customer Profile Header Card
-        '<div class="order-card" style="background:linear-gradient(180deg, var(--graphite), var(--charcoal));border-color:rgba(200,255,0,0.2)">' +
+        '<div class="order-card">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">' +
         '<div style="display:flex;align-items:center;gap:16px">' +
         '<div class="cust-avatar" style="width:54px;height:54px;font-size:22px">' + esc(initial) + '</div>' +
         '<div>' +
         '<div style="font-size:18px;font-weight:700;color:var(--ink)">' + esc(c.name || 'Valued Customer') + '</div>' +
         '<div style="display:flex;align-items:center;gap:8px;margin-top:4px">' +
-        '<span class="mono" style="color:var(--lime);font-weight:700;font-size:13.5px">' + icon('phone') + ' ' + esc(c.phone || '—') + '</span>' +
+        '<span class="mono" style="color:var(--ink);font-weight:700;font-size:13.5px">' + icon('phone') + ' ' + esc(c.phone || '—') + '</span>' +
         (c.email ? '<span class="cell-sub">&bull; ' + esc(c.email) + '</span>' : '') +
         '</div>' +
         '</div>' +
@@ -272,7 +272,7 @@
 
         // 4 KPI Analytics Strip
         '<div class="grid" style="grid-template-columns:repeat(4,1fr);gap:12px">' +
-        '<div class="stat-tile" style="padding:14px"><div class="st-num" style="color:var(--lime)">' + money(c.totalSpent) + '</div><div class="st-lbl">Lifetime Spend</div></div>' +
+        '<div class="stat-tile" style="padding:14px"><div class="st-num" style="color:var(--ink)">' + money(c.totalSpent) + '</div><div class="st-lbl">Lifetime Spend</div></div>' +
         '<div class="stat-tile" style="padding:14px"><div class="st-num">' + c.totalOrders + '</div><div class="st-lbl">Total Orders</div></div>' +
         '<div class="stat-tile" style="padding:14px"><div class="st-num">' + money(aov) + '</div><div class="st-lbl">Average Order</div></div>' +
         '<div class="stat-tile" style="padding:14px"><div class="st-num" style="font-size:14px;color:var(--ink)">' + (c.totalOrders >= 2 ? 'Repeat Buyer' : 'Single Order') + '</div><div class="st-lbl">Customer Tier</div></div>' +
@@ -307,14 +307,14 @@
 
         // Latest Order Spotlight Card (What did they order last)
         (c.lastOrder ?
-          '<div class="order-card" style="border-color:rgba(200,255,0,0.25)">' +
+          '<div class="order-card">' +
           '<div class="order-card-head">' +
           '<div class="dsec-title-left">' + icon('package') + '<span>Latest Order: ' + esc(c.lastOrder.orderId) + '</span></div>' +
           '<span class="badge ' + CC.orderBadgeClass(c.lastOrder.status) + '"><i class="d"></i>' + esc(c.lastOrder.status) + '</span>' +
           '</div>' +
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:12px;color:var(--ink-3)">' +
           '<span>Placed: <b>' + CC.dateLong(c.lastOrder.date) + ' (' + CC.timeAgo(c.lastOrder.date) + ')</b></span>' +
-          '<span class="cell-strong font-display" style="font-size:15px;color:var(--lime)">' + money(c.lastOrder.total) + '</span>' +
+          '<span class="cell-strong font-display" style="font-size:15px;color:var(--ink)">' + money(c.lastOrder.total) + '</span>' +
           '</div>' +
           '<div class="order-items-list">' +
           (c.lastOrder.items && c.lastOrder.items.length ?
@@ -350,7 +350,7 @@
             return '<div class="order-item-row" style="cursor:pointer" data-view-oid="' + esc(o.id) + '">' +
               '<div class="order-item-info">' +
               '<div style="display:flex;align-items:center;gap:8px">' +
-              '<span class="cell-strong mono" style="color:var(--lime)">' + esc(o.orderId) + '</span>' +
+              '<span class="cell-strong mono" style="color:var(--ink)">' + esc(o.orderId) + '</span>' +
               '<span class="badge ' + CC.orderBadgeClass(o.status) + '" style="font-size:10.5px;padding:2px 7px">' + esc(o.status) + '</span>' +
               '</div>' +
               '<div class="cell-sub" style="font-size:11.5px;margin-top:3px">' + CC.dateLong(o.date) + ' (' + CC.timeAgo(o.date) + ')</div>' +

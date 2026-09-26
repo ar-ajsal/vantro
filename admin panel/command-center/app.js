@@ -102,7 +102,16 @@
       var item = NAV.find(function (x) { return x.id === id; });
       return '<a class="bn-item" data-route="' + id + '" href="#/' + id + '">' +
         icon(item.icon) + '<span>' + esc(item.label) + '</span></a>';
-    }).join('');
+    }).join('') + '<a class="bn-item" id="bnMore">' + icon('menu') + '<span>More</span></a>';
+
+    var moreBtn = qs('#bnMore');
+    if (moreBtn) {
+      moreBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        qs('#sidebar').classList.add('open');
+        qs('#sidebarScrim').classList.add('open');
+      });
+    }
   }
 
   function setActiveNav() {
@@ -189,14 +198,10 @@
       sidebar.classList.toggle('collapsed');
       try { localStorage.setItem('cc.sidebar', sidebar.classList.contains('collapsed') ? '1' : '0'); } catch (e) {}
     });
-    qs('#openSidebar').addEventListener('click', function () {
-      sidebar.classList.add('mobile-open');
-      qs('#sidebarScrim').classList.add('open');
-    });
     qs('#sidebarScrim').addEventListener('click', closeSidebarMobile);
   }
   function closeSidebarMobile() {
-    qs('#sidebar').classList.remove('mobile-open');
+    qs('#sidebar').classList.remove('open');
     qs('#sidebarScrim').classList.remove('open');
   }
 
@@ -299,7 +304,6 @@
 
     // Icon-only buttons need their glyphs
     qs('#toggleSidebar').innerHTML = icon('sidebar');
-    qs('#openSidebar').innerHTML = icon('menu');
 
     renderNav();
     initSidebar();

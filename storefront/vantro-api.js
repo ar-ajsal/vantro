@@ -227,7 +227,41 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }, true);
             });
 
-            // Related Products removed per user request
+            // Related Products
+            try {
+                const relRes = await fetch(`${apiBase}/products?limit=50`);
+                if (relRes.ok) {
+                    const relData = await relRes.json();
+                    const allProds = relData.products || relData.data || [];
+                    const activeProds = allProds.filter(p => (p.status === "show" || !p.status) && p.slug !== slug);
+                    const shuffled = activeProds.sort(() => 0.5 - Math.random()).slice(0, 4);
+                    if (shuffled.length > 0) {
+                        // Use #dynamic-related-grid (our injected div)
+                        const relGrid = document.getElementById("dynamic-related-grid");
+                        const relSection = document.querySelector(".dynamic-related-products");
+                        if (relGrid && relSection) {
+                            relGrid.innerHTML = shuffled.map(p => {
+                                const title = getTitle(p);
+                                const price = getPrice(p);
+                                const image = getImage(p);
+                                const compareAt = p.compareAtPrice ? `<span class="price-compare">Rs. ${p.compareAtPrice}</span>` : '';
+                                return `<a href="/products/${p.slug}.html" class="related-product-card">
+                                    <div class="related-image-wrapper">
+                                        ${image ? `<img src="${image}" alt="${title}" loading="lazy" onerror="this.parentElement.style.background='#f4f4f5'">` : ''}
+                                    </div>
+                                    <div class="related-info">
+                                        <p class="related-p-title">${title}</p>
+                                        <div class="related-price">Rs. ${price}${compareAt}</div>
+                                    </div>
+                                </a>`;
+                            }).join("");
+                            // Update the grid to use the proper CSS class
+                            relGrid.className = "related-products-grid";
+                            relSection.style.display = "block";
+                        }
+                    }
+                }
+            } catch (err) { console.error("Related products error", err); }
         } catch (err) { console.error("[vantro] Product hydration error:", err); }
     }
 

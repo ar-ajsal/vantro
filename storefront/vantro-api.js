@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Images
             if (imgUrl) {
-                document.querySelectorAll(".slider-slide img, .product-media-column img, img").forEach(img => {
+                document.querySelectorAll(".slider-slide img, .product-media-column img").forEach(img => {
                     const s = img.src || "";
                     if (!img.classList.contains("header__logo") && !img.classList.contains("mobile-menu-drawer__logo")) {
                         img.src = imgUrl;

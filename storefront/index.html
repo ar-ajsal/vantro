@@ -3047,6 +3047,1294 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 </div>
+<div id="shopify-section-template--22086712361118__customer_reviews" class="shopify-section">
+
+<style>
+  .customer-reviews-template--22086712361118__customer_reviews {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 60px 20px;
+    font-family: var(--font-body, sans-serif);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .customer-reviews-template--22086712361118__customer_reviews .section-header {
+    font-family: var(--font-primary, sans-serif);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .cr-carousel-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .cr-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    padding-bottom: 20px;
+    flex-grow: 1;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cr-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cr-card {
+    background: linear-gradient(135deg, rgba(229, 229, 229, 0.3), rgba(229, 229, 229, 0.05));
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+    border-radius: 20px;
+    padding: 16px 16px;
+    min-width: 300px;
+    max-width: 350px;
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    user-select: none;
+  }
+
+  .cr-card__title {
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  .cr-card__stars {
+    display: flex;
+    gap: 4px;
+    margin: 10px 0;
+  }
+
+  .cr-card__stars svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  .cr-card__author {
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .cr-verified-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .cr-card__product {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.5;
+    margin-top: 5px;
+  }
+
+  .cr-nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    z-index: 2;
+  }
+
+  .cr-nav-btn:hover {
+    opacity: 0.6;
+  }
+
+  .cr-nav-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Dots pagination */
+  
+  
+
+  .cr-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cr-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #000000;
+    opacity: 0.25;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+  }
+
+  .cr-dot:hover {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+
+  .cr-dot.active {
+    width: 21px;
+    border-radius: 7px;
+    opacity: 0.85;
+    background-color: #000000;
+  }
+
+  @media screen and (max-width: 768px) {
+    .cr-nav-btn {
+      display: none; /* Hide arrows on mobile, allow natural swipe */
+    }
+    .cr-card {
+      min-width: 260px;
+    }
+    .cr-carousel {
+      /* Calculate padding to exactly center a 260px card (50vw - 130px) */
+      padding-left: calc(50vw - 130px);
+      padding-right: calc(50vw - 130px);
+    }
+  }
+</style>
+
+<div class="customer-reviews-template--22086712361118__customer_reviews">
+  
+    <h2 class="section-header">REVIEWS</h2>
+  
+
+  <div class="cr-carousel-wrapper">
+    <button class="cr-nav-btn cr-prev" aria-label="Previous reviews">
+      <svg viewBox="0 0 24 24">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <div class="cr-carousel" id="cr-carousel-template--22086712361118__customer_reviews">
+      
+        <div class="cr-card" data-index="0" >
+          
+            <p class="cr-card__title">Awesome</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Vishnu
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">Kushka</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="1" >
+          
+            <p class="cr-card__title">great stuff the feel is real must buy product.</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 3.5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <defs>
+                    <clipPath id="halfClip-review_1-4">
+                      <rect x="0" y="0" width="12" height="24" />
+                    </clipPath>
+                  </defs>
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="currentColor" stroke-width="2"></path>
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor" clip-path="url(#halfClip-review_1-4)"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="currentColor" stroke-width="2"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Sanjo Mondal
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">ch d pendent</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="2" >
+          
+            <p class="cr-card__title">I really loved the cap The D logo is beautifully placed, and the fabric feels premium.</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Arjun
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">D cap</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="3" >
+          
+            <p class="cr-card__title">Ordered this mainly for the design but the spec quality surprised me.</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Neha
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">vantro cross shade 001</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="4" >
+          
+            <p class="cr-card__title">Awesome quality</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 4 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="currentColor" stroke-width="2"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Razey
+            
+          </div>
+
+          
+            <div class="cr-card__product">vantro calculator</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="5" >
+          
+            <p class="cr-card__title">The quality of the D logo is outstanding. I really love this product!</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Amrith
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">vantro d addition belt</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="6" >
+          
+            <p class="cr-card__title">I really love them.</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Archana
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">vantro cross shade 005</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="7" >
+          
+            <p class="cr-card__title">I really liked the ring. I didnÔÇÖt expect the leather on the insideÔÇöitÔÇÖs peak. The quality is amazing!</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Amal
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">Vantro Cross Belt 01</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="8" >
+          
+            <p class="cr-card__title">Where did you find such an amazing collection? The products are absolutely superb!</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Rahul padiyath
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">2004 hearts braclet</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="9" >
+          
+            <p class="cr-card__title">The belt looks really niceÔÇöI loved it! IÔÇÖll definitely be getting another one very soon.</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Alan
+            
+          </div>
+
+          
+            <div class="cr-card__product">Vantro Cross Belt 01</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="10" >
+          
+            <p class="cr-card__title">What an amazing product! IÔÇÖm sure everyone will love it.</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            vishnu
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">Vantro Cross Belt 02</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="11" >
+          
+            <p class="cr-card__title">It looks and feels premium, and itÔÇÖs definitely worth every penny I paid.</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Farhan
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">D cap</div>
+          
+        </div>
+      
+        <div class="cr-card" data-index="12" >
+          
+            <p class="cr-card__title">Great collection! Keep it up!</p>
+          
+
+          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                
+                
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                
+              </svg>
+            
+          </div>
+
+          <div class="cr-card__author">
+            Kevin edits
+            
+              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            
+          </div>
+
+          
+            <div class="cr-card__product">midnight blue bracelet</div>
+          
+        </div>
+      
+    </div>
+
+    <button class="cr-nav-btn cr-next" aria-label="Next reviews">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  
+    
+      <div class="cr-dots" id="cr-dots-template--22086712361118__customer_reviews" aria-label="Reviews navigation">
+        
+          <button
+            type="button"
+            class="cr-dot active"
+            data-index="0"
+            aria-label="Go to review 1"
+            aria-current="true"
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="1"
+            aria-label="Go to review 2"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="2"
+            aria-label="Go to review 3"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="3"
+            aria-label="Go to review 4"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="4"
+            aria-label="Go to review 5"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="5"
+            aria-label="Go to review 6"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="6"
+            aria-label="Go to review 7"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="7"
+            aria-label="Go to review 8"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="8"
+            aria-label="Go to review 9"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="9"
+            aria-label="Go to review 10"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="10"
+            aria-label="Go to review 11"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="11"
+            aria-label="Go to review 12"
+            
+          ></button>
+        
+          <button
+            type="button"
+            class="cr-dot"
+            data-index="12"
+            aria-label="Go to review 13"
+            
+          ></button>
+        
+      </div>
+    
+  
+</div>
+
+<script>
+  (function() {
+    function initReviews() {
+      const carousel = document.getElementById('cr-carousel-template--22086712361118__customer_reviews');
+      if (!carousel) return;
+
+      const prevBtn = carousel.parentElement.querySelector('.cr-prev');
+      const nextBtn = carousel.parentElement.querySelector('.cr-next');
+      const dotsContainer = document.getElementById('cr-dots-template--22086712361118__customer_reviews');
+      const dots = dotsContainer ? Array.from(dotsContainer.querySelectorAll('.cr-dot')) : [];
+
+      const isAutoScroll = false;
+      const scrollDelay = 3 * 1000;
+      const originalCards = Array.from(carousel.querySelectorAll('.cr-card'));
+      const originalCount = originalCards.length;
+
+      if (originalCount === 0) return;
+
+      if (isAutoScroll) {
+        // Clone all cards for infinite loop
+        originalCards.forEach(card => {
+          const clone = card.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          carousel.appendChild(clone);
+        });
+
+        let autoScrollInterval;
+
+        function getScrollUnit() {
+          return originalCards[0].offsetWidth + 20; // card width + gap
+        }
+
+        function getMaxScroll() {
+          const allCards = carousel.querySelectorAll('.cr-card');
+          if (allCards.length > originalCount) {
+            return allCards[originalCount].offsetLeft - allCards[0].offsetLeft;
+          }
+          return carousel.scrollWidth / 2;
+        }
+
+        function startAutoScroll() {
+          if (!isAutoScroll) return;
+          autoScrollInterval = setInterval(() => {
+            if (!carousel) return;
+            const maxScroll = getMaxScroll();
+            if (carousel.scrollLeft >= maxScroll) {
+              carousel.scrollLeft -= maxScroll;
+            }
+            carousel.scrollBy({ left: getScrollUnit(), behavior: 'smooth' });
+          }, scrollDelay);
+        }
+
+        function stopAutoScroll() {
+          if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+          }
+        }
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', () => {
+            const maxScroll = getMaxScroll();
+            if (carousel.scrollLeft <= 0) {
+              carousel.scrollLeft += maxScroll;
+            }
+            carousel.scrollBy({ left: -getScrollUnit(), behavior: 'smooth' });
+            stopAutoScroll();
+            startAutoScroll();
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', () => {
+            const maxScroll = getMaxScroll();
+            if (carousel.scrollLeft >= maxScroll) {
+              carousel.scrollLeft -= maxScroll;
+            }
+            carousel.scrollBy({ left: getScrollUnit(), behavior: 'smooth' });
+            stopAutoScroll();
+            startAutoScroll();
+          });
+        }
+
+        let scrollTimeout;
+        carousel.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            const maxScroll = getMaxScroll();
+            if (carousel.scrollLeft <= 5) {
+              carousel.scrollLeft += maxScroll;
+            } else if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 5) {
+              carousel.scrollLeft -= maxScroll;
+            }
+          }, 150);
+        }, { passive: true });
+
+        startAutoScroll();
+        carousel.parentElement.addEventListener('mouseenter', stopAutoScroll);
+        carousel.parentElement.addEventListener('mouseleave', startAutoScroll);
+        carousel.parentElement.addEventListener('touchstart', stopAutoScroll, { passive: true });
+        carousel.parentElement.addEventListener('touchend', startAutoScroll, { passive: true });
+
+      } else {
+        // Manual Swiping with Navigation Dots
+        function getCurrentCardIndex() {
+          const carouselRect = carousel.getBoundingClientRect();
+          const carouselCenter = carouselRect.left + carouselRect.width / 2;
+          let closestIndex = 0;
+          let minDistance = Infinity;
+
+          originalCards.forEach((card, idx) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2;
+            const dist = Math.abs(carouselCenter - cardCenter);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestIndex = idx;
+            }
+          });
+          return closestIndex;
+        }
+
+        function updateActiveDot() {
+          if (!dots.length) return;
+          const activeIdx = getCurrentCardIndex();
+          dots.forEach((dot, idx) => {
+            if (idx === activeIdx) {
+              dot.classList.add('active');
+              dot.setAttribute('aria-current', 'true');
+            } else {
+              dot.classList.remove('active');
+              dot.removeAttribute('aria-current');
+            }
+          });
+        }
+
+        function scrollToCard(index) {
+          if (index < 0 || index >= originalCards.length) return;
+          const card = originalCards[index];
+          const cardRect = card.getBoundingClientRect();
+          const carouselRect = carousel.getBoundingClientRect();
+          const targetScroll = carousel.scrollLeft + (cardRect.left - carouselRect.left) - (carousel.clientWidth - card.offsetWidth) / 2;
+
+          carousel.scrollTo({
+            left: Math.max(0, targetScroll),
+            behavior: 'smooth'
+          });
+        }
+
+        dots.forEach((dot, idx) => {
+          dot.addEventListener('click', () => {
+            scrollToCard(idx);
+          });
+        });
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', () => {
+            const currentIdx = getCurrentCardIndex();
+            const targetIdx = Math.max(0, currentIdx - 1);
+            scrollToCard(targetIdx);
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', () => {
+            const currentIdx = getCurrentCardIndex();
+            const targetIdx = Math.min(originalCount - 1, currentIdx + 1);
+            scrollToCard(targetIdx);
+          });
+        }
+
+        let ticking = false;
+        carousel.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              updateActiveDot();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+
+        updateActiveDot();
+        window.addEventListener('resize', updateActiveDot);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReviews);
+    } else {
+      initReviews();
+    }
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail && event.detail.sectionId === 'template--22086712361118__customer_reviews') {
+        initReviews();
+      }
+    });
+  })();
+</script>
+</div>
+
 </main>
     <div id="shopify-section-footer" class="shopify-section"><link href="cdn/shop/t/10/assets/footer32c8.css?v=4652512725487660601786943362" rel="stylesheet" type="text/css" media="all" />
 <style data-shopify>.footer {

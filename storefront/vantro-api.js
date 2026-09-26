@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const apiBase = window.__CHROMVAULT_API_BASE__ || "/v1";
 
     // Clean up broken external srcset immediately
@@ -227,6 +227,30 @@
                 }, true);
             });
 
+            // Related Products
+            try {
+                const relRes = await fetch(`${apiBase}/products?limit=50`);
+                if (relRes.ok) {
+                    const relData = await relRes.json();
+                    const allProds = relData.products || relData.data || [];
+                    const activeProds = allProds.filter(p => (p.status === "show" || !p.status) && p.slug !== slug);
+                    const shuffled = activeProds.sort(() => 0.5 - Math.random()).slice(0, 4);
+                    if (shuffled.length > 0) {
+                        const relGrid = document.getElementById("dynamic-related-grid") || document.querySelector(".related-products-grid");
+                        if (relGrid) {
+                            relGrid.innerHTML = shuffled.map(p => {
+                                const title = getTitle(p);
+                                const price = getPrice(p);
+                                const image = getImage(p);
+                                const compareAt = p.compareAtPrice ? `<span style="text-decoration:line-through;color:#999;font-size:12px;margin-left:6px;">Rs. ${p.compareAtPrice}</span>` : '';
+                                return `<a href="/products/${p.slug}.html" style="text-decoration:none;color:inherit;display:block;"><div style="aspect-ratio:4/5;background:#f4f4f5;border-radius:4px;overflow:hidden;margin-bottom:12px;">${image ? `<img src="${image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">` : ''}</div><h3 style="font-size:13px;font-weight:500;margin:0 0 6px;">${title}</h3><div style="font-size:14px;font-weight:600;">Rs. ${price}${compareAt}</div></a>`;
+                            }).join("");
+                            const relSection = document.querySelector(".dynamic-related-products") || document.querySelector(".related-products-section");
+                            if (relSection && relSection.style) relSection.style.display = "block";
+                        }
+                    }
+                }
+            } catch (err) { console.error("Related products error", err); }
         } catch (err) { console.error("[vantro] Product hydration error:", err); }
     }
 

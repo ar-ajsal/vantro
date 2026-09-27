@@ -32,7 +32,7 @@
       '<button data-view="table" class="' + (q.view === 'table' ? 'active' : '') + '">' + icon('menu') + '</button></div>' +
       '<button class="btn primary" id="newProduct">' + icon('plus') + 'New product</button>' +
       '</div></div>' +
-      '<div class="toolbar">' +
+      '<div class="toolbar prod-toolbar">' +
       '<div class="search-box grow">' + icon('search') +
       '<input class="input" id="prodSearch" placeholder="Search products by title…"></div>' +
       '<select class="select" id="prodCat"><option value="">All categories</option></select>' +
@@ -63,6 +63,24 @@
 
     load(root);
     if (params && params.id) openEditor(params.id);
+  }
+
+  function getProductCoverImage(p) {
+    if (!p) return '';
+    var raw = p.image || p.images;
+    if (!raw) return '';
+    if (typeof raw === 'string') return raw.trim();
+    if (Array.isArray(raw)) {
+      for (var i = 0; i < raw.length; i++) {
+        var it = raw[i];
+        if (typeof it === 'string' && it.trim()) return it.trim();
+        if (it && typeof it === 'object') {
+          var u = it.url || it.secure_url || it.path || '';
+          if (typeof u === 'string' && u.trim()) return u.trim();
+        }
+      }
+    }
+    return '';
   }
 
   function load(root) {
@@ -110,7 +128,11 @@
 
   function gridHtml(products) {
     return '<div class="prod-grid">' + products.map(function (p) {
-      var img = (p.image && p.image[0]) ? '<img src="' + esc(p.image[0]) + '" alt="">' : '<div class="ph">' + icon('box') + '</div>';
+      var coverUrl = getProductCoverImage(p);
+      var img = coverUrl ?
+        '<img src="' + esc(coverUrl) + '" alt="' + esc(locName(p.title, '')) + '" loading="lazy" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
+        '<div class="prod-media-ph" style="display:none">' + icon('box') + '<span>No image</span></div>' :
+        '<div class="prod-media-ph">' + icon('box') + '<span>No image</span></div>';
       var hidden = (p.status || 'show') !== 'show';
       return '<div class="prod-card" data-id="' + esc(p._id) + '" draggable="true">' +
         '<div class="prod-media">' + img +
@@ -123,9 +145,9 @@
         '<div class="prod-meta">' + priceHtml(p) + (p.isBestSeller ? ' <span class="badge" style="background:#0A0A0B;color:#fff;font-size:9px;vertical-align:middle">Best Seller</span>' : '') + '</div>' +
         '</div>' +
         '<div class="prod-actions">' +
-        '<button class="btn sm" data-edit="' + esc(p._id) + '">' + icon('edit') + 'Edit</button>' +
-        '<button class="btn sm ghost" data-toggle="' + esc(p._id) + '" title="' + (hidden ? 'Show' : 'Hide') + '">' + icon(hidden ? 'eye' : 'eye-off') + '</button>' +
-        '<button class="btn sm ghost" data-del="' + esc(p._id) + '" title="Delete">' + icon('trash') + '</button>' +
+        '<button class="btn sm btn-edit" data-edit="' + esc(p._id) + '">' + icon('edit') + 'Edit</button>' +
+        '<button class="btn-action-icon" data-toggle="' + esc(p._id) + '" title="' + (hidden ? 'Show' : 'Hide') + '">' + icon(hidden ? 'eye' : 'eye-off') + '</button>' +
+        '<button class="btn-action-icon danger" data-del="' + esc(p._id) + '" title="Delete">' + icon('trash') + '</button>' +
         '</div></div>';
     }).join('') + '</div>';
   }
@@ -134,7 +156,10 @@
     return '<div class="panel"><div class="tbl-wrap"><table class="tbl"><thead><tr>' +
       '<th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Flags</th><th></th>' +
       '</tr></thead><tbody>' + products.map(function (p) {
-        var img = (p.image && p.image[0]) ? '<img class="thumb" src="' + esc(p.image[0]) + '" alt="">' : '<div class="thumb thumb-ph">' + icon('box') + '</div>';
+        var coverUrl = getProductCoverImage(p);
+        var img = coverUrl ?
+          '<img class="thumb" src="' + esc(coverUrl) + '" alt="" onerror="this.outerHTML=\'<div class=\\\'thumb thumb-ph\\\'>\' + icon(\'box\') + \'</div>\'">' :
+          '<div class="thumb thumb-ph">' + icon('box') + '</div>';
         var hidden = (p.status || 'show') !== 'show';
         var catName = catFor(p);
         return '<tr data-id="' + esc(p._id) + '" draggable="true">' +

@@ -383,9 +383,9 @@
       (o.email ? '<div class="cell-sub">' + esc(o.email) + '</div>' : '') +
       '</div></div>' +
       '<div class="cust-actions">' +
-      (cleanPhone ? '<a class="cust-action-btn whatsapp" href="https://wa.me/' + cleanPhone + '" target="_blank" rel="noopener">' + icon('zap') + 'WhatsApp</a>' : '') +
-      (o.phone ? '<a class="cust-action-btn" href="tel:' + esc(o.phone) + '">' + icon('phone') + 'Call</a>' : '') +
-      (o.phone ? '<button class="cust-action-btn" id="btnCopyPhone">' + icon('copy') + 'Copy Phone</button>' : '') +
+      (cleanPhone ? '<a class="btn sm whatsapp-btn" href="https://wa.me/' + cleanPhone + '" target="_blank" rel="noopener">' + icon('zap') + 'WhatsApp</a>' : '') +
+      (o.phone ? '<a class="btn sm" href="tel:' + esc(o.phone) + '">' + icon('phone') + 'Call</a>' : '') +
+      (o.phone ? '<button class="btn sm" id="btnCopyPhone">' + icon('copy') + 'Copy Phone</button>' : '') +
       '</div>' +
       '<div style="margin-top:8px">' +
       '<div class="cell-sub" style="margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Delivery Address</div>' +
@@ -394,7 +394,7 @@
       '<span class="addr-icon">' + icon('map-pin') + '</span>' +
       '<div class="addr-text">' + esc(formattedAddress) + '</div>' +
       '</div>' +
-      '<div style="margin-top:10px"><button class="btn ghost sm" id="btnCopyAddress">' + icon('copy') + 'Copy Address</button></div>' +
+      '<div style="margin-top:10px"><button class="btn sm" id="btnCopyAddress">' + icon('copy') + 'Copy Address</button></div>' +
       '</div>' +
       '</div>' +
       '</div></div>' +

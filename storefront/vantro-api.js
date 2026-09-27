@@ -17,8 +17,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     function getImage(product) {
         if (!product) return "";
-        const img = Array.isArray(product.image) ? product.image[0] : product.image;
+        const img = Array.isArray(product.image) ? product.image[0] : (Array.isArray(product.images) ? product.images[0] : (product.image || product.images));
         return img || "";
+    }
+    function getImages(product) {
+        if (!product) return [];
+        const raw = (product.images && product.images.length) ? product.images : (product.image || []);
+        if (typeof raw === "string" && raw.trim()) return [raw.trim()];
+        if (Array.isArray(raw)) {
+            const list = [];
+            raw.forEach(it => {
+                if (typeof it === "string" && it.trim()) list.push(it.trim());
+                else if (it && typeof it === "object") {
+                    const u = it.url || it.secure_url || it.src || it.path || "";
+                    if (typeof u === "string" && u.trim()) list.push(u.trim());
+                }
+            });
+            if (list.length) return list;
+        }
+        return [];
     }
     function getQty() {
         const qtyInput = document.querySelector(".qty-number-input, [name=quantity], input[type=number]");
@@ -129,7 +146,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (titleEls.length && cachedProd.title) titleEls.forEach(el => { el.innerText = cachedProd.title; });
                 const priceEls = document.querySelectorAll(".price-current, .price-item--regular, .price-item--sale");
                 if (priceEls.length && cachedProd.price !== undefined) priceEls.forEach(el => { el.innerText = "Rs. " + cachedProd.price; });
-                if (cachedProd.image) {
+                if (cachedProd.images && cachedProd.images.length > 0) {
+                    const slider = document.querySelector(".product-slider, [id*='productSlider']");
+                    if (slider) {
+                        slider.innerHTML = cachedProd.images.map((u, i) => `
+                            <div class="slider-slide" data-index="${i}">
+                                <img src="${u}" style="width:100%;height:100%;object-fit:cover;">
+                            </div>
+                        `).join('');
+                    }
+                } else if (cachedProd.image) {
                     document.querySelectorAll(".slider-slide img, .product-media-column img, .product-main-image img").forEach(img => {
                         if (!img.classList.contains("header__logo") && !img.classList.contains("mobile-menu-drawer__logo")) {
                             img.src = cachedProd.image;
@@ -144,7 +170,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!res.ok) throw new Error(`API ${res.status}`);
             const raw = await res.json();
             const product = raw.data || raw.product || raw;
-            window.__vantro_product__ = { id: product._id || product.id, title: getTitle(product), price: getPrice(product), image: getImage(product) };
+            const allImages = getImages(product);
+            window.__vantro_product__ = { id: product._id || product.id, title: getTitle(product), price: getPrice(product), image: getImage(product), images: allImages };
+            try {
+                sessionStorage.setItem("vantro_prod_" + slug, JSON.stringify({ title: getTitle(product), price: getPrice(product), image: getImage(product), images: allImages }));
+            } catch(e) {}
 
             const currentCart = readCart();
             let cartUpdated = false;
@@ -184,7 +214,68 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             // Images
-            if (imgUrl) {
+            const allImages = getImages(product);
+            const slider = document.querySelector(".product-slider, [id*='productSlider']");
+            const dotsContainer = document.querySelector(".slider-dots, [id*='sliderDots']");
+
+            if (allImages.length > 0 && slider) {
+                slider.innerHTML = allImages.map((u, i) => `
+                    <div class="slider-slide" data-index="${i}">
+                        <img 
+                            src="${u}" 
+                            sizes="(min-width: 1024px) 45vw, 100vw"
+                            alt="${title} - ${i + 1}" 
+                            loading="${i === 0 ? 'eager' : 'lazy'}"
+                            ${i === 0 ? 'fetchpriority="high"' : ''}
+                            style="width: 100%; height: 100%; object-fit: cover;"
+                        >
+                    </div>
+                `).join('');
+
+                if (dotsContainer) {
+                    if (allImages.length > 1) {
+                        dotsContainer.style.display = "flex";
+                        dotsContainer.innerHTML = allImages.map((_, i) => `
+                            <button type="button" class="dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Go to slide ${i + 1}" aria-current="${i === 0 ? 'true' : 'false'}"></button>
+                        `).join('');
+
+                        dotsContainer.querySelectorAll('.dot').forEach(dot => {
+                            dot.addEventListener('click', () => {
+                                const idx = parseInt(dot.dataset.index, 10);
+                                slider.scrollTo({
+                                    left: idx * slider.offsetWidth,
+                                    behavior: 'smooth'
+                                });
+                            });
+                        });
+                    } else {
+                        dotsContainer.style.display = "none";
+                    }
+                }
+
+                const prevBtn = document.querySelector(".slider-arrow--prev, [id*='sliderPrev']");
+                const nextBtn = document.querySelector(".slider-arrow--next, [id*='sliderNext']");
+                if (prevBtn && nextBtn) {
+                    if (allImages.length <= 1) {
+                        prevBtn.style.display = "none";
+                        nextBtn.style.display = "none";
+                    } else {
+                        prevBtn.style.display = "";
+                        nextBtn.style.display = "";
+                    }
+                }
+
+                slider.addEventListener('scroll', () => {
+                    const idx = Math.round(slider.scrollLeft / slider.offsetWidth);
+                    if (dotsContainer) {
+                        dotsContainer.querySelectorAll('.dot').forEach((dot, i) => {
+                            const isActive = i === idx;
+                            dot.classList.toggle('active', isActive);
+                            dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+                        });
+                    }
+                });
+            } else if (imgUrl) {
                 document.querySelectorAll(".slider-slide img, .product-media-column img").forEach(img => {
                     const s = img.src || "";
                     if (!img.classList.contains("header__logo") && !img.classList.contains("mobile-menu-drawer__logo")) {

@@ -4,6 +4,7 @@ const multer = require('multer');
 const { upload, cloudinary } = require('../config/cloudinary');
 const { protectAdmin } = require('../middleware/authMiddleware');
 const { removeBackground } = require('../services/removeBackground');
+const { normalizeProductImage } = require('../services/normalizeImage');
 
 // Setup memory storage for intercepting files before upload
 const uploadMem = multer({ storage: multer.memoryStorage() });
@@ -50,7 +51,10 @@ router.post('/removebg', uploadMem.single('file'), async (req, res) => {
       req.file.originalname
     );
 
-    // 2. Upload the processed transparent PNG to Cloudinary using upload_stream
+    // 2. Normalize: trim margins, resize proportionally, center on 1000x1000 canvas
+    const finalBuffer = await normalizeProductImage(processedBuffer);
+
+    // 3. Upload the processed transparent PNG to Cloudinary using upload_stream
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder: 'vantro',
@@ -67,7 +71,7 @@ router.post('/removebg', uploadMem.single('file'), async (req, res) => {
       }
     );
 
-    uploadStream.end(processedBuffer);
+    uploadStream.end(finalBuffer);
 
   } catch (error) {
     console.error('Remove background error:', error);

@@ -1,5 +1,22 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const Admin = require('../models/Admin');
 const Category = require('../models/Category');
+
+async function isAdminRequest(req) {
+  try {
+    const header = req.headers.authorization || req.headers.Authorization || '';
+    if (!header.startsWith('Bearer ')) return false;
+    const token = header.split(' ')[1];
+    if (!token || !process.env.JWT_SECRET) return false;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded || !decoded.id || (decoded.type && decoded.type !== 'admin')) return false;
+    const admin = await Admin.findById(decoded.id).select('_id').lean();
+    return Boolean(admin);
+  } catch (_) {
+    return false;
+  }
+}
 
 // Map Mongoose validation/cast errors to 400, duplicate keys to 409, and log
 // genuine server faults before returning a 500. Keeps HTTP semantics correct.
@@ -32,7 +49,8 @@ const getAllCategories = async (req, res) => {
   try {
     // Include a ?all=1 escape hatch used by the admin panel (which also sends
     // a Bearer token) so it can still display hidden categories.
-    const showAll = req.query.all === '1';
+    const adminReq = await isAdminRequest(req);
+    const showAll = req.query.all === '1' || adminReq;
     const filter = showAll ? {} : { status: 'show' };
     const categories = await Category.find(filter).sort({ order: 1, createdAt: -1 });
     res.status(200).send({ categories });

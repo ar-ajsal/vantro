@@ -41,7 +41,7 @@
       '<div id="prodPager" style="margin-top:16px"></div>';
 
     // categories for the filter + editor
-    CC.API.get('/category').then(function (d) {
+    CC.API.get('/category?all=1').then(function (d) {
       _categories = (d && d.categories) || [];
       var sel = root.querySelector('#prodCat');
       sel.innerHTML = '<option value="">All categories</option>' + _categories.map(function (c) {
@@ -264,7 +264,7 @@
 
   function ensureCategories() {
     if (_categories && _categories.length) return Promise.resolve(_categories);
-    return CC.API.get('/category').then(function (d) {
+    return CC.API.get('/category?all=1').then(function (d) {
       _categories = (d && d.categories) || [];
       return _categories;
     }).catch(function () { return []; });
@@ -297,7 +297,32 @@
 
   function mountForm(drawerEl, p, close) {
     var pr = p.prices || {};
-    var images = (p.image || []).slice();
+
+    // Normalize images: accept both p.image and p.images (string or array)
+    var rawImgs = p.image || p.images || [];
+    var images = [];
+    if (typeof rawImgs === 'string' && rawImgs.trim()) {
+      images = [rawImgs.trim()];
+    } else if (Array.isArray(rawImgs)) {
+      rawImgs.forEach(function (item) {
+        if (typeof item === 'string' && item.trim()) {
+          images.push(item.trim());
+        } else if (item && typeof item === 'object') {
+          var u = item.url || item.secure_url || item.src || item.path || '';
+          if (typeof u === 'string' && u.trim()) images.push(u.trim());
+        }
+      });
+    }
+    // Also include extra images if p.images has items not in p.image
+    if (Array.isArray(p.images)) {
+      p.images.forEach(function (item) {
+        var u = typeof item === 'string' ? item.trim() : (item && (item.url || item.secure_url || item.src || item.path));
+        if (u && typeof u === 'string' && u.trim() && !images.includes(u.trim())) {
+          images.push(u.trim());
+        }
+      });
+    }
+
     var currentCat = p.category || (p.categories && p.categories[0]);
     if (currentCat && typeof currentCat === 'object') currentCat = currentCat._id;
 
@@ -486,8 +511,8 @@
         return '<div class="up-thumb" draggable="true" data-index="' + i + '"><img src="' + esc(url) + '" alt="">' +
           '<button class="rm" data-rm="' + i + '" title="Remove">' + icon('x') + '</button></div>';
       }).join('') +
-        '<label class="up-slot" title="Upload image">' + icon('upload') +
-        '<input type="file" accept="image/*" hidden id="fileInput"></label>';
+        '<label class="up-slot" title="Upload images (click or drag & drop)">' + icon('upload') +
+        '<input type="file" accept="image/*" multiple hidden id="fileInput"></label>';
 
       host.querySelectorAll('[data-rm]').forEach(function (b) {
         b.addEventListener('click', function () { images.splice(+b.getAttribute('data-rm'), 1); renderUploader(); });
@@ -522,20 +547,78 @@
           this.classList.remove('dragging');
         });
       });
-      var fi = host.querySelector('#fileInput');
-      fi.addEventListener('change', function () {
-        var file = fi.files && fi.files[0]; if (!file) return;
+
+      function handleFiles(files) {
+        var fileList = Array.from(files || []).filter(function (f) {
+          return f && f.type && f.type.startsWith('image/');
+        });
+        if (!fileList.length) return;
+
         var removeBg = body.querySelector('#removeBgCheck') ? body.querySelector('#removeBgCheck').checked : true;
         var slot = host.querySelector('.up-slot');
-        slot.innerHTML = '<div class="spinner" style="width:22px;height:22px;border-width:2px;margin-bottom:8px"></div><div style="font-size:11px;text-align:center;color:var(--text-dim)">' + (removeBg ? 'Removing BG...' : 'Uploading...') + '</div>';
-        slot.style.flexDirection = 'column';
-        var uploadReq = removeBg ? CC.API.uploadProductImage(file) : CC.API.upload(file);
-        uploadReq.then(function (res) {
-          var url = typeof res === 'string' ? res : (res && (res.url || res.secure_url || res.path));
-          if (!url) throw new Error('Upload failed.');
-          images.push(url); renderUploader();
-        }).catch(function (e) { CC.toast(e.message || 'Upload failed', 'bad'); renderUploader(); });
-      });
+        if (slot) {
+          slot.innerHTML = '<div class="spinner" style="width:22px;height:22px;border-width:2px;margin-bottom:8px"></div><div id="upStatusText" style="font-size:11px;text-align:center;color:var(--text-dim)">' + (removeBg ? 'Removing BG...' : 'Uploading...') + '</div>';
+          slot.style.flexDirection = 'column';
+        }
+
+        var uploadedUrls = [];
+        var p = Promise.resolve();
+
+        fileList.forEach(function (file, idx) {
+          p = p.then(function () {
+            var statusEl = host.querySelector('#upStatusText');
+            if (statusEl) {
+              statusEl.textContent = (removeBg ? 'Removing BG ' : 'Uploading ') + (idx + 1) + '/' + fileList.length + '...';
+            }
+            var uploadReq = removeBg ? CC.API.uploadProductImage(file) : CC.API.upload(file);
+            return uploadReq.then(function (res) {
+              var url = typeof res === 'string' ? res : (res && (res.url || res.secure_url || res.path));
+              if (url) uploadedUrls.push(url);
+            });
+          });
+        });
+
+        p.then(function () {
+          if (uploadedUrls.length) {
+            images = images.concat(uploadedUrls);
+            CC.toast('Uploaded ' + uploadedUrls.length + ' image' + (uploadedUrls.length === 1 ? '' : 's'), 'ok');
+          }
+        }).catch(function (e) {
+          if (uploadedUrls.length) images = images.concat(uploadedUrls);
+          CC.toast(e.message || 'Upload failed', 'bad');
+        }).finally(function () {
+          renderUploader();
+        });
+      }
+
+      var fi = host.querySelector('#fileInput');
+      if (fi) {
+        fi.addEventListener('change', function () {
+          handleFiles(this.files);
+        });
+      }
+
+      var slot = host.querySelector('.up-slot');
+      if (slot) {
+        slot.addEventListener('dragover', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          slot.classList.add('drag-over');
+        });
+        slot.addEventListener('dragleave', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          slot.classList.remove('drag-over');
+        });
+        slot.addEventListener('drop', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          slot.classList.remove('drag-over');
+          if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+            handleFiles(e.dataTransfer.files);
+          }
+        });
+      }
     }
     renderUploader();
 
@@ -889,6 +972,7 @@
         category:      cat,
         categories:    [cat],
         image:         images,
+        images:        images,
         stock:         stock,
         prices:        { price: price, originalPrice: orig || price, discount: discount },
         status:        body.querySelector('#fStatus').value,

@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
   image: [{ type: String }],
+  images: [{ type: String }],
   stock: { type: Number, default: 0 },
   tag: [{ type: String }],
   prices: {

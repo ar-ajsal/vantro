@@ -48,6 +48,15 @@ const addProduct = async (req, res) => {
     if (!payload.categories || !payload.categories.length) {
       payload.categories = [categoryId];
     }
+    // Normalize image and images arrays
+    let imgList = payload.image || payload.images || [];
+    if (typeof imgList === 'string' && imgList.trim()) {
+      imgList = [imgList.trim()];
+    }
+    if (Array.isArray(imgList)) {
+      payload.image = imgList.filter(Boolean);
+      payload.images = payload.image;
+    }
     const newProduct = new Product(payload);
     await newProduct.save();
     res.status(201).send({ message: 'Product Added Successfully!', product: newProduct });
@@ -139,6 +148,17 @@ const updateProduct = async (req, res) => {
       payload.category = categoryId;
       if (!payload.categories || !payload.categories.length) {
         payload.categories = [categoryId];
+      }
+    }
+    // Normalize image and images arrays
+    if (payload.image !== undefined || payload.images !== undefined) {
+      let imgList = payload.image || payload.images || [];
+      if (typeof imgList === 'string' && imgList.trim()) {
+        imgList = [imgList.trim()];
+      }
+      if (Array.isArray(imgList)) {
+        payload.image = imgList.filter(Boolean);
+        payload.images = payload.image;
       }
     }
     const product = await Product.findByIdAndUpdate(req.params.id, payload, {

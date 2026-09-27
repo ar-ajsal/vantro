@@ -996,3 +996,414 @@ svg.chart text { font-family: var(--font-body); fill: var(--ink-3); font-size: 1
 @media (max-width: 900px) {
   .order-hero-meta { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ============================================================================
+   SETTINGS VIEW — LUXURY SYSTEM & STORE CONTROL
+   ========================================================================== */
+
+/* Segmented Tab Navigation */
+.settings-tabs-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 24px;
+  padding-bottom: 4px;
+  display: flex;
+}
+.settings-tabs-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.settings-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--graphite-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  min-width: min-content;
+}
+.settings-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: var(--r-pill);
+  border: none;
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  white-space: nowrap;
+}
+.settings-tab-btn .ic {
+  width: 16px;
+  height: 16px;
+  color: var(--ink-3);
+  transition: color 0.2s;
+}
+.settings-tab-btn:hover {
+  color: var(--ink);
+}
+.settings-tab-btn:hover .ic {
+  color: var(--ink);
+}
+.settings-tab-btn.active {
+  background: #ffffff;
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.settings-tab-btn.active .ic {
+  color: var(--ink);
+}
+
+/* Tab Panes */
+.settings-tab-pane {
+  display: none;
+  animation: settingsFadeIn 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.settings-tab-pane.active {
+  display: block;
+}
+@keyframes settingsFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Luxury Media Card */
+.media-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+  margin-bottom: 20px;
+  transition: border-color 0.2s;
+}
+.media-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--line);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.media-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.media-card-title .ic {
+  color: var(--ink-2);
+}
+.media-card-body {
+  padding: 22px;
+}
+.media-preview-box {
+  position: relative;
+  width: 100%;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: #09090b;
+  border: 1px solid var(--line);
+  margin-bottom: 16px;
+  max-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.media-preview-box video,
+.media-preview-box img {
+  width: 100%;
+  height: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  display: block;
+}
+.media-live-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.media-live-badge i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+.media-preview-overlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+/* Upload Dropzone */
+.upload-dropzone {
+  border: 2px dashed #d4d4d8;
+  border-radius: var(--r-lg);
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  background: #fafafa;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+}
+.upload-dropzone:hover,
+.upload-dropzone.drag-over {
+  border-color: var(--ink);
+  background: #f4f4f5;
+  transform: scale(1.003);
+}
+.upload-dropzone-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  margin-bottom: 2px;
+}
+.upload-dropzone-icon .ic {
+  width: 20px;
+  height: 20px;
+}
+.upload-dropzone-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.upload-dropzone-sub {
+  font-size: 12px;
+  color: var(--ink-3);
+  max-width: 360px;
+  line-height: 1.4;
+}
+
+/* File Selected / Staged Banner */
+.file-staged-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  background: #f4f4f5;
+  border: 1px solid var(--line);
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.file-staged-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+.file-staged-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #09090b;
+  flex-shrink: 0;
+}
+.file-staged-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}
+.file-staged-size {
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+.file-staged-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Lookbook Grid */
+.lookbook-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.lookbook-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #f4f4f5;
+  box-shadow: var(--shadow-1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.lookbook-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+.lookbook-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lookbook-del-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(9, 9, 11, 0.75);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.lookbook-del-btn:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+.lookbook-add-tile {
+  aspect-ratio: 1;
+  border-radius: var(--r-md);
+  border: 2px dashed #d4d4d8;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--ink-3);
+  transition: all 0.2s;
+  user-select: none;
+}
+.lookbook-add-tile:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: #f4f4f5;
+}
+
+/* Switch Toggle (iOS style) */
+.switch-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.switch-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.switch-track {
+  width: 44px;
+  height: 24px;
+  background: #e4e4e7;
+  border-radius: 999px;
+  position: relative;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+.switch-track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.switch-input:checked + .switch-track {
+  background: var(--ink);
+}
+.switch-input:checked + .switch-track::after {
+  transform: translateX(20px);
+}
+
+/* Delivery Rule Visual Card */
+.del-rule-card {
+  padding: 16px 18px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: #ffffff;
+  transition: border-color 0.2s;
+}
+.del-rule-card.kerala {
+  border-left: 4px solid var(--ok);
+  background: #fdfdfd;
+}
+.del-rule-card.outside {
+  border-left: 4px solid var(--info);
+  background: #fdfdfd;
+}
+
+/* Settings mobile adjustments */
+@media (max-width: 600px) {
+  .lookbook-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .media-card-body {
+    padding: 16px;
+  }
+  .media-card-head {
+    padding: 14px 16px;
+  }
+  .file-staged-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .file-staged-actions {
+    justify-content: flex-end;
+  }
+}

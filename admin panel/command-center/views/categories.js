@@ -15,6 +15,8 @@
   var CC = global.CC, UI = global.UI, icon = global.icon;
   var esc = CC.esc, locName = CC.locName;
 
+  var currentFilter = 'all';
+
   function render(root) {
     root.innerHTML =
       '<div class="page-head">' +
@@ -22,6 +24,7 @@
       '<div class="sub" id="catSub">Loading…</div></div>' +
       '<div class="head-actions"><button class="btn primary" id="newCat">' + icon('plus') + 'New category</button></div>' +
       '</div>' +
+      '<div id="catFilterBar" style="display:flex;gap:8px;margin-bottom:18px;align-items:center;"></div>' +
       '<div id="catContainer">' + UI.spinner() + '</div>';
 
     root.querySelector('#newCat').addEventListener('click', function () { openEditor(root, null); });
@@ -30,19 +33,49 @@
 
   function load(root) {
     var box = root.querySelector('#catContainer');
+    var filterBar = root.querySelector('#catFilterBar');
     box.innerHTML = UI.spinner();
-    CC.API.get('/category').then(function (d) {
-      var cats = (d && d.categories) || [];
-      root.querySelector('#catSub').textContent = CC.num(cats.length) + ' categor' + (cats.length === 1 ? 'y' : 'ies');
+    CC.API.get('/category?all=1').then(function (d) {
+      var allCats = (d && d.categories) || [];
+      var liveCount = allCats.filter(function (c) { return (c.status || 'show') === 'show'; }).length;
+      var hiddenCount = allCats.filter(function (c) { return (c.status || 'show') !== 'show'; }).length;
+
+      root.querySelector('#catSub').textContent = CC.num(allCats.length) + ' categor' + (allCats.length === 1 ? 'y' : 'ies') +
+        ' (' + liveCount + ' live, ' + hiddenCount + ' hidden)';
+
+      if (filterBar) {
+        filterBar.innerHTML =
+          '<button class="btn sm' + (currentFilter === 'all' ? ' primary' : ' ghost') + '" data-cfilter="all">All (' + allCats.length + ')</button>' +
+          '<button class="btn sm' + (currentFilter === 'live' ? ' primary' : ' ghost') + '" data-cfilter="live"><i class="d" style="width:6px;height:6px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:4px"></i>Live (' + liveCount + ')</button>' +
+          '<button class="btn sm' + (currentFilter === 'hidden' ? ' primary' : ' ghost') + '" data-cfilter="hidden">Hidden (' + hiddenCount + ')</button>';
+
+        filterBar.querySelectorAll('[data-cfilter]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            currentFilter = btn.getAttribute('data-cfilter');
+            load(root);
+          });
+        });
+      }
+
+      var cats = allCats.filter(function (c) {
+        var isHidden = (c.status || 'show') !== 'show';
+        if (currentFilter === 'live') return !isHidden;
+        if (currentFilter === 'hidden') return isHidden;
+        return true;
+      });
+
       if (!cats.length) {
-        box.innerHTML = UI.emptyState({ icon: 'layers', title: 'No categories', body: 'Create a category to organize your catalog.', actionLabel: 'New category', actionId: 'emptyNewCat' });
+        var emptyMsg = currentFilter === 'all' 
+          ? 'Create a category to organize your catalog.' 
+          : (currentFilter === 'hidden' ? 'No hidden categories found.' : 'No live categories found.');
+        box.innerHTML = UI.emptyState({ icon: 'layers', title: 'No categories', body: emptyMsg, actionLabel: currentFilter === 'all' ? 'New category' : '', actionId: 'emptyNewCat' });
         var en = box.querySelector('#emptyNewCat'); if (en) en.addEventListener('click', function () { openEditor(root, null); });
         return;
       }
       box.innerHTML = '<div class="grid grid-4" id="catGrid">' + cats.map(function (c) {
         var hidden = (c.status || 'show') !== 'show';
         var imgUrl = c.image || c.icon || '';
-        return '<div class="panel cat-panel" data-id="' + esc(c._id) + '" draggable="true" style="padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:grab;">' +
+        return '<div class="panel cat-panel" data-id="' + esc(c._id) + '" draggable="true" style="padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:grab;' + (hidden ? 'opacity:0.85;border-style:dashed;' : '') + '">' +
           '<div class="panel-pad" style="display:flex;align-items:center;gap:14px;flex:1">' +
           (imgUrl
             ? '<div style="width:48px;height:48px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--near-black);flex:0 0 48px;display:grid;place-items:center">' +

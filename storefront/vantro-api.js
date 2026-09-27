@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
+async function initVantroStorefront() {
     const apiBase = window.__CHROMVAULT_API_BASE__ || "/v1";
 
     // Clean up broken external srcset immediately
@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             const href = `/products/${slug}`;
                             return `
                                 <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);padding:14px;background:transparent;">
-                                    <a href="${href}" onclick="try{sessionStorage.setItem('vantro_prod_' + '${slug}', JSON.stringify({id:'${slug}',title:${JSON.stringify(title)},price:${price},image:${JSON.stringify(img)}}));}catch(e){}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
+                                    <a href="${href}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
                                         <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:transparent;border-radius:2px;display:flex;align-items:center;justify-content:center;">
                                             <img src="${img}" alt="${title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
                                         </div>
@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                     <div class="product-info-template--22086712361118__product_listing_grid" style="padding-top:12px;">
                                         <div class="product-info-top-template--22086712361118__product_listing_grid" style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">
                                             <div class="product-title-wrap-template--22086712361118__product_listing_grid" style="flex:1;min-width:0;">
-                                                <a href="${href}" onclick="try{sessionStorage.setItem('vantro_prod_' + '${slug}', JSON.stringify({id:'${slug}',title:${JSON.stringify(title)},price:${price},image:${JSON.stringify(img)}}));}catch(e){}" class="product-title-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:600;text-decoration:none;color:#000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</a>
+                                                <a href="${href}" class="product-title-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:600;text-decoration:none;color:#000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</a>
                                             </div>
                                             <div class="product-price-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:700;color:#000;white-space:nowrap;">Rs. ${price}</div>
                                         </div>
@@ -435,7 +435,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         const href = `/products/${slug}`;
                         return `
                             <div class="product-grid-item-template--22086712361118__product_listing_grid" style="border-right:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);padding:14px;background:transparent;">
-                                <a href="${href}" onclick="try{sessionStorage.setItem('vantro_prod_' + '${slug}', JSON.stringify({id:'${slug}',title:${JSON.stringify(title)},price:${price},image:${JSON.stringify(img)}}));}catch(e){}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
+                                <a href="${href}" class="product-image-link-template--22086712361118__product_listing_grid" style="display:block;overflow:hidden;">
                                     <div class="product-image-container-template--22086712361118__product_listing_grid ratio-portrait" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:transparent;border-radius:2px;display:flex;align-items:center;justify-content:center;">
                                         <img src="${img}" alt="${title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
                                     </div>
@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 <div class="product-info-template--22086712361118__product_listing_grid" style="padding-top:12px;">
                                     <div class="product-info-top-template--22086712361118__product_listing_grid" style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">
                                         <div class="product-title-wrap-template--22086712361118__product_listing_grid" style="flex:1;min-width:0;">
-                                            <a href="${href}" onclick="try{sessionStorage.setItem('vantro_prod_' + '${slug}', JSON.stringify({id:'${slug}',title:${JSON.stringify(title)},price:${price},image:${JSON.stringify(img)}}));}catch(e){}" class="product-title-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:600;text-decoration:none;color:#000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</a>
+                                            <a href="${href}" class="product-title-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:600;text-decoration:none;color:#000;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</a>
                                         </div>
                                         <div class="product-price-template--22086712361118__product_listing_grid" style="font-size:13px;font-weight:700;color:#000;white-space:nowrap;">Rs. ${price}</div>
                                     </div>
@@ -1080,4 +1080,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Unhide page
     document.body.classList.add("vantro-loaded");
-});
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initVantroStorefront);
+} else {
+    initVantroStorefront();
+}

@@ -169,9 +169,11 @@
     var off = 0;
     var arcs = segments.map(function (s) {
       var frac = s.value / total, len = frac * circ;
+      var gap = segments.length > 1 ? Math.min(3, len * 0.15) : 0;
+      var drawLen = Math.max(0.5, len - gap);
       var seg = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + s.color +
-        '" stroke-width="' + stroke + '" stroke-dasharray="' + len + ' ' + (circ - len) +
-        '" stroke-dashoffset="' + (-off) + '" transform="rotate(-90 ' + cx + ' ' + cy + ')" stroke-linecap="butt"/>';
+        '" stroke-width="' + stroke + '" stroke-dasharray="' + drawLen + ' ' + (circ - drawLen) +
+        '" stroke-dashoffset="' + (-(off + gap / 2)) + '" transform="rotate(-90 ' + cx + ' ' + cy + ')" stroke-linecap="butt"/>';
       off += len;
       return seg;
     }).join('');

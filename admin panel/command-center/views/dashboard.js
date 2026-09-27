@@ -169,16 +169,16 @@
         }
       }
 
-      // Recognized order statuses in standard commerce lifecycle
+      // Recognized order statuses with vibrant colorful palette
       var statusConfig = [
-        { key: 'Confirmed', label: 'Confirmed', color: '#18181b' },
-        { key: 'Processing', label: 'Processing', color: '#52525b' },
-        { key: 'Shipped', label: 'Shipped', color: '#71717a' },
-        { key: 'Out For Delivery', label: 'Out for delivery', color: '#a1a1aa' },
-        { key: 'Delivered', label: 'Delivered', color: '#059669' },
-        { key: 'Pending', label: 'Pending', color: '#d97706' },
-        { key: 'Cancelled', label: 'Cancelled', color: '#dc2626' },
-        { key: 'Returned', label: 'Returned', color: '#e11d48' }
+        { key: 'Confirmed', label: 'Confirmed', color: '#3b82f6' },        // Vibrant Royal Blue
+        { key: 'Processing', label: 'Processing', color: '#f59e0b' },      // Warm Amber Orange
+        { key: 'Shipped', label: 'Shipped', color: '#8b5cf6' },            // Rich Violet / Purple
+        { key: 'Out For Delivery', label: 'Out for delivery', color: '#06b6d4' }, // Bright Teal Cyan
+        { key: 'Delivered', label: 'Delivered', color: '#10b981' },        // Emerald Green
+        { key: 'Pending', label: 'Pending', color: '#eab308' },            // Golden Yellow
+        { key: 'Cancelled', label: 'Cancelled', color: '#ef4444' },        // Vivid Coral Red
+        { key: 'Returned', label: 'Returned', color: '#ec4899' }           // Rose Pink
       ];
 
       var segs = [];
@@ -196,28 +196,28 @@
       Object.keys(byStatus).forEach(function (k) {
         var isKnown = statusConfig.some(function (cfg) { return cfg.key.toLowerCase() === k.toLowerCase(); });
         if (!isKnown && byStatus[k] > 0) {
-          segs.push({ label: k, value: byStatus[k], color: '#9ca3af' });
+          segs.push({ label: k, value: byStatus[k], color: '#6366f1' });
           accounted += byStatus[k];
         }
       });
 
       var uncounted = Math.max(0, total - accounted);
       if (uncounted > 0) {
-        segs.push({ label: 'Other', value: uncounted, color: '#9ca3af' });
+        segs.push({ label: 'Other', value: uncounted, color: '#64748b' });
       }
 
       // Fallback if segs is somehow empty despite total > 0
       if (!segs.length && total > 0) {
-        segs.push({ label: 'Confirmed', value: total, color: '#18181b' });
+        segs.push({ label: 'Confirmed', value: total, color: '#3b82f6' });
       }
 
       box.innerHTML =
         UI.donut(segs, { centerLabel: 'orders', centerValue: num(total) }) +
-        '<div class="legend" style="justify-content:center;margin-top:16px;display:flex;flex-wrap:wrap;gap:8px 14px">' +
+        '<div class="legend" style="justify-content:center;margin-top:16px;display:flex;flex-wrap:wrap;gap:8px 12px">' +
         segs.map(function (s) {
-          return '<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink-2)">' +
-            '<i style="width:8px;height:8px;border-radius:2px;background:' + s.color + ';display:inline-block"></i>' +
-            esc(s.label) + ' &bull; <b>' + num(s.value) + '</b></span>';
+          return '<span style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;background:var(--surface-2);border-radius:20px;font-size:12px;font-weight:600;color:var(--ink);border:1px solid var(--line-soft)">' +
+            '<i style="width:9px;height:9px;border-radius:50%;background:' + s.color + ';display:inline-block;box-shadow:0 0 0 2px ' + s.color + '33"></i>' +
+            esc(s.label) + ' <span style="color:' + s.color + ';font-weight:700">&bull; ' + num(s.value) + '</span></span>';
         }).join('') +
         '</div>';
     }).catch(function (e) { box.innerHTML = UI.errorState(e.message); });

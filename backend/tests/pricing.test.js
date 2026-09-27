@@ -116,6 +116,34 @@ function check(name, cond) {
   ]);
   check('insufficient variant stock rejected', !!r.error);
 
+  // 10. Kerala address delivery is always free (₹0)
+  r = await computeOrderPricing(
+    [{ _id: '507f1f77bcf86cd799439013', quantity: 1, variant: 'Connector: Type-C' }], // subtotal 899
+    { state: 'Kerala', zip: '676505' }
+  );
+  check('Kerala address delivery is ₹0', r.shippingFee === 0 && r.total === 899);
+
+  // 11. Outside Kerala address under threshold (subtotal 899 < 999) applies ₹50 fee
+  r = await computeOrderPricing(
+    [{ _id: '507f1f77bcf86cd799439013', quantity: 1, variant: 'Connector: Type-C' }], // subtotal 899
+    { state: 'Karnataka', zip: '560001' }
+  );
+  check('Outside Kerala below threshold charges ₹50 shipping', r.shippingFee === 50 && r.total === 899 + 50);
+
+  // 12. Outside Kerala address above threshold (subtotal 1000 >= 999) has free delivery
+  r = await computeOrderPricing(
+    [{ _id: '507f1f77bcf86cd799439011', quantity: 1 }], // subtotal 1000
+    { state: 'Tamil Nadu', zip: '600001' }
+  );
+  check('Outside Kerala at/above threshold gets free delivery', r.shippingFee === 0 && r.total === 1000);
+
+  // 13. Kerala PIN auto-detected even if state text is omitted
+  r = await computeOrderPricing(
+    [{ _id: '507f1f77bcf86cd799439013', quantity: 1, variant: 'Connector: Type-C' }], // subtotal 899
+    { zip: '682001' }
+  );
+  check('Kerala PIN code auto-detected as free shipping', r.shippingFee === 0 && r.total === 899);
+
   console.log(`\n=== ${pass} passed, ${fail} failed ===`);
   process.exit(fail ? 1 : 0);
 })();

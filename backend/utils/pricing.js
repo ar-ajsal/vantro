@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Product = require('../models/Product');
+const Setting = require('../models/Setting');
 
 /**
  * Resolve a cart line to a real Product document.
@@ -22,12 +23,69 @@ async function findProduct(item) {
 }
 
 // ─── Server-side money policy ──────────────────────────────
-// Central place for shipping / discount rules. Currently: free shipping,
-// no discounts (there is no coupon system yet). These deliberately IGNORE any
-// client-supplied discount / shippingFee so totals cannot be tampered with.
-function computeShipping(/* subTotal, lineItems */) {
-  return 0;
+// Central place for shipping / discount rules.
+// Rules are loaded from Setting (key: 'delivery_rules') with cache & sensible defaults:
+// - Kerala: Always free delivery (₹0)
+// - Outside Kerala: Free if order value >= outsideKeralaMinFreeOrder, else outsideKeralaDeliveryFee
+let _cachedDeliveryRules = null;
+let _cachedRulesTime = 0;
+const RULES_CACHE_TTL = 15000; // 15 seconds
+
+async function getDeliveryRules() {
+  const now = Date.now();
+  if (_cachedDeliveryRules && (now - _cachedRulesTime < RULES_CACHE_TTL)) {
+    return _cachedDeliveryRules;
+  }
+  const defaults = {
+    keralaDeliveryFee: 0,
+    outsideKeralaMinFreeOrder: 999,
+    outsideKeralaDeliveryFee: 50
+  };
+  if (mongoose.connection.readyState !== 1) {
+    return defaults;
+  }
+  try {
+    const doc = await Setting.findOne({ key: 'delivery_rules' }).maxTimeMS(2000).exec();
+    if (doc && doc.value && typeof doc.value === 'object') {
+      _cachedDeliveryRules = {
+        keralaDeliveryFee: Number(doc.value.keralaDeliveryFee ?? 0),
+        outsideKeralaMinFreeOrder: Number(doc.value.outsideKeralaMinFreeOrder ?? 999),
+        outsideKeralaDeliveryFee: Number(doc.value.outsideKeralaDeliveryFee ?? 50)
+      };
+    } else {
+      _cachedDeliveryRules = defaults;
+    }
+  } catch (err) {
+    _cachedDeliveryRules = defaults;
+  }
+  _cachedRulesTime = now;
+  return _cachedDeliveryRules;
 }
+
+async function computeShipping(subTotal, deliveryAddress) {
+  if (!deliveryAddress) {
+    return 0; // default for cart calculation before address is entered
+  }
+  const rules = await getDeliveryRules();
+  const stateStr = (deliveryAddress.state || '').trim().toLowerCase();
+  const zipStr = String(deliveryAddress.zip || '').trim();
+
+  // Check if Kerala
+  const isKerala = stateStr.includes('kerala') || stateStr === 'kl' || (!stateStr && /^(67|68|69)\d{4}$/.test(zipStr));
+  if (isKerala) {
+    return Number(rules.keralaDeliveryFee) || 0;
+  }
+
+  // Outside Kerala: free if subtotal >= threshold, else flat fee
+  const threshold = Number(rules.outsideKeralaMinFreeOrder) || 0;
+  const fee = Number(rules.outsideKeralaDeliveryFee) || 0;
+
+  if (threshold > 0 && subTotal >= threshold) {
+    return 0;
+  }
+  return fee;
+}
+
 function computeDiscount(/* subTotal, lineItems */) {
   return 0;
 }
@@ -93,7 +151,7 @@ function resolveUnitPrice(product, qty, variantString, variantId) {
  * This single function is the source of truth for BOTH the Razorpay order
  * amount and the persisted order total, so they can never diverge.
  */
-async function computeOrderPricing(cart) {
+async function computeOrderPricing(cart, deliveryAddress) {
   if (!Array.isArray(cart) || cart.length === 0) {
     return { error: 'Your cart is empty.' };
   }
@@ -144,10 +202,10 @@ async function computeOrderPricing(cart) {
   }
 
   const discount = computeDiscount(subTotal, lineItems);
-  const shippingFee = computeShipping(subTotal, lineItems);
+  const shippingFee = await computeShipping(subTotal, deliveryAddress);
   const total = subTotal - discount + shippingFee;
 
   return { subTotal, discount, shippingFee, total, lineItems };
 }
 
-module.exports = { computeOrderPricing, findProduct, resolveUnitPrice, findMatchingVariant };
+module.exports = { computeOrderPricing, findProduct, resolveUnitPrice, findMatchingVariant, computeShipping, getDeliveryRules };

@@ -485,29 +485,116 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+        // Delivery Rules (defaults: Kerala free, Outside Kerala configurable)
+        let deliveryRules = {
+            keralaDeliveryFee: 0,
+            outsideKeralaMinFreeOrder: 999,
+            outsideKeralaDeliveryFee: 50
+        };
+
         // Hydrate checkout items & total
         const cart = checkCart;
-        let total = 0;
+        let cartSubtotal = 0;
         const summaryEl = document.getElementById("checkout-summary-items");
-        const totalEl = document.getElementById("checkout-total");
         if (summaryEl) {
             let html = "";
             cart.forEach(item => {
                 const itemPrice = parseFloat(item.price) || 0;
-                total += itemPrice * (item.quantity || 1);
+                const qty = item.quantity || 1;
+                cartSubtotal += itemPrice * qty;
                 html += `
                 <div class="chk-summary-item" style="display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.06);">
                     <img src="${item.image||''}" class="chk-summary-img" width="56" height="56" style="object-fit:cover;border-radius:4px;background:transparent;" onerror="this.style.display='none'">
                     <div class="chk-summary-details" style="flex:1;min-width:0;">
                         <div class="chk-summary-name" style="font-size:13px;font-weight:600;color:#09090b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.title}</div>
-                        <div class="chk-summary-qty" style="color:#71717a;font-size:12px;margin-top:2px;">Qty: ${item.quantity||1}</div>
+                        <div class="chk-summary-qty" style="color:#71717a;font-size:12px;margin-top:2px;">Qty: ${qty}</div>
                     </div>
-                    <div class="chk-summary-price" style="font-weight:700;font-size:14px;color:#09090b;">Rs. ${itemPrice * (item.quantity||1)}</div>
+                    <div class="chk-summary-price" style="font-weight:700;font-size:14px;color:#09090b;">Rs. ${itemPrice * qty}</div>
                 </div>`;
             });
             summaryEl.innerHTML = html;
-            if (totalEl) totalEl.innerText = `Rs. ${total}`;
         }
+
+        function updateCheckoutSummary(overrideState) {
+            const subtotalEl = document.getElementById("checkout-subtotal");
+            const shippingEl = document.getElementById("checkout-shipping");
+            const shippingNoteEl = document.getElementById("checkout-shipping-note");
+            const totalEl = document.getElementById("checkout-total");
+
+            const st = (overrideState || document.getElementById("chk-state")?.value || "").trim().toLowerCase();
+            const zip = (document.getElementById("chk-zip")?.value || "").trim();
+
+            const isKerala = st.includes("kerala") || st === "kl" || (!st && /^(67|68|69)\d{4}$/.test(zip));
+
+            let shipping = 0;
+            let note = "";
+
+            if (isKerala) {
+                shipping = Number(deliveryRules.keralaDeliveryFee) || 0;
+                note = "Kerala Delivery: Always Free";
+            } else if (st || /^\d{6}$/.test(zip)) {
+                const threshold = Number(deliveryRules.outsideKeralaMinFreeOrder) || 0;
+                const fee = Number(deliveryRules.outsideKeralaDeliveryFee) || 0;
+
+                if (threshold > 0 && cartSubtotal >= threshold) {
+                    shipping = 0;
+                    note = `Free delivery (Orders above Rs. ${threshold})`;
+                } else {
+                    shipping = fee;
+                    const diff = threshold - cartSubtotal;
+                    if (diff > 0) {
+                        note = `Add Rs. ${diff} more for Free Delivery`;
+                    }
+                }
+            } else {
+                shipping = 0;
+                note = "Free within Kerala · Free over Rs. " + (deliveryRules.outsideKeralaMinFreeOrder || 999) + " elsewhere";
+            }
+
+            if (subtotalEl) subtotalEl.innerText = `Rs. ${cartSubtotal}`;
+            if (shippingEl) {
+                if (shipping === 0) {
+                    shippingEl.innerText = "FREE";
+                    shippingEl.style.color = "#16a34a";
+                } else {
+                    shippingEl.innerText = `Rs. ${shipping}`;
+                    shippingEl.style.color = "#09090b";
+                }
+            }
+            if (shippingNoteEl) {
+                if (note) {
+                    shippingNoteEl.innerText = note;
+                    shippingNoteEl.style.display = "block";
+                } else {
+                    shippingNoteEl.style.display = "none";
+                }
+            }
+
+            const grandTotal = Math.max(0, cartSubtotal + shipping);
+            if (totalEl) totalEl.innerText = `Rs. ${grandTotal}`;
+        }
+
+        // Fetch live delivery rules from backend
+        async function fetchDeliveryRules() {
+            try {
+                const res = await fetch(`${apiBase}/settings/delivery_rules`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.value && typeof data.value === 'object') {
+                        deliveryRules = {
+                            keralaDeliveryFee: Number(data.value.keralaDeliveryFee ?? 0),
+                            outsideKeralaMinFreeOrder: Number(data.value.outsideKeralaMinFreeOrder ?? 999),
+                            outsideKeralaDeliveryFee: Number(data.value.outsideKeralaDeliveryFee ?? 50)
+                        };
+                        updateCheckoutSummary();
+                    }
+                }
+            } catch (e) {
+                console.warn('[vantro] Error loading delivery rules:', e.message);
+            }
+        }
+        fetchDeliveryRules();
+        updateCheckoutSummary();
 
         // Hook up back button
         const backBtn = document.getElementById("chk-back-btn");
@@ -536,6 +623,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     });
 
                     stateSelect.addEventListener('change', (e) => {
+                        const currentDist = districtSelect.value;
                         districtSelect.innerHTML = '<option value="" disabled selected>Select District *</option>';
                         const st = data.states.find(s => s.state === e.target.value);
                         if (st && st.districts) {
@@ -545,7 +633,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 opt.text = d;
                                 districtSelect.add(opt);
                             });
+                            if (currentDist && st.districts.includes(currentDist)) {
+                                districtSelect.value = currentDist;
+                            }
                         }
+                        updateCheckoutSummary(e.target.value);
                     });
                 }
             })
@@ -553,16 +645,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // PIN Code Auto-fetch
         const zipInput = document.getElementById("chk-zip");
+        const pinStatusEl = document.getElementById("pin-lookup-status");
         if (zipInput) {
             zipInput.addEventListener("input", async (e) => {
                 let val = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
                 e.target.value = val;
                 
-                if (val.length === 6 && indiaData) {
+                if (val.length === 6) {
+                    if (pinStatusEl) {
+                        pinStatusEl.innerText = "Locating postal district & state...";
+                        pinStatusEl.style.color = "#71717a";
+                        pinStatusEl.style.display = "block";
+                    }
                     try {
                         const res = await fetch('https://api.postalpincode.in/pincode/' + val);
                         const data = await res.json();
-                        if (data && data[0].Status === 'Success') {
+                        if (data && data[0] && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
                             const postOffice = data[0].PostOffice[0];
                             const stateName = postOffice.State;
                             const districtName = postOffice.District;
@@ -571,35 +669,64 @@ document.addEventListener("DOMContentLoaded", async () => {
                             const districtSelect = document.getElementById("chk-district");
                             const cityInput = document.getElementById("chk-city");
                             
-                            // Auto-select state
-                            let stateMatch = Array.from(stateSelect.options).find(o => o.text.toLowerCase() === stateName.toLowerCase());
-                            if (stateMatch) {
+                            // Auto-select or inject state
+                            if (stateSelect) {
+                                let stateMatch = Array.from(stateSelect.options).find(o => o.text.toLowerCase() === stateName.toLowerCase());
+                                if (!stateMatch) {
+                                    const opt = document.createElement('option');
+                                    opt.value = stateName;
+                                    opt.text = stateName;
+                                    stateSelect.add(opt);
+                                    stateMatch = opt;
+                                }
                                 stateSelect.value = stateMatch.value;
                                 stateSelect.dispatchEvent(new Event('change'));
                             }
                             
-                            // Auto-select district
+                            // Auto-select or inject district
                             setTimeout(() => {
-                                let distMatch = Array.from(districtSelect.options).find(o => o.text.toLowerCase() === districtName.toLowerCase());
-                                if (distMatch) {
+                                if (districtSelect) {
+                                    let distMatch = Array.from(districtSelect.options).find(o => o.text.toLowerCase() === districtName.toLowerCase());
+                                    if (!distMatch) {
+                                        const opt = document.createElement('option');
+                                        opt.value = districtName;
+                                        opt.text = districtName;
+                                        districtSelect.add(opt);
+                                        distMatch = opt;
+                                    }
                                     districtSelect.value = distMatch.value;
-                                } else {
-                                    const opt = document.createElement('option');
-                                    opt.value = districtName;
-                                    opt.text = districtName;
-                                    districtSelect.add(opt);
-                                    districtSelect.value = districtName;
                                 }
                             }, 50);
                             
                             // Auto-fill city
-                            if (!cityInput.value) {
-                                cityInput.value = postOffice.Block || postOffice.Region || postOffice.Name;
+                            if (cityInput && !cityInput.value) {
+                                cityInput.value = (postOffice.Block && postOffice.Block !== 'NA') ? postOffice.Block : (postOffice.Name || '');
                             }
+
+                            if (pinStatusEl) {
+                                pinStatusEl.innerText = `✓ ${districtName}, ${stateName}`;
+                                pinStatusEl.style.color = "#16a34a";
+                                pinStatusEl.style.display = "block";
+                            }
+
+                            // Real-time shipping update
+                            updateCheckoutSummary(stateName);
+                        } else {
+                            if (pinStatusEl) {
+                                pinStatusEl.innerText = "Invalid 6-digit Indian PIN code";
+                                pinStatusEl.style.color = "#dc2626";
+                                pinStatusEl.style.display = "block";
+                            }
+                            updateCheckoutSummary();
                         }
                     } catch (err) {
                         console.error('Pincode fetch error:', err);
+                        if (pinStatusEl) pinStatusEl.style.display = "none";
+                        updateCheckoutSummary();
                     }
+                } else {
+                    if (pinStatusEl) pinStatusEl.style.display = "none";
+                    updateCheckoutSummary();
                 }
             });
         }

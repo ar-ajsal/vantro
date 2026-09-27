@@ -25,8 +25,8 @@ const createRazorpayOrder = async (req, res) => {
     let orderAmountPaise;
 
     if (cart && Array.isArray(cart) && cart.length > 0) {
-      // Storefront flow: compute pricing server-side from the DB
-      const pricing = await computeOrderPricing(cart);
+      // Storefront flow: compute pricing server-side from the DB (with authoritative shipping)
+      const pricing = await computeOrderPricing(cart, deliveryAddress);
       if (pricing.error) {
         return res.status(400).send({ message: pricing.error });
       }
@@ -248,7 +248,7 @@ const verifyPaymentAndCreateOrder = async (req, res) => {
     // Authoritative pricing: recompute subtotal/discount/shipping/total from the
     // DB using the SAME helper that priced the Razorpay order. Unknown products
     // are rejected here rather than billed at a client-supplied price.
-    const pricing = await computeOrderPricing(cart);
+    const pricing = await computeOrderPricing(cart, deliveryAddress);
     if (pricing.error) {
       return res.status(400).send({ message: pricing.error });
     }

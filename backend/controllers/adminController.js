@@ -74,11 +74,22 @@ const loginAdmin = async (req, res) => {
   }
 };
 
+const DEFAULT_SETTINGS = {
+  delivery_rules: {
+    keralaDeliveryFee: 0,
+    outsideKeralaMinFreeOrder: 999,
+    outsideKeralaDeliveryFee: 50
+  }
+};
+
 const getSetting = async (req, res) => {
   try {
     const { key } = req.params;
     const setting = await Setting.findOne({ key });
-    if (!setting) {
+    if (!setting || setting.value === null || setting.value === undefined) {
+      if (DEFAULT_SETTINGS[key]) {
+        return res.status(200).send({ key, value: DEFAULT_SETTINGS[key] });
+      }
       return res.status(200).send({ key, value: null });
     }
     res.status(200).send({ key: setting.key, value: setting.value });

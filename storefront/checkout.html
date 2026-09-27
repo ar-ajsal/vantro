@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   
 <!-- Mirrored from vantro.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Sep 2026 19:30:51 GMT -->
@@ -1686,6 +1686,7 @@ first.parentNode.insertBefore(script, first);
           <div>
             <label for="chk-zip" class="chk-field-label">PIN Code *</label>
             <input id="chk-zip" class="chk-input" type="tel" placeholder="Enter 6-digit PIN Code *" required pattern="[0-9]{6}" maxlength="6">
+            <div id="pin-lookup-status" style="font-size:11px;color:#71717a;margin-top:4px;display:none;"></div>
           </div>
           <div class="chk-two-col">
             <div>
@@ -1722,9 +1723,14 @@ first.parentNode.insertBefore(script, first);
         </div>
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(0,0,0,0.1);display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;justify-content:space-between;font-size:13px;color:#71717a;">
-            <span>Delivery</span>
-            <span style="color:#16a34a;font-weight:600;text-transform:uppercase;">FREE</span>
+            <span>Subtotal</span>
+            <span id="checkout-subtotal" style="font-weight:600;color:#09090b;">Rs. 0</span>
           </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:#71717a;">
+            <span>Delivery</span>
+            <span id="checkout-shipping" style="color:#16a34a;font-weight:600;text-transform:uppercase;">FREE</span>
+          </div>
+          <div id="checkout-shipping-note" style="font-size:11px;color:#71717a;text-align:right;display:none;"></div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:10px;border-top:1px dashed rgba(0,0,0,0.15);">
             <span style="font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Total Amount</span>
             <span id="checkout-total" style="font-size:20px;font-weight:800;">Rs. 0</span>

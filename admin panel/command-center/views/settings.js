@@ -27,6 +27,17 @@
           address: 'Hill View Arcade, NH 66, Kakkanchery, Malappuram, Kerala - 671321, India'
         };
 
+    // Load delivery rules (Kerala is always free, Outside Kerala configurable)
+    var deliveryRules = {
+      keralaDeliveryFee: 0,
+      outsideKeralaMinFreeOrder: 999,
+      outsideKeralaDeliveryFee: 50
+    };
+    try {
+      var savedDR = localStorage.getItem('vantro_delivery_rules');
+      if (savedDR) deliveryRules = Object.assign(deliveryRules, JSON.parse(savedDR));
+    } catch (e) {}
+
     root.innerHTML =
       '<div class="page-head">' +
       '<div><div class="eyebrow">System</div><h1>Settings</h1>' +
@@ -92,9 +103,61 @@
       '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:14px;border-top:1px solid var(--line-soft);flex-wrap:wrap">' +
       '<button class="btn primary" id="btnSaveFromAddress">' + icon('check') + 'Save From Address</button>' +
       '<button class="btn ghost" id="btnResetFromAddress" style="color:var(--ink-3)">' + icon('refresh') + 'Reset Defaults</button>' +
+      '</div></div>' +
+
+      // Delivery & Shipping Rules Panel (Kerala vs Rest of India)
+      '<div class="panel" style="margin-bottom:20px">' +
+      '<div class="panel-head">' +
+      '<h3>' + icon('truck') + 'Delivery &amp; Shipping Rules</h3>' +
+      '<span class="badge ok"><i class="d"></i>Kerala &amp; Rest of India</span>' +
+      '</div>' +
+      '<div class="panel-pad">' +
+      '<p class="cell-sub" style="font-size:13px;margin-bottom:18px;max-width:700px">' +
+      'Configure regional delivery pricing. Deliveries inside <b>Kerala</b> are always free. For orders <b>Outside Kerala (Rest of India)</b>, configure the minimum order value for free delivery and the delivery charge for orders below that threshold.' +
+      '</p>' +
+
+      '<div style="display:flex;flex-direction:column;gap:16px;max-width:680px">' +
+      // Kerala Box
+      '<div style="padding:14px 16px;background:var(--near-black);border:1px solid var(--line-soft);border-radius:var(--r-md);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">' +
+      '<div>' +
+      '<div class="cell-strong" style="font-size:14px;display:flex;align-items:center;gap:8px">' +
+      'Kerala Deliveries' +
+      '<span class="badge ok" style="font-size:11px">Always Free</span>' +
+      '</div>' +
+      '<div class="cell-sub" style="font-size:12px;margin-top:4px">' +
+      'All orders shipped to addresses within Kerala automatically receive ₹0 Free Delivery.' +
+      '</div>' +
+      '</div>' +
+      '<div style="font-weight:700;font-size:15px;color:var(--ok, #16a34a);letter-spacing:.02em">₹0 (FREE)</div>' +
+      '</div>' +
+
+      // Outside Kerala Box
+      '<div style="padding:16px;border:1px solid var(--line-soft);border-radius:var(--r-md);background:var(--surface-1)">' +
+      '<div class="cell-strong" style="font-size:14px;margin-bottom:4px">Outside Kerala (Rest of India)</div>' +
+      '<div class="cell-sub" style="font-size:12px;margin-bottom:14px">' +
+      'Set delivery charge when customer order total is under threshold, or ₹0 if equal/above.' +
+      '</div>' +
+      '<div class="grid grid-2" style="gap:14px">' +
+      '<div class="field">' +
+      '<label>Free Delivery Threshold (₹)</label>' +
+      '<input class="input" id="delOutsideMinOrder" type="number" min="0" step="1" value="' + esc(deliveryRules.outsideKeralaMinFreeOrder) + '" placeholder="e.g. 999">' +
+      '<span class="hint">Free delivery if item cost is at or above this amount.</span>' +
+      '</div>' +
+      '<div class="field">' +
+      '<label>Delivery Fee (₹)</label>' +
+      '<input class="input" id="delOutsideFee" type="number" min="0" step="1" value="' + esc(deliveryRules.outsideKeralaDeliveryFee) + '" placeholder="e.g. 50">' +
+      '<span class="hint">Charge applied if order value is under threshold.</span>' +
+      '</div>' +
       '</div>' +
       '</div>' +
 
+      // Save / Reset buttons
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px;padding-top:14px;border-top:1px solid var(--line-soft);flex-wrap:wrap">' +
+      '<button class="btn primary" id="btnSaveDeliveryRules">' + icon('check') + 'Save Delivery Rules</button>' +
+      '<button class="btn ghost" id="btnResetDeliveryRules" style="color:var(--ink-3)">' + icon('refresh') + 'Reset Defaults (₹999 / ₹50)</button>' +
+      '</div>' +
+
+      '</div>' +
       '</div></div>' +
 
       // Hero Media Panel
@@ -328,6 +391,93 @@
             root.querySelector('#faAddress').value = def.address || '';
             CC.toast('From Address reset to factory defaults.', 'ok');
           }
+        });
+      });
+    }
+
+    // --- Delivery Rules Sync & Handlers ---
+    // Fetch live delivery rules from server
+    CC.API.get('/admin/settings/delivery_rules').then(function (res) {
+      if (res && res.value && typeof res.value === 'object') {
+        var val = res.value;
+        var minInp = root.querySelector('#delOutsideMinOrder');
+        var feeInp = root.querySelector('#delOutsideFee');
+        if (minInp && val.outsideKeralaMinFreeOrder !== undefined) minInp.value = val.outsideKeralaMinFreeOrder;
+        if (feeInp && val.outsideKeralaDeliveryFee !== undefined) feeInp.value = val.outsideKeralaDeliveryFee;
+        try { localStorage.setItem('vantro_delivery_rules', JSON.stringify(val)); } catch (e) {}
+      }
+    }).catch(function (e) {
+      console.warn('Could not fetch delivery rules:', e.message);
+    });
+
+    // Save Delivery Rules click
+    var btnSaveDR = root.querySelector('#btnSaveDeliveryRules');
+    if (btnSaveDR) {
+      btnSaveDR.addEventListener('click', function () {
+        var minInp = root.querySelector('#delOutsideMinOrder');
+        var feeInp = root.querySelector('#delOutsideFee');
+        var minVal = parseInt(minInp ? minInp.value : '999', 10);
+        var feeVal = parseInt(feeInp ? feeInp.value : '50', 10);
+
+        if (isNaN(minVal) || minVal < 0) {
+          CC.toast('Enter a valid free delivery threshold (>= 0)', 'bad');
+          return;
+        }
+        if (isNaN(feeVal) || feeVal < 0) {
+          CC.toast('Enter a valid delivery fee (>= 0)', 'bad');
+          return;
+        }
+
+        btnSaveDR.disabled = true;
+        var payload = {
+          keralaDeliveryFee: 0,
+          outsideKeralaMinFreeOrder: minVal,
+          outsideKeralaDeliveryFee: feeVal
+        };
+
+        CC.API.put('/admin/settings/delivery_rules', { value: payload })
+          .then(function () {
+            try { localStorage.setItem('vantro_delivery_rules', JSON.stringify(payload)); } catch (e) {}
+            CC.toast('Delivery rules saved! Kerala is Free, Outside Kerala threshold is ₹' + minVal + ' (Fee: ₹' + feeVal + ').', 'ok');
+          })
+          .catch(function (err) {
+            CC.toast('Failed to save delivery rules: ' + (err.message || 'Error'), 'bad');
+          })
+          .finally(function () {
+            setTimeout(function () { btnSaveDR.disabled = false; }, 400);
+          });
+      });
+    }
+
+    // Reset Delivery Rules click
+    var btnResetDR = root.querySelector('#btnResetDeliveryRules');
+    if (btnResetDR) {
+      btnResetDR.addEventListener('click', function () {
+        CC.confirmModal({
+          title: 'Reset Delivery Rules?',
+          body: 'This will revert outside Kerala rules to factory defaults: Free over ₹999, and ₹50 delivery fee under ₹999. Kerala remains ₹0 free delivery.',
+          ok: 'Reset Rules',
+          danger: true
+        }).then(function (ok) {
+          if (!ok) return;
+          var payload = {
+            keralaDeliveryFee: 0,
+            outsideKeralaMinFreeOrder: 999,
+            outsideKeralaDeliveryFee: 50
+          };
+          var minInp = root.querySelector('#delOutsideMinOrder');
+          var feeInp = root.querySelector('#delOutsideFee');
+          if (minInp) minInp.value = 999;
+          if (feeInp) feeInp.value = 50;
+
+          CC.API.put('/admin/settings/delivery_rules', { value: payload })
+            .then(function () {
+              try { localStorage.setItem('vantro_delivery_rules', JSON.stringify(payload)); } catch (e) {}
+              CC.toast('Delivery rules reset to defaults (₹999 / ₹50).', 'ok');
+            })
+            .catch(function (err) {
+              CC.toast('Failed to reset delivery rules: ' + (err.message || 'Error'), 'bad');
+            });
         });
       });
     }

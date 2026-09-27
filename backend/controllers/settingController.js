@@ -1,12 +1,22 @@
 const Setting = require('../models/Setting');
 
+const DEFAULT_SETTINGS = {
+  delivery_rules: {
+    keralaDeliveryFee: 0,
+    outsideKeralaMinFreeOrder: 999,
+    outsideKeralaDeliveryFee: 50
+  }
+};
+
 // GET /v1/settings/:key
 exports.getSetting = async (req, res) => {
   try {
     const { key } = req.params;
     const setting = await Setting.findOne({ key });
-    if (!setting) {
-      // Return 200 + null so callers can distinguish "not configured" from errors.
+    if (!setting || setting.value === null || setting.value === undefined) {
+      if (DEFAULT_SETTINGS[key]) {
+        return res.status(200).json({ key, value: DEFAULT_SETTINGS[key] });
+      }
       return res.status(200).json({ key, value: null });
     }
     res.json({ key: setting.key, value: setting.value });

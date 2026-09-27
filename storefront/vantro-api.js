@@ -214,7 +214,7 @@ async function initVantroStorefront() {
             }
 
             // Images
-            const allImages = getImages(product);
+
             const slider = document.querySelector(".product-slider, [id*='productSlider']");
             const dotsContainer = document.querySelector(".slider-dots, [id*='sliderDots']");
 

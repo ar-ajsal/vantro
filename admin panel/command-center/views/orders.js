@@ -478,64 +478,75 @@
     }
 
     // Order Slip / Courier Package Label Handlers
+    var invEngine = global.Invoice || window.Invoice || {};
+    var ccEngine = global.CC || window.CC || {};
+
     var btnPrintSlip = containerEl.querySelector('#btnPrintOrderSlip');
     if (btnPrintSlip) {
-      btnPrintSlip.addEventListener('click', function () {
-        if (global.Invoice && global.Invoice.printShippingSlip) global.Invoice.printShippingSlip(o);
-        else if (global.CC && global.CC.printShippingSlip) global.CC.printShippingSlip(o);
+      btnPrintSlip.addEventListener('click', function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (invEngine.printShippingSlip) invEngine.printShippingSlip(o);
+        else if (ccEngine.printShippingSlip) ccEngine.printShippingSlip(o);
       });
     }
     var btnPreviewSlip = containerEl.querySelector('#btnPreviewOrderSlip');
     if (btnPreviewSlip) {
-      btnPreviewSlip.addEventListener('click', function () {
-        if (global.Invoice && global.Invoice.previewShippingSlip) global.Invoice.previewShippingSlip(o);
-        else if (global.CC && global.CC.previewShippingSlip) global.CC.previewShippingSlip(o);
+      btnPreviewSlip.addEventListener('click', function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (invEngine.previewShippingSlip) invEngine.previewShippingSlip(o);
+        else if (ccEngine.previewShippingSlip) ccEngine.previewShippingSlip(o);
       });
     }
     var btnSummaryPrintSlip = containerEl.querySelector('#btnSummaryPrintSlip');
     if (btnSummaryPrintSlip) {
-      btnSummaryPrintSlip.addEventListener('click', function () {
-        if (global.Invoice && global.Invoice.printShippingSlip) global.Invoice.printShippingSlip(o);
-        else if (global.CC && global.CC.printShippingSlip) global.CC.printShippingSlip(o);
+      btnSummaryPrintSlip.addEventListener('click', function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (invEngine.printShippingSlip) invEngine.printShippingSlip(o);
+        else if (ccEngine.printShippingSlip) ccEngine.printShippingSlip(o);
       });
     }
     var btnSummaryPreviewSlip = containerEl.querySelector('#btnSummaryPreviewSlip');
     if (btnSummaryPreviewSlip) {
-      btnSummaryPreviewSlip.addEventListener('click', function () {
-        if (global.Invoice && global.Invoice.previewShippingSlip) global.Invoice.previewShippingSlip(o);
-        else if (global.CC && global.CC.previewShippingSlip) global.CC.previewShippingSlip(o);
+      btnSummaryPreviewSlip.addEventListener('click', function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (invEngine.previewShippingSlip) invEngine.previewShippingSlip(o);
+        else if (ccEngine.previewShippingSlip) ccEngine.previewShippingSlip(o);
       });
     }
 
     // Customer Invoice Handlers
     var btnPrint = containerEl.querySelector('#btnPrintInvoice');
     if (btnPrint) {
-      btnPrint.addEventListener('click', function () {
-        if (global.Invoice && global.Invoice.printInvoice) global.Invoice.printInvoice(o);
-        else if (global.CC && global.CC.printInvoice) global.CC.printInvoice(o);
+      btnPrint.addEventListener('click', function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (invEngine.printInvoice) invEngine.printInvoice(o);
+        else if (ccEngine.printInvoice) ccEngine.printInvoice(o);
         else window.print();
       });
     }
     var btnPreview = containerEl.querySelector('#btnPreviewInvoice');
     if (btnPreview) {
-      btnPreview.addEventListener('click', function () {
-        if (global.Invoice && global.Invoice.previewInvoice) global.Invoice.previewInvoice(o);
-        else if (global.CC && global.CC.previewInvoice) global.CC.previewInvoice(o);
+      btnPreview.addEventListener('click', function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (invEngine.previewInvoice) invEngine.previewInvoice(o);
+        else if (ccEngine.previewInvoice) ccEngine.previewInvoice(o);
       });
     }
     var btnSummaryPrint = containerEl.querySelector('#btnSummaryPrintInvoice');
     if (btnSummaryPrint) {
-      btnSummaryPrint.addEventListener('click', function () {
-        if (global.Invoice && global.Invoice.printInvoice) global.Invoice.printInvoice(o);
-        else if (global.CC && global.CC.printInvoice) global.CC.printInvoice(o);
+      btnSummaryPrint.addEventListener('click', function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (invEngine.printInvoice) invEngine.printInvoice(o);
+        else if (ccEngine.printInvoice) ccEngine.printInvoice(o);
         else window.print();
       });
     }
     var btnSummaryPreview = containerEl.querySelector('#btnSummaryPreviewInvoice');
     if (btnSummaryPreview) {
-      btnSummaryPreview.addEventListener('click', function () {
-        if (global.Invoice && global.Invoice.previewInvoice) global.Invoice.previewInvoice(o);
-        else if (global.CC && global.CC.previewInvoice) global.CC.previewInvoice(o);
+      btnSummaryPreview.addEventListener('click', function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (invEngine.previewInvoice) invEngine.previewInvoice(o);
+        else if (ccEngine.previewInvoice) ccEngine.previewInvoice(o);
       });
     }
 

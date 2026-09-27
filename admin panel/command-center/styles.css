@@ -397,6 +397,133 @@ table.tbl tbody tr:last-child td { border-bottom: none; }
 .modal-actions { display: flex; gap: 12px; }
 .modal-actions .btn { flex: 1; height: 44px; }
 
+/* ============================================================================
+   INVOICE & ORDER SLIP PREVIEW MODAL
+   ========================================================================== */
+.inv-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  background: rgba(9, 9, 11, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 1;
+  transition: opacity 0.2s var(--ease);
+}
+.inv-modal-overlay.closing {
+  opacity: 0;
+  pointer-events: none;
+}
+.inv-modal-dialog {
+  width: 940px;
+  max-width: 100%;
+  height: 90vh;
+  max-height: 920px;
+  background: #ffffff;
+  border-radius: var(--r-xl);
+  border: 1px solid var(--line);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.97) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.inv-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  background: #ffffff;
+  flex-shrink: 0;
+}
+.inv-modal-head-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.inv-modal-head-title span.inv-modal-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.inv-modal-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.inv-modal-head-actions .btn {
+  height: 34px;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.inv-modal-body {
+  flex: 1;
+  min-height: 0;
+  background: #f4f4f5;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+.inv-modal-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #ffffff;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .inv-modal-overlay {
+    padding: 0;
+  }
+  .inv-modal-dialog {
+    width: 100vw;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+  .inv-modal-head {
+    padding: 12px 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .inv-modal-head-title {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .inv-modal-head-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .inv-modal-head-actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .inv-modal-head-actions .tab-btn-text {
+    display: none;
+  }
+}
+
 /* CMD Palette */
 .cmdk-scrim { position: fixed; inset: 0; z-index: 120; background: rgba(0,0,0,0.3); backdrop-filter: blur(2px); opacity: 0; pointer-events: none; transition: opacity 0.2s; display: grid; align-items: flex-start; justify-items: center; padding-top: 12vh; }
 .cmdk-scrim.open { opacity: 1; pointer-events: auto; }

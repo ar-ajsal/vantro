@@ -1,4 +1,9 @@
-const sharp = require('sharp');
+let sharp;
+try {
+  sharp = require('sharp');
+} catch (e) {
+  console.warn('[normalizeImage] sharp not installed or failed to load. Image normalization will be skipped.', e.message);
+}
 
 const CANVAS_SIZE = 1000;       // Final output: 1000x1000 px
 const MAX_PRODUCT_DIM = 800;    // Product fits within 800x800 (80% of canvas)
@@ -16,6 +21,9 @@ const MAX_PRODUCT_DIM = 800;    // Product fits within 800x800 (80% of canvas)
  * @returns {Promise<Buffer>} - Normalized 1000x1000 transparent PNG buffer
  */
 async function normalizeProductImage(pngBuffer) {
+  if (!sharp) {
+    return pngBuffer;
+  }
   // Step 1: Trim all transparent margins around the actual product
   const trimmedBuffer = await sharp(pngBuffer)
     .trim({ threshold: 10 })   // threshold=10 handles near-transparent anti-aliased edges

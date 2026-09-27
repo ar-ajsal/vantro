@@ -85,10 +85,20 @@
           iconName: 'trending-up', sub: 'Last month ' + moneyCompact(amt.lastMonthOrderAmount || 0),
           delta: { pct: CC.pct(amt.thisMonthOrderAmount, amt.lastMonthOrderAmount) }
         }),
-        UI.kpiCard({
-          label: 'Total orders', value: num(cnt.totalOrder || 0),
-          iconName: 'cart', sub: (cnt.totalPendingOrder || 0) + ' pending · ' + (cnt.totalProcessingOrder || 0) + ' processing'
-        }),
+        (function () {
+          var activeSub = [];
+          if (cnt.totalConfirmedOrder) activeSub.push(cnt.totalConfirmedOrder + ' confirmed');
+          if (cnt.totalProcessingOrder) activeSub.push(cnt.totalProcessingOrder + ' processing');
+          if (cnt.totalShippedOrder) activeSub.push(cnt.totalShippedOrder + ' shipped');
+          if (cnt.totalPendingOrder) activeSub.push(cnt.totalPendingOrder + ' pending');
+          if (!activeSub.length && cnt.totalDeliveredOrder) activeSub.push(cnt.totalDeliveredOrder + ' delivered');
+          var subText = activeSub.length ? activeSub.slice(0, 2).join(' · ') : (cnt.totalOrder ? cnt.totalOrder + ' recorded' : 'No orders yet');
+
+          return UI.kpiCard({
+            label: 'Total orders', value: num(cnt.totalOrder || 0),
+            iconName: 'cart', sub: subText
+          });
+        })(),
         UI.kpiCard({
           label: 'Lifetime revenue', value: moneyCompact(amt.totalOrderAmount || 0),
           iconName: 'wallet', sub: (cnt.totalDeliveredOrder || 0) + ' delivered'
@@ -129,19 +139,86 @@
   function loadStatus(root) {
     var box = root.querySelector('#statusDonut');
     CC.API.get('/orders/dashboard-count').then(function (c) {
-      var segs = [
-        { label: 'Delivered', value: c.totalDeliveredOrder || 0, color: 'var(--ok)' },
-        { label: 'Processing', value: c.totalProcessingOrder || 0, color: 'var(--info)' },
-        { label: 'Pending', value: c.totalPendingOrder || 0, color: 'var(--warn)' }
+      c = c || {};
+      var total = Number(c.totalOrder) || 0;
+      if (total === 0) {
+        box.innerHTML = UI.emptyState({ icon: 'gauge', title: 'No orders yet' });
+        return;
+      }
+
+      var byStatus = c.byStatus || {};
+
+      // If backend returned legacy payload without byStatus or without Confirmed
+      if (!c.byStatus) {
+        byStatus['Delivered'] = c.totalDeliveredOrder || 0;
+        byStatus['Processing'] = c.totalProcessingOrder || 0;
+        byStatus['Pending'] = c.totalPendingOrder || 0;
+        if (c.totalConfirmedOrder) byStatus['Confirmed'] = c.totalConfirmedOrder;
+        if (c.totalShippedOrder) byStatus['Shipped'] = c.totalShippedOrder;
+        if (c.totalCancelledOrder) byStatus['Cancelled'] = c.totalCancelledOrder;
+
+        var knownSum = (byStatus['Delivered'] || 0) + (byStatus['Processing'] || 0) +
+                       (byStatus['Pending'] || 0) + (byStatus['Confirmed'] || 0) +
+                       (byStatus['Shipped'] || 0) + (byStatus['Cancelled'] || 0);
+        var rem = Math.max(0, total - knownSum);
+        // In Vantro, new storefront orders are automatically Confirmed on payment
+        if (rem > 0 && !byStatus['Confirmed']) {
+          byStatus['Confirmed'] = rem;
+        } else if (rem > 0) {
+          byStatus['Other'] = rem;
+        }
+      }
+
+      // Recognized order statuses in standard commerce lifecycle
+      var statusConfig = [
+        { key: 'Confirmed', label: 'Confirmed', color: '#18181b' },
+        { key: 'Processing', label: 'Processing', color: '#52525b' },
+        { key: 'Shipped', label: 'Shipped', color: '#71717a' },
+        { key: 'Out For Delivery', label: 'Out for delivery', color: '#a1a1aa' },
+        { key: 'Delivered', label: 'Delivered', color: '#059669' },
+        { key: 'Pending', label: 'Pending', color: '#d97706' },
+        { key: 'Cancelled', label: 'Cancelled', color: '#dc2626' },
+        { key: 'Returned', label: 'Returned', color: '#e11d48' }
       ];
-      var accounted = segs.reduce(function (a, s) { return a + s.value; }, 0);
-      var other = Math.max(0, (c.totalOrder || 0) - accounted);
-      if (other > 0) segs.push({ label: 'Other', value: other, color: 'var(--ink-4)' });
-      if ((c.totalOrder || 0) === 0) { box.innerHTML = UI.emptyState({ icon: 'gauge', title: 'No orders yet' }); return; }
+
+      var segs = [];
+      var accounted = 0;
+
+      statusConfig.forEach(function (cfg) {
+        var count = Number(byStatus[cfg.key]) || 0;
+        if (count > 0) {
+          segs.push({ label: cfg.label, value: count, color: cfg.color });
+          accounted += count;
+        }
+      });
+
+      // Include any other custom/unmapped status with a positive count
+      Object.keys(byStatus).forEach(function (k) {
+        var isKnown = statusConfig.some(function (cfg) { return cfg.key.toLowerCase() === k.toLowerCase(); });
+        if (!isKnown && byStatus[k] > 0) {
+          segs.push({ label: k, value: byStatus[k], color: '#9ca3af' });
+          accounted += byStatus[k];
+        }
+      });
+
+      var uncounted = Math.max(0, total - accounted);
+      if (uncounted > 0) {
+        segs.push({ label: 'Other', value: uncounted, color: '#9ca3af' });
+      }
+
+      // Fallback if segs is somehow empty despite total > 0
+      if (!segs.length && total > 0) {
+        segs.push({ label: 'Confirmed', value: total, color: '#18181b' });
+      }
+
       box.innerHTML =
-        UI.donut(segs, { centerLabel: 'orders', centerValue: num(c.totalOrder || 0) }) +
-        '<div class="legend" style="justify-content:center;margin-top:14px">' +
-        segs.map(function (s) { return '<span><i style="background:' + s.color + '"></i>' + esc(s.label) + ' · ' + num(s.value) + '</span>'; }).join('') +
+        UI.donut(segs, { centerLabel: 'orders', centerValue: num(total) }) +
+        '<div class="legend" style="justify-content:center;margin-top:16px;display:flex;flex-wrap:wrap;gap:8px 14px">' +
+        segs.map(function (s) {
+          return '<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink-2)">' +
+            '<i style="width:8px;height:8px;border-radius:2px;background:' + s.color + ';display:inline-block"></i>' +
+            esc(s.label) + ' &bull; <b>' + num(s.value) + '</b></span>';
+        }).join('') +
         '</div>';
     }).catch(function (e) { box.innerHTML = UI.errorState(e.message); });
   }

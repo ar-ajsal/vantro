@@ -505,15 +505,35 @@ const getDashboardAmount = async (req, res) => {
 const getDashboardCount = async (req, res) => {
   try {
     const totalOrder = await Order.countDocuments();
-    const totalPendingOrder = await Order.countDocuments({ status: 'Pending' });
-    const totalProcessingOrder = await Order.countDocuments({ status: 'Processing' });
-    const totalDeliveredOrder = await Order.countDocuments({ status: 'Delivered' });
+
+    // Group counts by status dynamically from the database
+    const statusAgg = await Order.aggregate([
+      { $group: { _id: '$status', count: { $sum: 1 } } }
+    ]);
+
+    const byStatus = {};
+    (statusAgg || []).forEach((item) => {
+      if (item && item._id) {
+        byStatus[item._id] = item.count;
+      }
+    });
+
+    const totalPendingOrder = byStatus['Pending'] || 0;
+    const totalConfirmedOrder = byStatus['Confirmed'] || 0;
+    const totalProcessingOrder = byStatus['Processing'] || 0;
+    const totalShippedOrder = (byStatus['Shipped'] || 0) + (byStatus['Out For Delivery'] || 0);
+    const totalDeliveredOrder = byStatus['Delivered'] || 0;
+    const totalCancelledOrder = (byStatus['Cancelled'] || 0) + (byStatus['Returned'] || 0);
 
     res.send({
       totalOrder,
       totalPendingOrder,
+      totalConfirmedOrder,
       totalProcessingOrder,
-      totalDeliveredOrder
+      totalShippedOrder,
+      totalDeliveredOrder,
+      totalCancelledOrder,
+      byStatus
     });
   } catch (err) {
     res.status(500).send({ message: err.message });

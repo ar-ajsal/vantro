@@ -175,11 +175,13 @@
       off += len;
       return seg;
     }).join('');
-    var center = opts.centerLabel ?
-      '<text x="' + cx + '" y="' + (cy - 4) + '" text-anchor="middle" font-size="22" font-weight="700" fill="var(--ink)" font-family="var(--font-display)">' +
-      esc(opts.centerValue || '') + '</text>' +
-      '<text x="' + cx + '" y="' + (cy + 15) + '" text-anchor="middle" font-size="10">' + esc(opts.centerLabel) + '</text>' : '';
-    return '<svg class="chart" viewBox="0 0 ' + size + ' ' + size + '" style="max-width:' + size + 'px;margin:0 auto;">' +
+    var val = opts.centerValue != null ? opts.centerValue : (opts.centerTop != null ? opts.centerTop : '');
+    var lbl = opts.centerLabel != null ? opts.centerLabel : (opts.centerBottom != null ? opts.centerBottom : '');
+    var center = (val || lbl) ?
+      '<text x="' + cx + '" y="' + (cy - 3) + '" text-anchor="middle" font-size="22" font-weight="700" fill="var(--ink)" font-family="var(--font-display)">' +
+      esc(val) + '</text>' +
+      '<text x="' + cx + '" y="' + (cy + 16) + '" text-anchor="middle" font-size="11" font-weight="500" fill="var(--ink-3)">' + esc(lbl) + '</text>' : '';
+    return '<svg class="chart" viewBox="0 0 ' + size + ' ' + size + '" style="max-width:' + size + 'px;margin:0 auto;display:block">' +
       '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="var(--graphite-2)" stroke-width="' + stroke + '"/>' +
       arcs + center + '</svg>';
   }

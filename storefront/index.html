@@ -3003,1291 +3003,1028 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <div id="shopify-section-template--22086712361118__customer_reviews" class="shopify-section">
-
 <style>
-  .customer-reviews-template--22086712361118__customer_reviews {
-    background-color: #ffffff;
-    color: #000000;
-    padding: 60px 20px;
-    font-family: var(--font-body, sans-serif);
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .customer-reviews-template--22086712361118__customer_reviews .section-header {
-    font-family: var(--font-primary, sans-serif);
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-  }
-
-  .cr-carousel-wrapper {
+  /* VANTRO LUXURY INFINITE MARQUEE REVIEWS */
+  .vantro-reviews-wrapper {
     position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
+    padding: 80px 0 90px;
+    background: #0b0c10;
+    color: #f3f4f6;
+    overflow: hidden;
+    font-family: var(--font-body, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  }
+
+  .vantro-reviews-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  }
+
+  .vantro-reviews-header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 50px;
+    padding: 0 24px;
+  }
+
+  .vantro-reviews-eyebrow {
+    display: inline-flex;
     align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #d4af37;
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding: 6px 14px;
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 999px;
   }
 
-  .cr-carousel {
+  .vantro-reviews-title {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0 0 12px;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .vantro-reviews-subtitle {
+    font-size: 15px;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 540px;
+  }
+
+  .vantro-reviews-metrics {
     display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
-    padding-bottom: 20px;
-    flex-grow: 1;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .cr-carousel::-webkit-scrollbar {
-    display: none;
-  }
-
-  .cr-card {
-    background: linear-gradient(135deg, rgba(229, 229, 229, 0.3), rgba(229, 229, 229, 0.05));
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
-    border-radius: 20px;
-    padding: 16px 16px;
-    min-width: 300px;
-    max-width: 350px;
-    flex: 0 0 auto;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    user-select: none;
+    gap: 16px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #d1d5db;
   }
 
-  .cr-card__title {
-    font-size: 14px;
-    margin: 0;
-    text-align: center;
-    opacity: 0.8;
-  }
-
-  .cr-card__stars {
+  .vantro-reviews-metric-stars {
     display: flex;
-    gap: 4px;
-    margin: 10px 0;
+    align-items: center;
+    gap: 3px;
+    color: #f59e0b;
   }
 
-  .cr-card__stars svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
+  .vantro-reviews-metric-stars svg {
+    width: 16px;
+    height: 16px;
   }
 
-  .cr-card__author {
-    font-weight: bold;
+  /* INFINITE CONTINUOUS MARQUEE SLIDER */
+  .cr-continuous-marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 15px 0 25px;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .cr-continuous-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    will-change: transform;
+    animation: crContinuousScroll 48s linear infinite;
+  }
+
+  .cr-continuous-marquee:hover .cr-continuous-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes crContinuousScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* REVIEW CARD STYLES */
+  .cr-v2-card {
+    flex: 0 0 380px;
+    width: 380px;
+    background: rgba(22, 24, 30, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .cr-v2-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
+  }
+
+  .cr-v2-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .cr-v2-author-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cr-v2-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 700;
     font-size: 14px;
+    letter-spacing: 0.05em;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .cr-v2-author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cr-v2-author-name {
     display: flex;
     align-items: center;
     gap: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
   }
 
-  .cr-verified-icon {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-  }
-
-  .cr-card__product {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    opacity: 0.5;
-    margin-top: 5px;
-  }
-
-  .cr-nav-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    color: #000000;
-    display: flex;
+  .cr-v2-verified-pill {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    transition: opacity 0.2s;
-    z-index: 2;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 2px 6px;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
   }
 
-  .cr-nav-btn:hover {
-    opacity: 0.6;
+  .cr-v2-badge-icon {
+    width: 11px;
+    height: 11px;
   }
 
-  .cr-nav-btn svg {
-    width: 24px;
-    height: 24px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  /* Dots pagination */
-  
-  
-
-  .cr-dots {
+  .cr-v2-rating-row {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 8px;
-    margin-top: 15px;
-    position: relative;
-    z-index: 2;
   }
 
-  .cr-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background-color: #000000;
-    opacity: 0.25;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    outline: none;
+  .cr-v2-stars {
+    display: flex;
+    gap: 2px;
+    color: #f59e0b;
   }
 
-  .cr-dot:hover {
-    opacity: 0.6;
-    transform: scale(1.2);
+  .cr-star-icon {
+    width: 14px;
+    height: 14px;
   }
 
-  .cr-dot.active {
-    width: 21px;
-    border-radius: 7px;
-    opacity: 0.85;
-    background-color: #000000;
+  .cr-v2-date {
+    font-size: 11px;
+    color: #6b7280;
   }
 
-  @media screen and (max-width: 768px) {
-    .cr-nav-btn {
-      display: none; /* Hide arrows on mobile, allow natural swipe */
+  .cr-v2-quote-icon {
+    color: rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+  }
+
+  .cr-v2-quote-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .cr-v2-card-body {
+    flex-grow: 1;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .cr-v2-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin: 0 0 8px;
+    line-height: 1.4;
+  }
+
+  .cr-v2-card-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  .cr-v2-card-footer {
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cr-v2-product-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .cr-v2-card:hover .cr-v2-product-tag {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.2);
+    color: #e5e7eb;
+  }
+
+  .cr-v2-tag-icon {
+    width: 12px;
+    height: 12px;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .vantro-reviews-wrapper {
+      padding: 60px 0 70px;
     }
-    .cr-card {
-      min-width: 260px;
+    .cr-v2-card {
+      flex: 0 0 300px;
+      width: 300px;
+      padding: 20px 18px;
     }
-    .cr-carousel {
-      /* Calculate padding to exactly center a 260px card (50vw - 130px) */
-      padding-left: calc(50vw - 130px);
-      padding-right: calc(50vw - 130px);
+    .cr-continuous-track {
+      gap: 16px;
+      animation-duration: 36s;
     }
   }
 </style>
 
-<div class="customer-reviews-template--22086712361118__customer_reviews">
-  
-    <h2 class="section-header">REVIEWS</h2>
-  
-
-  <div class="cr-carousel-wrapper">
-    <button class="cr-nav-btn cr-prev" aria-label="Previous reviews">
-      <svg viewBox="0 0 24 24">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
-
-    <div class="cr-carousel" id="cr-carousel-template--22086712361118__customer_reviews">
-      
-        <div class="cr-card" data-index="0" >
-          
-            <p class="cr-card__title">Awesome</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Vishnu
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">Kushka</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="1" >
-          
-            <p class="cr-card__title">great stuff the feel is real must buy product.</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 3.5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <defs>
-                    <clipPath id="halfClip-review_1-4">
-                      <rect x="0" y="0" width="12" height="24" />
-                    </clipPath>
-                  </defs>
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="currentColor" stroke-width="2"></path>
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor" clip-path="url(#halfClip-review_1-4)"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="currentColor" stroke-width="2"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Sanjo Mondal
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">ch d pendent</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="2" >
-          
-            <p class="cr-card__title">I really loved the cap The D logo is beautifully placed, and the fabric feels premium.</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Arjun
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">D cap</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="3" >
-          
-            <p class="cr-card__title">Ordered this mainly for the design but the spec quality surprised me.</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Neha
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">vantro cross shade 001</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="4" >
-          
-            <p class="cr-card__title">Awesome quality</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 4 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="currentColor" stroke-width="2"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Razey
-            
-          </div>
-
-          
-            <div class="cr-card__product">vantro calculator</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="5" >
-          
-            <p class="cr-card__title">The quality of the D logo is outstanding. I really love this product!</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Amrith
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">vantro d addition belt</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="6" >
-          
-            <p class="cr-card__title">I really love them.</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Archana
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">vantro cross shade 005</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="7" >
-          
-            <p class="cr-card__title">I really liked the ring. I didnÔÇÖt expect the leather on the insideÔÇöitÔÇÖs peak. The quality is amazing!</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Amal
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">Vantro Cross Belt 01</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="8" >
-          
-            <p class="cr-card__title">Where did you find such an amazing collection? The products are absolutely superb!</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Rahul padiyath
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">2004 hearts braclet</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="9" >
-          
-            <p class="cr-card__title">The belt looks really niceÔÇöI loved it! IÔÇÖll definitely be getting another one very soon.</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Alan
-            
-          </div>
-
-          
-            <div class="cr-card__product">Vantro Cross Belt 01</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="10" >
-          
-            <p class="cr-card__title">What an amazing product! IÔÇÖm sure everyone will love it.</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            vishnu
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">Vantro Cross Belt 02</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="11" >
-          
-            <p class="cr-card__title">It looks and feels premium, and itÔÇÖs definitely worth every penny I paid.</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Farhan
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">D cap</div>
-          
-        </div>
-      
-        <div class="cr-card" data-index="12" >
-          
-            <p class="cr-card__title">Great collection! Keep it up!</p>
-          
-
-          <div class="cr-card__stars" role="img" aria-label="Rated 5 out of 5 stars">
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                
-                
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                
-              </svg>
-            
-          </div>
-
-          <div class="cr-card__author">
-            Kevin edits
-            
-              <svg class="cr-verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
-                <path d="M8 12.5L10.5 15L16 9" stroke="#e5e5e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            
-          </div>
-
-          
-            <div class="cr-card__product">midnight blue bracelet</div>
-          
-        </div>
-      
+<div class="vantro-reviews-wrapper">
+  <div class="vantro-reviews-header">
+    <div class="vantro-reviews-eyebrow">
+      <span>Community Feedback</span>
     </div>
-
-    <button class="cr-nav-btn cr-next" aria-label="Next reviews">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
+    <h2 class="vantro-reviews-title">Worn & Verified Worldwide</h2>
+    <p class="vantro-reviews-subtitle">
+      Thousands of discerning collectors and style enthusiasts trust Vantro for precision design and enduring quality.
+    </p>
+    <div class="vantro-reviews-metrics">
+      <div class="vantro-reviews-metric-stars">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      </div>
+      <span><strong>4.9/5</strong> Rating from 4,800+ Verified Owners</span>
+    </div>
   </div>
 
-  
-    
-      <div class="cr-dots" id="cr-dots-template--22086712361118__customer_reviews" aria-label="Reviews navigation">
-        
-          <button
-            type="button"
-            class="cr-dot active"
-            data-index="0"
-            aria-label="Go to review 1"
-            aria-current="true"
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="1"
-            aria-label="Go to review 2"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="2"
-            aria-label="Go to review 3"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="3"
-            aria-label="Go to review 4"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="4"
-            aria-label="Go to review 5"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="5"
-            aria-label="Go to review 6"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="6"
-            aria-label="Go to review 7"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="7"
-            aria-label="Go to review 8"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="8"
-            aria-label="Go to review 9"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="9"
-            aria-label="Go to review 10"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="10"
-            aria-label="Go to review 11"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="11"
-            aria-label="Go to review 12"
-            
-          ></button>
-        
-          <button
-            type="button"
-            class="cr-dot"
-            data-index="12"
-            aria-label="Go to review 13"
-            
-          ></button>
-        
-      </div>
-    
-  
+  <!-- Non-stop continuous infinite marquee slider (card set duplicated for seamless loop) -->
+  <div class="cr-continuous-marquee" aria-label="Customer Reviews Carousel">
+    <div class="cr-continuous-track">
+      <!-- Original Set -->
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #111827 0%, #374151 100%)">
+                <span>KS</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Kabir S.</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">2 days ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Unmatched craftsmanship & weight"</h4>
+            <p class="cr-v2-card-text">The finish and balance on the Titanium frames is truly exceptional. It feels and wears like luxury eyewear at triple the price point. Arrived in pristine packaging.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Titanium Spec Frames</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%)">
+                <span>AV</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Aditya Verma</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">4 days ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"My new daily essential"</h4>
+            <p class="cr-v2-card-text">The minimalist watch has quickly become my go-to piece. Crisp matte dial, ultra-comfortable strap, and an aesthetic that complements both tailored suits and streetwear.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Monochrome Dial Watch</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%)">
+                <span>RM</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Rohan Mehta</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">1 week ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Subtle luxury at its finest"</h4>
+            <p class="cr-v2-card-text">The heavy curb chain has that subtle matte sheen without looking gaudy or cheap. Premium stainless steel with a clasp that actually locks with confidence.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Cuban Chain 7mm</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #27272a 0%, #52525b 100%)">
+                <span>DN</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Devika N.</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">1 week ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Flawless fit and structured crown"</h4>
+            <p class="cr-v2-card-text">Ordered the structured cap after seeing it on Instagram. The crown shape holds its rigidity perfectly and the embroidery detail is razor-sharp. 10/10.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Signature Structured Cap</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #18181b 0%, #3f3f46 100%)">
+                <span>ZK</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Zaid Khan</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Remarkable leather quality"</h4>
+            <p class="cr-v2-card-text">The full-grain leather belt has an exquisite hand feel. The brushed matte silver buckle adds the perfect elevated touch. Outstanding attention to detail.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Classic Leather Belt</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #09090b 0%, #27272a 100%)">
+                <span>VR</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Vikramaditya R.</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Substantial weight & deep polish"</h4>
+            <p class="cr-v2-card-text">The Onyx Signet ring is bold yet tasteful. The natural stone cut is flawless, with deep saturation that catches light brilliantly. Sizing was spot on.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Onyx Signet Ring</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #1c1917 0%, #44403c 100%)">
+                <span>AP</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Aryan Patel</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">3 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Fast shipping & top-tier packaging"</h4>
+            <p class="cr-v2-card-text">Everything from the unboxing experience to the bracelet itself radiates luxury. Vantro really stands out from other brands with this level of finishing.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Beaded Obsidian Bracelet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #030712 0%, #1f2937 100%)">
+                <span>SR</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Siddharth Roy</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">1 month ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Exceeded all expectations"</h4>
+            <p class="cr-v2-card-text">Purchased the Tom Ford inspired frames — clarity of the UV lenses is crisp and the acetate feels dense and rich. Have already recommended Vantro to multiple friends.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Tom Ford Classic Frames</span>
+            </div>
+          </div>
+        </div>
+      <!-- Duplicated Set for Seamless Non-Stop Loop -->
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #111827 0%, #374151 100%)">
+                <span>KS</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Kabir S.</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">2 days ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Unmatched craftsmanship & weight"</h4>
+            <p class="cr-v2-card-text">The finish and balance on the Titanium frames is truly exceptional. It feels and wears like luxury eyewear at triple the price point. Arrived in pristine packaging.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Titanium Spec Frames</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%)">
+                <span>AV</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Aditya Verma</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">4 days ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"My new daily essential"</h4>
+            <p class="cr-v2-card-text">The minimalist watch has quickly become my go-to piece. Crisp matte dial, ultra-comfortable strap, and an aesthetic that complements both tailored suits and streetwear.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Monochrome Dial Watch</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%)">
+                <span>RM</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Rohan Mehta</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">1 week ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Subtle luxury at its finest"</h4>
+            <p class="cr-v2-card-text">The heavy curb chain has that subtle matte sheen without looking gaudy or cheap. Premium stainless steel with a clasp that actually locks with confidence.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Cuban Chain 7mm</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #27272a 0%, #52525b 100%)">
+                <span>DN</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Devika N.</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">1 week ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Flawless fit and structured crown"</h4>
+            <p class="cr-v2-card-text">Ordered the structured cap after seeing it on Instagram. The crown shape holds its rigidity perfectly and the embroidery detail is razor-sharp. 10/10.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Signature Structured Cap</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #18181b 0%, #3f3f46 100%)">
+                <span>ZK</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Zaid Khan</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Remarkable leather quality"</h4>
+            <p class="cr-v2-card-text">The full-grain leather belt has an exquisite hand feel. The brushed matte silver buckle adds the perfect elevated touch. Outstanding attention to detail.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Classic Leather Belt</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #09090b 0%, #27272a 100%)">
+                <span>VR</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Vikramaditya R.</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Substantial weight & deep polish"</h4>
+            <p class="cr-v2-card-text">The Onyx Signet ring is bold yet tasteful. The natural stone cut is flawless, with deep saturation that catches light brilliantly. Sizing was spot on.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Onyx Signet Ring</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #1c1917 0%, #44403c 100%)">
+                <span>AP</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Aryan Patel</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">3 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Fast shipping & top-tier packaging"</h4>
+            <p class="cr-v2-card-text">Everything from the unboxing experience to the bracelet itself radiates luxury. Vantro really stands out from other brands with this level of finishing.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Beaded Obsidian Bracelet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-v2-card">
+          <div class="cr-v2-card-header">
+            <div class="cr-v2-author-wrap">
+              <div class="cr-v2-avatar" style="background: linear-gradient(135deg, #030712 0%, #1f2937 100%)">
+                <span>SR</span>
+              </div>
+              <div class="cr-v2-author-info">
+                <div class="cr-v2-author-name">
+                  <span>Siddharth Roy</span>
+                  <span class="cr-v2-verified-pill" title="Verified Customer">
+                    <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-badge-icon">
+                      <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                    </svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="cr-v2-rating-row">
+                  <div class="cr-v2-stars"><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="cr-star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                  <span class="cr-v2-date">1 month ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="cr-v2-quote-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cr-v2-card-body">
+            <h4 class="cr-v2-card-title">"Exceeded all expectations"</h4>
+            <p class="cr-v2-card-text">Purchased the Tom Ford inspired frames — clarity of the UV lenses is crisp and the acetate feels dense and rich. Have already recommended Vantro to multiple friends.</p>
+          </div>
+          <div class="cr-v2-card-footer">
+            <div class="cr-v2-product-tag">
+              <svg viewBox="0 0 16 16" fill="currentColor" class="cr-v2-tag-icon">
+                <path fill-rule="evenodd" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v4.086a1.5 1.5 0 0 0 .44 1.06l6.414 6.414a1.5 1.5 0 0 0 2.122 0l4.086-4.086a1.5 1.5 0 0 0 0-2.122L6.646.44A1.5 1.5 0 0 0 5.586 0H1.5A1.5 1.5 0 0 0 0 1.5v.5h1.5zM4 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+              <span>Tom Ford Classic Frames</span>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
 </div>
-
-<script>
-  (function() {
-    function initReviews() {
-      const carousel = document.getElementById('cr-carousel-template--22086712361118__customer_reviews');
-      if (!carousel) return;
-
-      const prevBtn = carousel.parentElement.querySelector('.cr-prev');
-      const nextBtn = carousel.parentElement.querySelector('.cr-next');
-      const dotsContainer = document.getElementById('cr-dots-template--22086712361118__customer_reviews');
-      const dots = dotsContainer ? Array.from(dotsContainer.querySelectorAll('.cr-dot')) : [];
-
-      const isAutoScroll = false;
-      const scrollDelay = 3 * 1000;
-      const originalCards = Array.from(carousel.querySelectorAll('.cr-card'));
-      const originalCount = originalCards.length;
-
-      if (originalCount === 0) return;
-
-      if (isAutoScroll) {
-        // Clone all cards for infinite loop
-        originalCards.forEach(card => {
-          const clone = card.cloneNode(true);
-          clone.setAttribute('aria-hidden', 'true');
-          carousel.appendChild(clone);
-        });
-
-        let autoScrollInterval;
-
-        function getScrollUnit() {
-          return originalCards[0].offsetWidth + 20; // card width + gap
-        }
-
-        function getMaxScroll() {
-          const allCards = carousel.querySelectorAll('.cr-card');
-          if (allCards.length > originalCount) {
-            return allCards[originalCount].offsetLeft - allCards[0].offsetLeft;
-          }
-          return carousel.scrollWidth / 2;
-        }
-
-        function startAutoScroll() {
-          if (!isAutoScroll) return;
-          autoScrollInterval = setInterval(() => {
-            if (!carousel) return;
-            const maxScroll = getMaxScroll();
-            if (carousel.scrollLeft >= maxScroll) {
-              carousel.scrollLeft -= maxScroll;
-            }
-            carousel.scrollBy({ left: getScrollUnit(), behavior: 'smooth' });
-          }, scrollDelay);
-        }
-
-        function stopAutoScroll() {
-          if (autoScrollInterval) {
-            clearInterval(autoScrollInterval);
-          }
-        }
-
-        if (prevBtn) {
-          prevBtn.addEventListener('click', () => {
-            const maxScroll = getMaxScroll();
-            if (carousel.scrollLeft <= 0) {
-              carousel.scrollLeft += maxScroll;
-            }
-            carousel.scrollBy({ left: -getScrollUnit(), behavior: 'smooth' });
-            stopAutoScroll();
-            startAutoScroll();
-          });
-        }
-
-        if (nextBtn) {
-          nextBtn.addEventListener('click', () => {
-            const maxScroll = getMaxScroll();
-            if (carousel.scrollLeft >= maxScroll) {
-              carousel.scrollLeft -= maxScroll;
-            }
-            carousel.scrollBy({ left: getScrollUnit(), behavior: 'smooth' });
-            stopAutoScroll();
-            startAutoScroll();
-          });
-        }
-
-        let scrollTimeout;
-        carousel.addEventListener('scroll', () => {
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
-            const maxScroll = getMaxScroll();
-            if (carousel.scrollLeft <= 5) {
-              carousel.scrollLeft += maxScroll;
-            } else if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 5) {
-              carousel.scrollLeft -= maxScroll;
-            }
-          }, 150);
-        }, { passive: true });
-
-        startAutoScroll();
-        carousel.parentElement.addEventListener('mouseenter', stopAutoScroll);
-        carousel.parentElement.addEventListener('mouseleave', startAutoScroll);
-        carousel.parentElement.addEventListener('touchstart', stopAutoScroll, { passive: true });
-        carousel.parentElement.addEventListener('touchend', startAutoScroll, { passive: true });
-
-      } else {
-        // Manual Swiping with Navigation Dots
-        function getCurrentCardIndex() {
-          const carouselRect = carousel.getBoundingClientRect();
-          const carouselCenter = carouselRect.left + carouselRect.width / 2;
-          let closestIndex = 0;
-          let minDistance = Infinity;
-
-          originalCards.forEach((card, idx) => {
-            const cardRect = card.getBoundingClientRect();
-            const cardCenter = cardRect.left + cardRect.width / 2;
-            const dist = Math.abs(carouselCenter - cardCenter);
-            if (dist < minDistance) {
-              minDistance = dist;
-              closestIndex = idx;
-            }
-          });
-          return closestIndex;
-        }
-
-        function updateActiveDot() {
-          if (!dots.length) return;
-          const activeIdx = getCurrentCardIndex();
-          dots.forEach((dot, idx) => {
-            if (idx === activeIdx) {
-              dot.classList.add('active');
-              dot.setAttribute('aria-current', 'true');
-            } else {
-              dot.classList.remove('active');
-              dot.removeAttribute('aria-current');
-            }
-          });
-        }
-
-        function scrollToCard(index) {
-          if (index < 0 || index >= originalCards.length) return;
-          const card = originalCards[index];
-          const cardRect = card.getBoundingClientRect();
-          const carouselRect = carousel.getBoundingClientRect();
-          const targetScroll = carousel.scrollLeft + (cardRect.left - carouselRect.left) - (carousel.clientWidth - card.offsetWidth) / 2;
-
-          carousel.scrollTo({
-            left: Math.max(0, targetScroll),
-            behavior: 'smooth'
-          });
-        }
-
-        dots.forEach((dot, idx) => {
-          dot.addEventListener('click', () => {
-            scrollToCard(idx);
-          });
-        });
-
-        if (prevBtn) {
-          prevBtn.addEventListener('click', () => {
-            const currentIdx = getCurrentCardIndex();
-            const targetIdx = Math.max(0, currentIdx - 1);
-            scrollToCard(targetIdx);
-          });
-        }
-
-        if (nextBtn) {
-          nextBtn.addEventListener('click', () => {
-            const currentIdx = getCurrentCardIndex();
-            const targetIdx = Math.min(originalCount - 1, currentIdx + 1);
-            scrollToCard(targetIdx);
-          });
-        }
-
-        let ticking = false;
-        carousel.addEventListener('scroll', () => {
-          if (!ticking) {
-            window.requestAnimationFrame(() => {
-              updateActiveDot();
-              ticking = false;
-            });
-            ticking = true;
-          }
-        }, { passive: true });
-
-        updateActiveDot();
-        window.addEventListener('resize', updateActiveDot);
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initReviews);
-    } else {
-      initReviews();
-    }
-
-    document.addEventListener('shopify:section:load', function(event) {
-      if (event.detail && event.detail.sectionId === 'template--22086712361118__customer_reviews') {
-        initReviews();
-      }
-    });
-  })();
-</script>
 </div>
 
 </main>
